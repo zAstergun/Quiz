@@ -1,0 +1,192 @@
+# Mapeamento do Funil Quiz: Programa Reviver
+
+Este documento apresenta o mapeamento completo do funil de vendas estilo quiz do site concorrente (inlead.digital/reviver). O objetivo é fornecer a estrutura detalhada de cada etapa, incluindo a copy (textos), as perguntas e as opções de resposta, para que você possa utilizar como base (prompt) na criação das páginas do seu próprio funil através de uma inteligência artificial.
+
+O funil é composto por 15 etapas, sendo a maioria perguntas de qualificação e conscientização do lead, intercaladas com telas de educação e prova social, culminando em uma página de vendas personalizada.
+
+---
+
+## Estrutura das Etapas do Quiz
+
+### Etapa 1: Faixa Etária
+A primeira tela busca segmentar o público pela idade, utilizando um layout visual com imagens.
+
+**Título:** Qual a sua faixa etária?
+**Subtítulo:** Escolha uma opção para avançar
+
+**Opções de Resposta:**
+*   18 - 29 anos
+*   30 - 49 anos
+*   50 - 59 anos
+*   + 60 anos
+
+**Observação de Design:** As opções são apresentadas em 4 cards (grade 2x2), cada um contendo uma imagem ilustrativa e o texto da idade na parte inferior. A seleção de uma opção avança automaticamente para a próxima etapa.
+
+### Etapa 2: Patologias
+Nesta etapa, o funil identifica as dores específicas do usuário, permitindo seleção múltipla.
+
+**Título:** Você sofre com alguma das patologias abaixo?
+**Subtítulo:** Escolhe uma opção para avançar
+
+**Opções de Resposta:**
+*   Hérnia de Disco
+*   Fibromialgia
+*   Tendinite / Bursite
+*   Escoliose
+*   Artrose (Desgaste no Joelho)
+*   Bico de Papagaio
+*   Ansiedade / Depressão
+*   Osteoporose / Osteopenia
+
+**Ação:** Botão "Continuar" (aparece após a seleção).
+
+### Etapa 3: Localização da Dor
+O objetivo aqui é mapear fisicamente onde o usuário sente dor, utilizando imagens de uma personagem 3D para ilustrar cada região.
+
+**Título:** Onde você costuma sentir mais dor?
+**Subtítulo:** Escolhe uma ou mais opções para avançar
+
+**Opções de Resposta:**
+*   Quadris / Pelve
+*   Lombar
+*   Pescoço
+*   Ombros
+*   Joelho
+*   Corpo inteiro
+*   Nenhuma alternativa
+
+**Ação:** Botão "Continuar".
+
+### Etapa 4: Frequência da Dor
+Esta pergunta avalia a intensidade e a constância do problema na vida do usuário.
+
+**Título:** Quando foi a última vez que você se sentiu com o corpo leve e sem dores?
+**Subtítulo:** Escolhe uma opção para avançar
+
+**Opções de Resposta:**
+*   Quase não sinto dores
+*   Não sinto nenhuma dor
+*   Sinto dores frequentemente
+*   Sinto dores todos os dias
+
+**Ação:** Botão "Continuar".
+
+### Etapa 5: Tela de Educação e Prova Científica (Interstitial)
+Esta é uma tela de transição sem perguntas. O objetivo é educar o lead e aumentar a autoridade do método antes de prosseguir.
+
+**Título:** Porque o Pilates é o mais recomendado e eficiente para aliviar as dores...
+
+**Conteúdo (Copy):**
+A tela apresenta recortes de estudos científicos reais:
+*   "O Pilates é um tratamento eficaz para a dor crônica no pescoço, melhorando a dor, funcionalidade e qualidade de vida dos pacientes" (Revista ACRM).
+*   "Pilates pode ser o melhor exercício mente-corpo para dor lombar crônica, segundo nova meta-análise com mais de 3 mil pacientes" (Physiotherapy Journal).
+*   "Tanto o Pilates de alta quanto o de baixa intensidade são eficazes para reduzir dor e incapacidade em pessoas com dor lombar crônica".
+
+**Ação:** Botão "Continuar".
+
+### Etapa 6: Satisfação com o Corpo
+Uma pergunta de cunho emocional para entender a relação do usuário com sua autoimagem.
+
+**Título:** Quão satisfeita você está com a situação do seu corpo hoje?
+**Subtítulo:** Escolhe uma opção para avançar
+
+**Opções de Resposta:**
+*   Completamente satisfeita
+*   Amo meu corpo, mas preciso melhorá-lo
+*   Insatisfeita
+
+**Ação:** Botão "Continuar".
+
+### Etapa 7: Tipo Físico
+Semelhante à Etapa 1, utiliza imagens para que o usuário se identifique visualmente.
+
+**Título:** Como você descreveria seu físico?
+**Subtítulo:** Escolhe uma opção para avançar
+
+**Opções de Resposta:**
+*   Magra
+*   Média
+*   Grande
+*   Acima do peso
+
+**Observação de Design:** Apresenta 4 cards com imagens de personagens 3D femininas representando diferentes biótipos. A seleção avança automaticamente.
+
+### Etapa 8: Tela de Vídeo (Interstitial)
+Outra tela de transição, desta vez utilizando um vídeo curto para engajar o lead com a especialista.
+
+**Título:** Assista o vídeo abaixo para entender melhor
+**Subtítulo:** É super rápido, fique tranquila
+
+**Conteúdo:** Vídeo incorporado com o título "15 minutos por dia é melhor que 1h por semana".
+
+**Ação:** Botão "Continuar" (disponível mesmo sem assistir ao vídeo completo).
+
+### Etapa 9: Prova Social em Vídeo (Interstitial)
+Tela focada em quebrar objeções através de depoimentos reais.
+
+**Título:** Não é a toa que milhares de alunas minhas estão colhendo resultados como esses..
+**Subtítulo:** Dá uma olhada no que algumas disseram
+
+**Conteúdo:** Vídeo vertical (formato Reels/Shorts) com depoimentos de alunas.
+
+**Ação:** Botão "Continuar".
+
+### Etapas 10 a 14: Avaliações em Escala (Estrelas)
+Uma sequência de 5 perguntas rápidas utilizando uma escala de 1 a 5 estrelas para avaliar diferentes aspectos da vida do usuário. A seleção de qualquer opção avança automaticamente para a próxima tela.
+
+**Etapa 10: Humor**
+*   **Título:** Como está o seu humor?
+*   **Legenda:** Muito ruim = 1 estrela | Excelente = 5 estrelas
+
+**Etapa 11: Satisfação com a Dor**
+*   **Título:** Qual o nível de satisfação com relação a dor no seu corpo hoje?
+*   **Legenda:** Muito ruim = 1 estrela | Excelente = 5 estrelas
+
+**Etapa 12: Nível de Energia**
+*   **Título:** Como está seu nível de energia no dia-a-dia?
+*   **Legenda:** Muito baixa = 1 estrela | Excelente = 5 estrelas
+
+**Etapa 13: Prática de Exercícios**
+*   **Título:** Você tem praticado exercícios?
+*   **Legenda:** Nenhuma atividade = 1 estrela | Pratica diária = 5 estrelas
+
+**Etapa 14: Qualidade do Sono**
+*   **Título:** E a qualidade do seu sono?
+*   **Legenda:** Muito ruim = 1 estrela | Excelente = 5 estrelas
+
+---
+
+## Etapa 15: Página de Resultado e Oferta (Página de Vendas)
+
+Após responder todas as perguntas, o usuário é direcionado para a página final, que apresenta a solução como um plano personalizado.
+
+**Headline Principal:** Seu Plano Exclusivo de Pilates em Casa está pronto!
+**Chamada para Ação (CTA):** Adquira agora o seu plano (Botões "Adquirir Agora" distribuídos pela página).
+
+### Seção 1: Destaques do Plano
+Apresenta os benefícios diretos do programa:
+*   **Mais de 150 aulas de Pilates:** Projetados para liberar emoções armazenadas e aliviar suas dores em casa.
+*   **Fortalecimento dos músculos:** Deixe seus músculos fortes diminuindo o risco de lesão.
+*   **Tensão reduzida em:** Quadris, costas, ciática, ombros, pescoço e joelho.
+*   **Redução do estresse e das preocupações:** Sensação de mais relaxamento e calma.
+*   **Melhora do sono:** E melhor qualidade de descanso.
+
+### Seção 2: Copy de Vendas (Argumentação)
+Textos persuasivos focados na transformação e facilidade do método:
+*   **Headline:** Alívio das dores com apenas 10-15 minutos por dia.
+*   **Copy:** "Dores no corpo, preocupação e cargas emocionais acabam com sua qualidade de vida. Este plano oferece uma abordagem abrangente para aliviar suas dores físicas e emocionais e finalmente obter uma qualidade de vida melhor. Experimente nossos exercícios transformadores para encontrar a paz interior e se livrar do estresse avassalador, da preocupação e do peso emocional. Com apenas 15 minutos por dia, com exercícios simples e seguros, você tem resultados muito mais rápidos do que apenas treinar 1 vez por semana."
+
+### Seção 3: Planos e Preços
+Apresentação das opções de compra com ancoragem de preço:
+*   **Plano PRO Anual:** De R$ 99,90/mês por apenas R$ 49,90/mês.
+*   **Plano Trimestral:** De R$ 119,90/mês por apenas 3x R$ 89,90.
+
+### Seção 4: Garantia e Segurança
+Quebra final de objeções focada no risco zero:
+*   **Título:** Garantia de 7 Dias.
+*   **Copy:** "Você vai ter 7 dias para experimentar. Você vai poder assistir quantas aulas quiser e se por qualquer razão não gostar ou se adaptar, basta enviar um simples email para nossa atenciosa equipe de atendimento dentro desse período, que reembolsaremos 100% do valor pago. É super simples. Comece agora os seus 7 dias experimentais!"
+*   **Elementos Visuais:** Selos de "Compra 100% Segura", "Site Protegido" e a logo do programa.
+
+---
+
+**Dica para a IA:** Ao fornecer este documento para a inteligência artificial que criará suas páginas, peça para ela manter a estrutura de intercalar perguntas de qualificação com telas de educação (interstitials), pois isso aumenta o engajamento e a percepção de valor do lead antes de chegar à página de vendas final. Adapte as perguntas e a copy para o seu nicho específico, mantendo a lógica de funil apresentada.

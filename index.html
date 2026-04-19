@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubra o Template Ideal para Organizar suas Finanças | Quiz Financeiro</title>
+    <meta name="description" content="Responda o quiz e descubra qual template do Notion é ideal para você finalmente organizar seus gastos e alcançar a liberdade financeira.">
+    <meta property="og:title" content="Quiz: Qual Template do Notion é Ideal para Suas Finanças?">
+    <meta property="og:description" content="Descubra em 2 minutos como organizar seus gastos com o template perfeito do Notion.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+        <span class="progress-text" id="progressText">0%</span>
+    </div>
+
+    <!-- Quiz Container -->
+    <div class="quiz-wrapper" id="quizWrapper">
+
+        <!-- ===== ETAPA 0: LANDING / WELCOME ===== -->
+        <div class="step active" data-step="0" id="step-0">
+            <div class="step-content welcome-screen">
+                <div class="welcome-badge animate-pop">
+                    <span class="badge-icon">💰</span>
+                    <span>Quiz Financeiro</span>
+                </div>
+                <h1 class="welcome-title animate-slide-up">
+                    Descubra o template <span class="gradient-text">perfeito</span> do Notion para organizar seus gastos
+                </h1>
+                <p class="welcome-subtitle animate-slide-up delay-1">
+                    Responda algumas perguntas rápidas e receba uma recomendação personalizada para transformar sua vida financeira.
+                </p>
+                <div class="welcome-stats animate-slide-up delay-2">
+                    <div class="stat-item">
+                        <span class="stat-number counter" data-target="12847">0</span>
+                        <span class="stat-label">Pessoas já fizeram</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">⭐ 4.9</span>
+                        <span class="stat-label">Avaliação média</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">2 min</span>
+                        <span class="stat-label">Para completar</span>
+                    </div>
+                </div>
+                <button class="btn-primary btn-glow animate-slide-up delay-3" onclick="nextStep()">
+                    <span>Começar Quiz Grátis</span>
+                    <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <p class="welcome-disclaimer animate-fade delay-3">🔒 Suas respostas são 100% anônimas</p>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA 1: FAIXA ETÁRIA ===== -->
+        <div class="step" data-step="1" id="step-1">
+            <div class="step-content">
+                <div class="step-header">
+                    <span class="step-number">1 de 13</span>
+                    <h2 class="step-title">Qual a sua <span class="gradient-text">faixa etária</span>?</h2>
+                    <p class="step-subtitle">Escolha uma opção para avançar</p>
+                </div>
+                <div class="options-grid grid-2x2" id="options-1">
+                    <button class="option-card card-hover" data-value="18-24" onclick="selectAndAdvance(this)">
+                        <div class="card-emoji">🎓</div>
+                        <span class="card-label">18 - 24 anos</span>
+                        <span class="card-desc">Início da jornada</span>
+                    </button>
+                    <button class="option-card card-hover" data-value="25-34" onclick="selectAndAdvance(this)">
+                        <div class="card-emoji">💼</div>
+                        <span class="card-label">25 - 34 anos</span>
+                        <span class="card-desc">Crescimento profissional</span>
+                    </button>
+                    <button class="option-card card-hover" data-value="35-49" onclick="selectAndAdvance(this)">
+                        <div class="card-emoji">🏠</div>
+                        <span class="card-label">35 - 49 anos</span>
+                        <span class="card-desc">Consolidação</span>
+                    </button>
+                    <button class="option-card card-hover" data-value="50+" onclick="selectAndAdvance(this)">
+                        <div class="card-emoji">🌟</div>
+                        <span class="card-label">50+ anos</span>
+                        <span class="card-desc">Experiência</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA 2: PROBLEMAS FINANCEIROS (Múltipla escolha) ===== -->
+        <div class="step" data-step="2" id="step-2">
+            <div class="step-content">
+                <div class="step-header">
+                    <span class="step-number">2 de 13</span>
+                    <h2 class="step-title">Quais desses <span class="gradient-text">problemas financeiros</span> você enfrenta?</h2>
+                    <p class="step-subtitle">Selecione todos que se aplicam</p>
+                </div>
+                <div class="options-list" id="options-2">
+                    <button class="option-pill" data-value="gastos-impulsivos" onclick="toggleMulti(this)">
+                        <span class="pill-icon">🛒</span>
+                        <span>Gastos impulsivos</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="nao-sabe-pra-onde-vai" onclick="toggleMulti(this)">
+                        <span class="pill-icon">🤷</span>
+                        <span>Não sei pra onde vai meu dinheiro</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="dividas" onclick="toggleMulti(this)">
+                        <span class="pill-icon">💳</span>
+                        <span>Dívidas acumuladas</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="nao-consegue-poupar" onclick="toggleMulti(this)">
+                        <span class="pill-icon">🐷</span>
+                        <span>Não consigo poupar dinheiro</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="ansiedade-financeira" onclick="toggleMulti(this)">
+                        <span class="pill-icon">😰</span>
+                        <span>Ansiedade / estresse financeiro</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="falta-planejamento" onclick="toggleMulti(this)">
+                        <span class="pill-icon">📋</span>
+                        <span>Falta de planejamento</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="renda-insuficiente" onclick="toggleMulti(this)">
+                        <span class="pill-icon">📉</span>
+                        <span>Renda não cobre os gastos</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="sem-reserva" onclick="toggleMulti(this)">
+                        <span class="pill-icon">🏦</span>
+                        <span>Sem reserva de emergência</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                </div>
+                <button class="btn-continue hidden" id="btn-continue-2" onclick="nextStep()">
+                    <span>Continuar</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA 3: ONDE GASTA MAIS ===== -->
+        <div class="step" data-step="3" id="step-3">
+            <div class="step-content">
+                <div class="step-header">
+                    <span class="step-number">3 de 13</span>
+                    <h2 class="step-title">Onde você sente que <span class="gradient-text">gasta mais</span>?</h2>
+                    <p class="step-subtitle">Selecione uma ou mais opções</p>
+                </div>
+                <div class="options-list" id="options-3">
+                    <button class="option-pill" data-value="alimentacao" onclick="toggleMulti(this)">
+                        <span class="pill-icon">🍔</span>
+                        <span>Alimentação / Delivery</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="assinaturas" onclick="toggleMulti(this)">
+                        <span class="pill-icon">📱</span>
+                        <span>Assinaturas / Apps</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="roupas" onclick="toggleMulti(this)">
+                        <span class="pill-icon">👗</span>
+                        <span>Roupas e acessórios</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="transporte" onclick="toggleMulti(this)">
+                        <span class="pill-icon">🚗</span>
+                        <span>Transporte / Combustível</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="lazer" onclick="toggleMulti(this)">
+                        <span class="pill-icon">🎉</span>
+                        <span>Lazer e entretenimento</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                    <button class="option-pill" data-value="nao-sei" onclick="toggleMulti(this)">
+                        <span class="pill-icon">❓</span>
+                        <span>Sinceramente, não sei</span>
+                        <span class="pill-check">✓</span>
+                    </button>
+                </div>
+                <button class="btn-continue hidden" id="btn-continue-3" onclick="nextStep()">
+                    <span>Continuar</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA 4: FREQUÊNCIA DE CONTROLE ===== -->
+        <div class="step" data-step="4" id="step-4">
+            <div class="step-content">
+                <div class="step-header">
+                    <span class="step-number">4 de 13</span>
+                    <h2 class="step-title">Quando foi a última vez que você <span class="gradient-text">controlou seus gastos</span>?</h2>
+                    <p class="step-subtitle">Escolha uma opção para avançar</p>
+                </div>
+                <div class="options-list single-select" id="options-4">
+                    <button class="option-pill" data-value="nunca" onclick="selectAndAdvance(this)">
+                        <span class="pill-icon">🚫</span>
+                        <span>Nunca controlei</span>
+                    </button>
+                    <button class="option-pill" data-value="tentei-desisti" onclick="selectAndAdvance(this)">
+                        <span class="pill-icon">😔</span>
+                        <span>Já tentei, mas desisti</span>
+                    </button>
+                    <button class="option-pill" data-value="faz-tempo" onclick="selectAndAdvance(this)">
+                        <span class="pill-icon">📆</span>
+                        <span>Faz muito tempo que não faço</span>
+                    </button>
+                    <button class="option-pill" data-value="controlo-mal" onclick="selectAndAdvance(this)">
+                        <span class="pill-icon">📝</span>
+                        <span>Controlo, mas de forma precária</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA 5: INTERSTITIAL - EDUCAÇÃO ===== -->
+        <div class="step" data-step="5" id="step-5">
+            <div class="step-content interstitial-screen">
+                <div class="interstitial-icon animate-float">
+                    <span>📊</span>
+                </div>
+                <h2 class="step-title interstitial-title">
+                    Por que um <span class="gradient-text">sistema de organização</span> faz toda a diferença...
+                </h2>
+                <div class="proof-cards">
+                    <div class="proof-card animate-slide-left">
+                        <div class="proof-source">📈 Pesquisa SERASA</div>
+                        <p>"78% dos brasileiros que usam alguma ferramenta de controle financeiro conseguem reduzir seus gastos em até 30% nos primeiros 3 meses."</p>
+                    </div>
+                    <div class="proof-card animate-slide-right delay-1">
+                        <div class="proof-source">🏛️ Banco Central do Brasil</div>
+                        <p>"A principal causa do endividamento é a falta de planejamento e controle dos gastos mensais — não a baixa renda."</p>
+                    </div>
+                    <div class="proof-card animate-slide-left delay-2">
+                        <div class="proof-source">📱 Notion Official</div>
+                        <p>"Usuários que utilizam templates de finanças pessoais reportam 3x mais consistência em seus hábitos financeiros comparado a planilhas tradicionais."</p>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="nextStep()">
+                    <span>Continuar</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA 6: SATISFAÇÃO FINANCEIRA ===== -->
+        <div class="step" data-step="6" id="step-6">
+            <div class="step-content">
+                <div class="step-header">
+                    <span class="step-number">6 de 13</span>
+                    <h2 class="step-title">Quão <span class="gradient-text">satisfeito(a)</span> você está com sua vida financeira hoje?</h2>
+                    <p class="step-subtitle">Escolha uma opção para avançar</p>
+                </div>
+                <div class="options-list single-select emoji-options" id="options-6">
+                    <button class="option-pill" data-value="satisfeito" onclick="selectAndAdvance(this)">
+                        <span class="pill-icon big-emoji">😊</span>
+                        <span>Completamente satisfeito(a)</span>
+                    </button>
+                    <button class="option-pill" data-value="melhorar" onclick="selectAndAdvance(this)">
+                        <span class="pill-icon big-emoji">🤔</span>
+                        <span>Sei que posso melhorar bastante</span>
+                    </button>
+                    <button class="option-pill" data-value="insatisfeito" onclick="selectAndAdvance(this)">
+                        <span class="pill-icon big-emoji">😞</span>
+                        <span>Insatisfeito(a) e preocupado(a)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA 7: PERFIL DE RENDA ===== -->
+        <div class="step" data-step="7" id="step-7">
+            <div class="step-content">
+                <div class="step-header">
+                    <span class="step-number">7 de 13</span>
+                    <h2 class="step-title">Como você descreveria sua <span class="gradient-text">situação financeira</span> atual?</h2>
+                    <p class="step-subtitle">Escolha a que mais se aproxima</p>
+                </div>
+                <div class="options-grid grid-2x2" id="options-7">
+                    <button class="option-card card-hover" data-value="apertado" onclick="selectAndAdvance(this)">
+                        <div class="card-emoji">😰</div>
+                        <span class="card-label">Apertado</span>
+                        <span class="card-desc">O dinheiro mal dá pro mês</span>
+                    </button>
+                    <button class="option-card card-hover" data-value="equilibrado" onclick="selectAndAdvance(this)">
+                        <div class="card-emoji">⚖️</div>
+                        <span class="card-label">Equilibrado</span>
+                        <span class="card-desc">Pago contas mas não sobra</span>
+                    </button>
+                    <button class="option-card card-hover" data-value="confortavel" onclick="selectAndAdvance(this)">
+                        <div class="card-emoji">😌</div>
+                        <span class="card-label">Confortável</span>
+                        <span class="card-desc">Sobra um pouco todo mês</span>
+                    </button>
+                    <button class="option-card card-hover" data-value="bom" onclick="selectAndAdvance(this)">
+                        <div class="card-emoji">🚀</div>
+                        <span class="card-label">Bom, mas desorganizado</span>
+                        <span class="card-desc">Ganho bem mas não controlo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA 8: INTERSTITIAL - PROVA SOCIAL ===== -->
+        <div class="step" data-step="8" id="step-8">
+            <div class="step-content interstitial-screen">
+                <div class="interstitial-icon animate-float">
+                    <span>🏆</span>
+                </div>
+                <h2 class="step-title interstitial-title">
+                    Milhares de pessoas já <span class="gradient-text">transformaram</span> suas finanças com nosso template
+                </h2>
+                <div class="testimonials-container">
+                    <div class="testimonial-card animate-slide-up">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">M</div>
+                            <div>
+                                <strong>Mariana S.</strong>
+                                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                        <p>"Em 2 meses usando o template, consegui economizar R$1.200 que eu nem sabia que estava gastando à toa!"</p>
+                    </div>
+                    <div class="testimonial-card animate-slide-up delay-1">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">R</div>
+                            <div>
+                                <strong>Rafael T.</strong>
+                                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                        <p>"Já tentei planilha, app, caderno... nada funcionou. O template do Notion foi o único que eu consegui manter."</p>
+                    </div>
+                    <div class="testimonial-card animate-slide-up delay-2">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">A</div>
+                            <div>
+                                <strong>Ana Paula L.</strong>
+                                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                        <p>"Saí de R$8.000 em dívidas para ter minha primeira reserva de emergência em 6 meses. O template mudou tudo."</p>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="nextStep()">
+                    <span>Continuar</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA 9: INTERSTITIAL - VÍDEO SIMULADO ===== -->
+        <div class="step" data-step="9" id="step-9">
+            <div class="step-content interstitial-screen">
+                <div class="step-header">
+                    <h2 class="step-title">Veja como o template funciona <span class="gradient-text">na prática</span></h2>
+                    <p class="step-subtitle">É super rápido, fique tranquilo(a)</p>
+                </div>
+                <div class="video-placeholder animate-scale-in">
+                    <div class="video-mock">
+                        <div class="video-play-btn" id="videoPlayBtn">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <div class="video-title-overlay">
+                            <span>📱 "5 minutos por dia para mudar suas finanças"</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="nextStep()">
+                    <span>Continuar</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== ETAPAS 10-14: AVALIAÇÕES EM ESCALA (ESTRELAS) ===== -->
+        
+        <!-- Etapa 10: Controle Financeiro -->
+        <div class="step" data-step="10" id="step-10">
+            <div class="step-content star-rating-screen">
+                <div class="step-header">
+                    <span class="step-number">9 de 13</span>
+                    <h2 class="step-title">Como está seu <span class="gradient-text">controle financeiro</span>?</h2>
+                    <p class="step-subtitle star-legend">Péssimo = 1 estrela &nbsp;|&nbsp; Excelente = 5 estrelas</p>
+                </div>
+                <div class="stars-container" id="stars-10">
+                    <button class="star" data-rating="1" onclick="rateStar(this, 10)">★</button>
+                    <button class="star" data-rating="2" onclick="rateStar(this, 10)">★</button>
+                    <button class="star" data-rating="3" onclick="rateStar(this, 10)">★</button>
+                    <button class="star" data-rating="4" onclick="rateStar(this, 10)">★</button>
+                    <button class="star" data-rating="5" onclick="rateStar(this, 10)">★</button>
+                </div>
+                <div class="star-feedback" id="starFeedback-10"></div>
+            </div>
+        </div>
+
+        <!-- Etapa 11: Nível de Ansiedade -->
+        <div class="step" data-step="11" id="step-11">
+            <div class="step-content star-rating-screen">
+                <div class="step-header">
+                    <span class="step-number">10 de 13</span>
+                    <h2 class="step-title">Qual o nível de <span class="gradient-text">ansiedade financeira</span> que você sente?</h2>
+                    <p class="step-subtitle star-legend">Muita ansiedade = 1 estrela &nbsp;|&nbsp; Nenhuma = 5 estrelas</p>
+                </div>
+                <div class="stars-container" id="stars-11">
+                    <button class="star" data-rating="1" onclick="rateStar(this, 11)">★</button>
+                    <button class="star" data-rating="2" onclick="rateStar(this, 11)">★</button>
+                    <button class="star" data-rating="3" onclick="rateStar(this, 11)">★</button>
+                    <button class="star" data-rating="4" onclick="rateStar(this, 11)">★</button>
+                    <button class="star" data-rating="5" onclick="rateStar(this, 11)">★</button>
+                </div>
+                <div class="star-feedback" id="starFeedback-11"></div>
+            </div>
+        </div>
+
+        <!-- Etapa 12: Disciplina -->
+        <div class="step" data-step="12" id="step-12">
+            <div class="step-content star-rating-screen">
+                <div class="step-header">
+                    <span class="step-number">11 de 13</span>
+                    <h2 class="step-title">Como está sua <span class="gradient-text">disciplina</span> com dinheiro?</h2>
+                    <p class="step-subtitle star-legend">Zero disciplina = 1 estrela &nbsp;|&nbsp; Muito disciplinado = 5 estrelas</p>
+                </div>
+                <div class="stars-container" id="stars-12">
+                    <button class="star" data-rating="1" onclick="rateStar(this, 12)">★</button>
+                    <button class="star" data-rating="2" onclick="rateStar(this, 12)">★</button>
+                    <button class="star" data-rating="3" onclick="rateStar(this, 12)">★</button>
+                    <button class="star" data-rating="4" onclick="rateStar(this, 12)">★</button>
+                    <button class="star" data-rating="5" onclick="rateStar(this, 12)">★</button>
+                </div>
+                <div class="star-feedback" id="starFeedback-12"></div>
+            </div>
+        </div>
+
+        <!-- Etapa 13: Conhecimento -->
+        <div class="step" data-step="13" id="step-13">
+            <div class="step-content star-rating-screen">
+                <div class="step-header">
+                    <span class="step-number">12 de 13</span>
+                    <h2 class="step-title">Seu nível de <span class="gradient-text">conhecimento financeiro</span>?</h2>
+                    <p class="step-subtitle star-legend">Nenhum = 1 estrela &nbsp;|&nbsp; Avançado = 5 estrelas</p>
+                </div>
+                <div class="stars-container" id="stars-13">
+                    <button class="star" data-rating="1" onclick="rateStar(this, 13)">★</button>
+                    <button class="star" data-rating="2" onclick="rateStar(this, 13)">★</button>
+                    <button class="star" data-rating="3" onclick="rateStar(this, 13)">★</button>
+                    <button class="star" data-rating="4" onclick="rateStar(this, 13)">★</button>
+                    <button class="star" data-rating="5" onclick="rateStar(this, 13)">★</button>
+                </div>
+                <div class="star-feedback" id="starFeedback-13"></div>
+            </div>
+        </div>
+
+        <!-- Etapa 14: Metas Financeiras -->
+        <div class="step" data-step="14" id="step-14">
+            <div class="step-content star-rating-screen">
+                <div class="step-header">
+                    <span class="step-number">13 de 13</span>
+                    <h2 class="step-title">Você tem <span class="gradient-text">metas financeiras</span> definidas?</h2>
+                    <p class="step-subtitle star-legend">Nenhuma meta = 1 estrela &nbsp;|&nbsp; Muito claras = 5 estrelas</p>
+                </div>
+                <div class="stars-container" id="stars-14">
+                    <button class="star" data-rating="1" onclick="rateStar(this, 14)">★</button>
+                    <button class="star" data-rating="2" onclick="rateStar(this, 14)">★</button>
+                    <button class="star" data-rating="3" onclick="rateStar(this, 14)">★</button>
+                    <button class="star" data-rating="4" onclick="rateStar(this, 14)">★</button>
+                    <button class="star" data-rating="5" onclick="rateStar(this, 14)">★</button>
+                </div>
+                <div class="star-feedback" id="starFeedback-14"></div>
+            </div>
+        </div>
+
+        <!-- ===== LOADING / CALCULATING ===== -->
+        <div class="step" data-step="15" id="step-15">
+            <div class="step-content loading-screen">
+                <div class="loading-animation">
+                    <div class="loading-circle"></div>
+                    <div class="loading-circle delay-1"></div>
+                    <div class="loading-circle delay-2"></div>
+                </div>
+                <h2 class="loading-title">Analisando suas respostas...</h2>
+                <div class="loading-steps" id="loadingSteps">
+                    <div class="loading-step" data-delay="500">
+                        <span class="loading-check">⏳</span>
+                        <span>Identificando seu perfil financeiro...</span>
+                    </div>
+                    <div class="loading-step" data-delay="1500">
+                        <span class="loading-check">⏳</span>
+                        <span>Selecionando o template ideal...</span>
+                    </div>
+                    <div class="loading-step" data-delay="2500">
+                        <span class="loading-check">⏳</span>
+                        <span>Preparando sua oferta exclusiva...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ETAPA FINAL: RESULTADO E OFERTA ===== -->
+        <div class="step" data-step="16" id="step-16">
+            <div class="step-content results-screen">
+                
+                <!-- Hero Section -->
+                <div class="result-hero">
+                    <div class="confetti-container" id="confettiContainer"></div>
+                    <div class="result-badge animate-pop">
+                        <span>🎯</span>
+                    </div>
+                    <h1 class="result-headline">
+                        Seu Template <span class="gradient-text">Personalizado</span> de Finanças está pronto!
+                    </h1>
+                    <p class="result-subheadline">
+                        Baseado nas suas respostas, preparamos a solução ideal para transformar sua vida financeira.
+                    </p>
+                    <button class="btn-primary btn-glow btn-cta" onclick="scrollToOffer()">
+                        <span>🔥 Quero Meu Template Agora</span>
+                    </button>
+                </div>
+
+                <!-- Benefícios -->
+                <div class="benefits-section">
+                    <h2 class="section-title">O que você vai receber:</h2>
+                    <div class="benefits-grid">
+                        <div class="benefit-card animate-on-scroll">
+                            <div class="benefit-icon">📊</div>
+                            <h3>Dashboard Completo</h3>
+                            <p>Visão geral das suas finanças em um painel visual e intuitivo, atualizado automaticamente.</p>
+                        </div>
+                        <div class="benefit-card animate-on-scroll">
+                            <div class="benefit-icon">🏷️</div>
+                            <h3>Categorização Inteligente</h3>
+                            <p>Sistema de categorias pré-configurado para você saber exatamente para onde vai cada centavo.</p>
+                        </div>
+                        <div class="benefit-card animate-on-scroll">
+                            <div class="benefit-icon">🎯</div>
+                            <h3>Metas e Objetivos</h3>
+                            <p>Defina metas financeiras e acompanhe seu progresso com indicadores visuais.</p>
+                        </div>
+                        <div class="benefit-card animate-on-scroll">
+                            <div class="benefit-icon">📅</div>
+                            <h3>Controle Mensal</h3>
+                            <p>Planejamento mensal passo a passo para manter a disciplina o ano todo.</p>
+                        </div>
+                        <div class="benefit-card animate-on-scroll">
+                            <div class="benefit-icon">🔔</div>
+                            <h3>Lembretes de Contas</h3>
+                            <p>Nunca mais esqueça de pagar uma conta. Sistema de alertas configurável.</p>
+                        </div>
+                        <div class="benefit-card animate-on-scroll">
+                            <div class="benefit-icon">📈</div>
+                            <h3>Relatórios Automáticos</h3>
+                            <p>Relatórios semanais e mensais gerados automaticamente para você analisar sua evolução.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copy de Vendas -->
+                <div class="sales-copy-section">
+                    <h2 class="section-title">Organize suas finanças com apenas <span class="gradient-text">5 minutos por dia</span></h2>
+                    <p class="sales-copy">
+                        Gastos descontrolados, dívidas e falta de planejamento acabam com sua tranquilidade. 
+                        Este template oferece uma abordagem completa para você retomar o controle, 
+                        eliminar desperdícios e finalmente começar a construir seu patrimônio. 
+                        Com apenas 5 minutos por dia, registrando seus gastos de forma simples e visual, 
+                        você terá resultados que anos de tentativas com planilhas nunca entregaram.
+                    </p>
+                    <button class="btn-primary btn-glow btn-cta" onclick="scrollToOffer()">
+                        <span>Quero Transformar Minhas Finanças</span>
+                    </button>
+                </div>
+
+                <!-- Preços -->
+                <div class="pricing-section" id="offerSection">
+                    <h2 class="section-title">Escolha seu plano:</h2>
+                    <div class="pricing-grid">
+                        <div class="pricing-card">
+                            <div class="pricing-badge">Mais Popular</div>
+                            <h3 class="pricing-name">Template Completo</h3>
+                            <div class="pricing-old">De <s>R$ 97,00</s></div>
+                            <div class="pricing-price">
+                                <span class="pricing-currency">R$</span>
+                                <span class="pricing-value">29</span>
+                                <span class="pricing-cents">,90</span>
+                            </div>
+                            <span class="pricing-period">pagamento único</span>
+                            <ul class="pricing-features">
+                                <li>✅ Template completo do Notion</li>
+                                <li>✅ Dashboard de finanças</li>
+                                <li>✅ Controle de gastos</li>
+                                <li>✅ Planejador mensal</li>
+                                <li>✅ Atualizações gratuitas</li>
+                                <li>✅ Suporte via e-mail</li>
+                            </ul>
+                            <button class="btn-primary btn-glow btn-pricing" onclick="handlePurchase('completo')">
+                                <span>Adquirir Agora</span>
+                            </button>
+                        </div>
+                        <div class="pricing-card pricing-premium">
+                            <div class="pricing-badge premium-badge">🔥 Melhor Oferta</div>
+                            <h3 class="pricing-name">Template Premium + Bônus</h3>
+                            <div class="pricing-old">De <s>R$ 197,00</s></div>
+                            <div class="pricing-price">
+                                <span class="pricing-currency">R$</span>
+                                <span class="pricing-value">49</span>
+                                <span class="pricing-cents">,90</span>
+                            </div>
+                            <span class="pricing-period">pagamento único</span>
+                            <ul class="pricing-features">
+                                <li>✅ Tudo do Template Completo</li>
+                                <li>✅ Template de investimentos</li>
+                                <li>✅ Calculadora de metas</li>
+                                <li>✅ Guia de finanças pessoais (PDF)</li>
+                                <li>✅ Comunidade exclusiva</li>
+                                <li>✅ Suporte prioritário</li>
+                                <li>✅ 3 templates bônus</li>
+                            </ul>
+                            <button class="btn-primary btn-glow btn-pricing premium-btn" onclick="handlePurchase('premium')">
+                                <span>🔥 Quero o Premium</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Garantia -->
+                <div class="guarantee-section">
+                    <div class="guarantee-card">
+                        <div class="guarantee-icon">🛡️</div>
+                        <h3>Garantia Incondicional de 7 Dias</h3>
+                        <p>
+                            Você terá 7 dias para experimentar o template. Use, explore e organize suas finanças. 
+                            Se por qualquer motivo não ficar satisfeito(a), basta enviar um e-mail para nossa equipe 
+                            dentro desse período e reembolsaremos 100% do valor pago. Sem perguntas, sem burocracia.
+                        </p>
+                        <div class="guarantee-badges">
+                            <span class="g-badge">🔒 Compra Segura</span>
+                            <span class="g-badge">✅ Satisfação Garantida</span>
+                            <span class="g-badge">🛡️ Site Protegido</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ -->
+                <div class="faq-section">
+                    <h2 class="section-title">Perguntas Frequentes</h2>
+                    <div class="faq-list">
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-question">
+                                <span>Preciso saber usar o Notion?</span>
+                                <span class="faq-arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Não! O template já vem totalmente pronto e configurado. Basta duplicar para o seu Notion e começar a usar. Incluímos também um guia passo a passo.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-question">
+                                <span>O Notion é gratuito?</span>
+                                <span class="faq-arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Sim! O Notion tem um plano gratuito que é mais que suficiente para usar todos os recursos do template.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-question">
+                                <span>Funciona no celular?</span>
+                                <span class="faq-arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Sim! O Notion tem aplicativo para iOS e Android. Você pode registrar seus gastos de qualquer lugar, a qualquer momento.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-question">
+                                <span>Como recebo o template?</span>
+                                <span class="faq-arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Após a compra, você recebe imediatamente o link para duplicar o template no seu Notion. Acesso instantâneo!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer CTA -->
+                <div class="final-cta">
+                    <h2>Não deixe para depois o que pode <span class="gradient-text">transformar</span> suas finanças hoje</h2>
+                    <button class="btn-primary btn-glow btn-cta" onclick="scrollToOffer()">
+                        <span>🚀 Começar Agora</span>
+                    </button>
+                    <p class="final-urgency">⚡ Oferta por tempo limitado • Preço pode aumentar a qualquer momento</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
