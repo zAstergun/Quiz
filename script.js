@@ -1,46 +1,138 @@
 /* =============================================
    Quiz Hermes Wallet — Vanilla JS (ES6+)
-   Tradução 1:1 do componente React QuizHermesWallet.jsx
+   Render Engine com suporte a tipos mistos:
+   'question' | 'video' | 'review'
    ============================================= */
 
-// ─── DADOS MOCKADOS ─────────────────────────────────────────────
-const QUESTIONS = [
+// ─── DADOS DO FUNIL ─────────────────────────────────────────────
+const STEPS = [
   {
     id: 1,
-    question: "Como você descreveria o controle atual das suas finanças pessoais?",
+    type: "question",
+    question: "Você sabe exatamente para onde cada centavo do seu salário vai todo mês?",
     options: [
-      "Não tenho nenhum controle, gasto sem acompanhar",
-      "Anoto algumas coisas, mas sem método definido",
-      "Uso planilha ou app, porém sem consistência",
-      "Tenho um sistema organizado que sigo todo mês",
+      "Não faço ideia, o dinheiro simplesmente some",
+      "Tenho uma noção vaga, mas nunca anotei direito",
+      "Sei mais ou menos, porém sempre estouro o orçamento",
+      "Sim, acompanho tudo com planilha ou aplicativo",
     ],
   },
   {
     id: 2,
-    question: "Qual é o seu maior desafio financeiro hoje?",
+    type: "question",
+    question: "Como está a sua relação com dívidas hoje?",
     options: [
-      "Não consigo guardar dinheiro no fim do mês",
-      "Tenho dívidas acumuladas e não sei por onde começar",
-      "Ganho bem, mas o dinheiro some sem eu perceber",
-      "Quero investir, mas não sei como organizar meu caixa",
+      "Estou afundado e não sei nem por onde começar a pagar",
+      "Tenho parcelas que apertam, mas vou empurrando com a barriga",
+      "Já quitei tudo, porém volta e meia me endivido de novo",
+      "Não tenho dívidas e consigo manter o controle",
     ],
   },
   {
     id: 3,
-    question: "Se você tivesse uma ferramenta para organizar suas finanças, o que ela deveria resolver primeiro?",
+    type: "question",
+    question: "Quando você pensa em investir dinheiro, qual sentimento vem primeiro?",
     options: [
-      "Mostrar para onde meu dinheiro está indo",
-      "Criar um plano para sair das dívidas",
-      "Automatizar o controle mensal de receitas e despesas",
-      "Ajudar a definir metas e acompanhar o progresso",
+      "Paralisia total — não entendo nada e tenho medo de perder",
+      "Curiosidade, mas falta sobra no mês para aplicar qualquer valor",
+      "Já tentei, porém não tive consistência e parei",
+      "Invisto com frequência e tenho uma estratégia definida",
     ],
+  },
+  {
+    id: 4,
+    type: "question",
+    question: "Como é a sensação na última semana do mês na sua casa?",
+    options: [
+      "Desespero: conto moedas e rezo para nenhum boleto vencer",
+      "Aperto: vivo no limite e qualquer imprevisto é uma crise",
+      "Neutro: pago as contas, mas não sobra nada para o futuro",
+      "Tranquilidade: tudo está planejado e já reservei minha poupança",
+    ],
+  },
+  {
+    id: 5,
+    type: "question",
+    question: "Qual destas frases mais se parece com algo que você já disse?",
+    options: [
+      '"Ganho bem, mas não sei para onde vai meu dinheiro"',
+      '"Sempre prometo que vou organizar… mas nunca começo"',
+      '"Já tentei planilha, app, caderninho… nada funciona pra mim"',
+      '"Preciso de um método simples que eu consiga manter"',
+    ],
+  },
+  {
+    id: 6,
+    type: "question",
+    question: "Se um gasto inesperado de R$ 500 surgisse agora, o que aconteceria?",
+    options: [
+      "Caos total: teria que pedir emprestado ou usar crédito rotativo",
+      "Pagaria, mas comprometeria outras contas do mês",
+      "Usaria minha reserva, porém ficaria desconfortável",
+      "Tranquilo: minha reserva de emergência cobre isso e muito mais",
+    ],
+  },
+  {
+    id: 7,
+    type: "question",
+    question: "O que te impede de ter a vida financeira que você quer?",
+    options: [
+      "Falta de organização: não tenho um sistema que funcione",
+      "Falta de disciplina: gasto por impulso e me arrependo depois",
+      "Falta de conhecimento: ninguém me ensinou a lidar com dinheiro",
+      "Falta de ferramenta: preciso de algo prático e visual",
+    ],
+  },
+  {
+    id: 8,
+    type: "question",
+    question: "Imagine ter um painel que mostra sua saúde financeira em tempo real. Qual recurso te animaria mais?",
+    options: [
+      "Visão total de receitas, despesas e saldo em uma só tela",
+      "Alertas automáticos quando estou perto de estourar o limite",
+      "Planejador de metas com progresso visual mês a mês",
+      "Simulador de investimentos integrado ao meu orçamento",
+    ],
+  },
+  {
+    id: 9,
+    type: "video",
+    title: "📊 Veja como o Hermes Wallet revelou o diagnóstico de milhares de brasileiros",
+    subtitle: "Assista ao vídeo de 1 minuto e entenda o que as suas respostas dizem sobre o seu perfil financeiro.",
+    buttonText: "Avançar para o Diagnóstico",
+  },
+  {
+    id: 10,
+    type: "review",
+    title: "O que dizem quem já retomou o controle financeiro",
+    testimonials: [
+      {
+        name: "Camila R.",
+        initials: "CR",
+        stars: 5,
+        text: "Eu achava que o problema era meu salário, mas era falta de organização. Com o Hermes Wallet, em 2 meses quitei R$ 3.400 em dívidas e finalmente comecei a guardar dinheiro.",
+      },
+      {
+        name: "Lucas M.",
+        initials: "LM",
+        stars: 5,
+        text: "Já tinha tentado planilha, Mobills, Organizze… nada colava. O Hermes é diferente porque é visual e rápido. Gasto 5 minutos por semana e tenho tudo sob controle.",
+      },
+      {
+        name: "Fernanda S.",
+        initials: "FS",
+        stars: 5,
+        text: "Meu dinheiro sumia e eu não sabia explicar pra onde ia. O dashboard me mostrou que eu gastava R$ 800/mês em delivery sem perceber. Hoje invisto esse valor todo mês.",
+      },
+    ],
+    buttonText: "Ver Meu Diagnóstico",
   },
 ];
 
 const CHECKOUT_URL = "https://pay.kiwify.com.br/chCm1MZ";
 
 // ─── ESTADO GLOBAL ──────────────────────────────────────────────
-let phase = "intro";          // intro | questions | loading | result
+let phase = "intro"; // intro | steps | loading | result
 let currentIndex = 0;
 let selectedOption = null;
 const answers = [];
@@ -72,7 +164,7 @@ function renderIntro() {
         <div class="welcome-screen">
           <h1 class="welcome-title">Quiz Financeiro</h1>
           <p class="welcome-subtitle">
-            Descubra o seu perfil financeiro em menos de 1 minuto e receba uma
+            Descubra o seu perfil financeiro em menos de 2 minutos e receba uma
             recomendação personalizada para organizar suas finanças.
           </p>
           <button
@@ -89,13 +181,13 @@ function renderIntro() {
   document.getElementById("btn-start").addEventListener("click", handleStart);
 }
 
-// ─────────────────── TELA: PERGUNTAS ────────────────────────────
-function renderQuestions() {
-  phase = "questions";
+// ─────────────────── RENDER STEP (Engine Multi-Tipo) ────────────
+function renderStep() {
+  phase = "steps";
 
-  const current = QUESTIONS[currentIndex];
+  const current = STEPS[currentIndex];
   const stepNumber = currentIndex + 1;
-  const total = QUESTIONS.length;
+  const total = STEPS.length;
   const pct = Math.round((stepNumber / total) * 100);
 
   // Dispara quiz_step_viewed (anti-duplicação)
@@ -108,8 +200,54 @@ function renderQuestions() {
     });
   }
 
-  // Monta as opções
-  const optionsHTML = current.options
+  // ── Gera o HTML interno conforme o type ──
+  let innerHTML = "";
+
+  switch (current.type) {
+    case "question":
+      innerHTML = buildQuestionHTML(current, stepNumber, total);
+      break;
+    case "video":
+      innerHTML = buildVideoHTML(current);
+      break;
+    case "review":
+      innerHTML = buildReviewHTML(current);
+      break;
+    default:
+      innerHTML = `<p>Tipo de etapa desconhecido.</p>`;
+  }
+
+  mount(/* html */ `
+    <div class="quiz-wrapper">
+      <!-- Progresso -->
+      <div class="progress-container">
+        <div class="progress-bar" style="width: ${pct}%"></div>
+      </div>
+      <div class="progress-text">Etapa ${stepNumber} / ${total}</div>
+
+      <div class="step active">
+        <div class="step-content">
+          ${innerHTML}
+        </div>
+      </div>
+    </div>
+  `);
+
+  // ── Binds pós-montagem conforme o tipo ──
+  if (current.type === "question") {
+    bindQuestionEvents(current);
+  }
+
+  // Bind do botão avançar (presente em todos os tipos)
+  const btnNext = document.getElementById("btn-next");
+  if (btnNext) {
+    btnNext.addEventListener("click", handleNext);
+  }
+}
+
+// ─────────────────── BUILDER: QUESTION ──────────────────────────
+function buildQuestionHTML(step, stepNumber, total) {
+  const optionsHTML = step.options
     .map(
       (opt, idx) => `
       <button
@@ -123,41 +261,97 @@ function renderQuestions() {
 
   const isLast = stepNumber >= total;
 
-  mount(/* html */ `
-    <div class="quiz-wrapper">
-      <!-- Progresso -->
-      <div class="progress-container">
-        <div class="progress-bar" style="width: ${pct}%"></div>
-      </div>
-      <div class="progress-text">Pergunta ${stepNumber} / ${total}</div>
+  return /* html */ `
+    <!-- Cabeçalho da pergunta -->
+    <div class="step-header">
+      <span class="step-number">Pergunta ${stepNumber} de ${total}</span>
+      <h2 class="step-title">${step.question}</h2>
+    </div>
 
-      <div class="step active">
-        <div class="step-content">
-          <!-- Cabeçalho da pergunta -->
-          <div class="step-header">
-            <span class="step-number">Pergunta ${stepNumber} de ${total}</span>
-            <h2 class="step-title">${current.question}</h2>
-          </div>
+    <!-- Opções -->
+    <div class="options-grid grid-2x2" id="options-container">
+      ${optionsHTML}
+    </div>
 
-          <!-- Opções -->
-          <div class="options-grid grid-2x2" id="options-container">
-            ${optionsHTML}
-          </div>
+    <!-- Botão Avançar (inicia oculto) -->
+    <button
+      id="btn-next"
+      disabled
+      class="btn-continue hidden"
+    >
+      ${isLast ? "Finalizar Quiz" : "Próxima Pergunta"}
+    </button>
+  `;
+}
 
-          <!-- Botão Avançar (inicia oculto) -->
-          <button
-            id="btn-next"
-            disabled
-            class="btn-continue hidden"
-          >
-            ${isLast ? "Finalizar Quiz" : "Próxima Pergunta"}
-          </button>
+// ─────────────────── BUILDER: VIDEO ─────────────────────────────
+function buildVideoHTML(step) {
+  return /* html */ `
+    <div class="step-header">
+      <h2 class="step-title">${step.title}</h2>
+      <p class="step-subtitle">${step.subtitle}</p>
+    </div>
+
+    <div class="video-placeholder">
+      <div class="video-mock">
+        <div class="video-play-btn">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#0a0e17">
+            <polygon points="6,3 20,12 6,21" />
+          </svg>
         </div>
+        <span class="video-title-overlay">Clique para assistir</span>
       </div>
     </div>
-  `);
 
-  // ── Bind: seleção de opção ──
+    <!-- Botão Avançar (nasce HABILITADO) -->
+    <button
+      id="btn-next"
+      class="btn-continue"
+    >
+      ${step.buttonText}
+    </button>
+  `;
+}
+
+// ─────────────────── BUILDER: REVIEW ────────────────────────────
+function buildReviewHTML(step) {
+  const testimonialsHTML = step.testimonials
+    .map(
+      (t) => `
+      <div class="testimonial-card">
+        <div class="testimonial-header">
+          <div class="testimonial-avatar">${t.initials}</div>
+          <div>
+            <strong>${t.name}</strong>
+            <div class="testimonial-stars">${"⭐".repeat(t.stars)}</div>
+          </div>
+        </div>
+        <p>"${t.text}"</p>
+      </div>`
+    )
+    .join("");
+
+  return /* html */ `
+    <div class="step-header">
+      <h2 class="step-title">${step.title}</h2>
+    </div>
+
+    <div class="testimonials-container">
+      ${testimonialsHTML}
+    </div>
+
+    <!-- Botão Avançar (nasce HABILITADO) -->
+    <button
+      id="btn-next"
+      class="btn-continue"
+    >
+      ${step.buttonText}
+    </button>
+  `;
+}
+
+// ─────────────────── BIND: QUESTION EVENTS ──────────────────────
+function bindQuestionEvents(step) {
   document.querySelectorAll(".option-card").forEach((btn) => {
     btn.addEventListener("click", () => {
       // Remove seleção anterior
@@ -168,7 +362,7 @@ function renderQuestions() {
       // Marca a opção clicada
       btn.classList.add("selected");
 
-      selectedOption = current.options[parseInt(btn.dataset.index, 10)];
+      selectedOption = step.options[parseInt(btn.dataset.index, 10)];
 
       // Habilita o botão Avançar
       const nextBtn = document.getElementById("btn-next");
@@ -176,9 +370,6 @@ function renderQuestions() {
       nextBtn.classList.remove("hidden");
     });
   });
-
-  // ── Bind: avançar ──
-  document.getElementById("btn-next").addEventListener("click", handleNext);
 }
 
 // ─────────────────── TELA: LOADING ──────────────────────────────
@@ -274,26 +465,32 @@ function handleStart() {
   selectedOption = null;
   answers.length = 0;
   viewedSteps.clear();
-  renderQuestions();
+  renderStep();
 }
 
 /** Confirma resposta e avança (trava anti-burlar) */
 function handleNext() {
-  if (selectedOption === null) return; // trava de segurança
-
+  const current = STEPS[currentIndex];
   const stepNumber = currentIndex + 1;
+
+  // Para tipo 'question', exige seleção
+  if (current.type === "question" && selectedOption === null) return;
 
   // Evento: step completado
   pushDataLayer({
     event: "quiz_step_completed",
     quiz_step: stepNumber,
-    quiz_answer: selectedOption,
+    quiz_step_type: current.type,
+    quiz_answer: current.type === "question" ? selectedOption : null,
   });
 
-  answers.push({ step: stepNumber, answer: selectedOption });
+  // Salva resposta (para questions)
+  if (current.type === "question") {
+    answers.push({ step: stepNumber, answer: selectedOption });
+  }
 
-  // Última pergunta?
-  if (currentIndex + 1 >= QUESTIONS.length) {
+  // Última etapa?
+  if (currentIndex + 1 >= STEPS.length) {
     pushDataLayer({
       event: "quiz_completed",
       quiz_answers: [...answers],
@@ -303,7 +500,7 @@ function handleNext() {
   } else {
     currentIndex++;
     selectedOption = null;
-    renderQuestions();
+    renderStep();
   }
 }
 
