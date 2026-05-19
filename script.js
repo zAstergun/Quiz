@@ -13,10 +13,10 @@ const STEPS = [
     type: "question",
     question: "Você sabe exatamente para onde cada centavo do seu salário vai todo mês?",
     options: [
-      "Não faço ideia, o dinheiro simplesmente some",
-      "Tenho uma noção vaga, mas nunca anotei direito",
-      "Sei mais ou menos, porém sempre estouro o orçamento",
-      "Sim, acompanho tudo com planilha ou aplicativo",
+      { emoji: "🕳️", label: "Sem Controle", desc: "Não faço ideia, o dinheiro simplesmente some" },
+      { emoji: "📝", label: "Noção Vaga", desc: "Tenho uma noção, mas nunca anotei direito" },
+      { emoji: "📉", label: "Estouro Frequente", desc: "Sei mais ou menos, porém sempre estouro" },
+      { emoji: "✅", label: "Tudo Organizado", desc: "Acompanho tudo com planilha ou aplicativo" },
     ],
   },
   // ── 2. Pergunta grid 2x2 ──────────────────────────────────────
@@ -25,10 +25,10 @@ const STEPS = [
     type: "question",
     question: "Como está a sua relação com dívidas hoje?",
     options: [
-      "Estou afundado e não sei por onde começar",
-      "Tenho parcelas que apertam todo mês",
-      "Já quitei tudo, mas volta e meia me endivido",
-      "Não tenho dívidas e mantenho o controle",
+      { emoji: "🆘", label: "Afundado", desc: "Estou afundado e não sei por onde começar" },
+      { emoji: "😰", label: "Apertado", desc: "Tenho parcelas que apertam todo mês" },
+      { emoji: "🔄", label: "Ciclo Vicioso", desc: "Já quitei, mas volta e meia me endivido" },
+      { emoji: "💚", label: "Livre", desc: "Não tenho dívidas e mantenho o controle" },
     ],
   },
   // ── 3. Interstitial — Impacto Emocional ───────────────────────
@@ -58,10 +58,10 @@ const STEPS = [
     type: "question",
     question: "Como é a sensação na última semana do mês na sua casa?",
     options: [
-      "Desespero: conto moedas e rezo pra nenhum boleto vencer",
-      "Aperto: vivo no limite e qualquer imprevisto é crise",
-      "Neutro: pago as contas, mas não sobra nada",
-      "Tranquilo: tudo planejado e reserva garantida",
+      { emoji: "😱", label: "Desespero", desc: "Conto moedas e rezo pra nenhum boleto vencer" },
+      { emoji: "😓", label: "Aperto", desc: "Vivo no limite, qualquer imprevisto é crise" },
+      { emoji: "😐", label: "Neutro", desc: "Pago as contas, mas não sobra nada" },
+      { emoji: "😌", label: "Tranquilo", desc: "Tudo planejado e reserva garantida" },
     ],
   },
   // ── 6. Pill select ────────────────────────────────────────────
@@ -90,10 +90,10 @@ const STEPS = [
     type: "question",
     question: "Se um gasto inesperado de R$ 500 surgisse agora, o que aconteceria?",
     options: [
-      "Caos: teria que pedir emprestado ou usar crédito rotativo",
-      "Pagaria, mas comprometeria outras contas do mês",
-      "Usaria minha reserva, porém ficaria desconfortável",
-      "Tranquilo: minha reserva de emergência cobre fácil",
+      { emoji: "🚨", label: "Caos Total", desc: "Teria que pedir emprestado ou rotativo" },
+      { emoji: "⚠️", label: "Aperto", desc: "Pagaria, mas comprometeria o mês" },
+      { emoji: "😬", label: "Desconfortável", desc: "Usaria minha reserva com receio" },
+      { emoji: "🛡️", label: "Protegido", desc: "Minha reserva de emergência cobre fácil" },
     ],
   },
   // ── 9. Star Rating — Nota pra vida financeira ─────────────────
@@ -137,10 +137,10 @@ const STEPS = [
     type: "question",
     question: "Imagine ter um painel que mostra sua saúde financeira em tempo real. Qual recurso te animaria mais?",
     options: [
-      "Visão total de receitas, despesas e saldo numa só tela",
-      "Alertas automáticos quando estou perto de estourar limite",
-      "Planejador de metas com progresso visual mês a mês",
-      "Simulador de investimentos integrado ao orçamento",
+      { emoji: "📊", label: "Dashboard Total", desc: "Receitas, despesas e saldo numa só tela" },
+      { emoji: "🔔", label: "Alertas Inteligentes", desc: "Avisos antes de estourar o limite" },
+      { emoji: "🎯", label: "Metas Visuais", desc: "Progresso visual mês a mês" },
+      { emoji: "💹", label: "Simulador", desc: "Investimentos integrados ao orçamento" },
     ],
   },
   // ── 13. Review — Prova Social ─────────────────────────────────
@@ -357,7 +357,9 @@ function buildQuestionHTML(step, stepNumber, total) {
         class="option-card"
         data-index="${idx}"
       >
-        <span class="card-label">${opt}</span>
+        <span class="card-emoji">${opt.emoji}</span>
+        <span class="card-label">${opt.label}</span>
+        <span class="card-desc">${opt.desc}</span>
       </button>`
     )
     .join("");
@@ -541,7 +543,8 @@ function bindQuestionEvents(step) {
         b.classList.remove("selected")
       );
       btn.classList.add("selected");
-      selectedOption = step.options[parseInt(btn.dataset.index, 10)];
+      const opt = step.options[parseInt(btn.dataset.index, 10)];
+      selectedOption = opt.desc;
 
       const nextBtn = document.getElementById("btn-next");
       nextBtn.disabled = false;
