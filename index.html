@@ -6,53 +6,15 @@
   <title>Quiz Financeiro — Descubra seu perfil e organize suas finanças</title>
   <meta name="description" content="Responda 3 perguntas rápidas, descubra seu perfil financeiro e receba uma recomendação personalizada para organizar seus gastos." />
 
-  <!-- Tailwind CSS (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { inter: ['Inter', 'system-ui', 'sans-serif'] },
-          colors: {
-            gray: {
-              950: '#030712',
-              900: '#111827',
-              800: '#1f2937',
-              700: '#374151',
-              500: '#6b7280',
-              400: '#9ca3af',
-              300: '#d1d5db',
-              600: '#4b5563',
-            },
-            emerald: {
-              300: '#6ee7b7',
-              400: '#34d399',
-              500: '#10b981',
-              600: '#059669',
-            },
-          },
-        },
-      },
-    };
-  </script>
+  <!-- Design System -->
+  <link rel="stylesheet" href="style.css" />
 
   <!-- Google Fonts — Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { font-family: 'Inter', system-ui, sans-serif; }
 
-    /* Spinner animation */
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .animate-spin { animation: spin 1s linear infinite; }
-
-    /* Smooth width transition for progress bar */
-    .transition-all { transition-property: all; }
-    .duration-300 { transition-duration: 300ms; }
-  </style>
 </head>
 <body class="bg-gray-950 text-white">
 

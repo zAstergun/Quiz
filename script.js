@@ -307,7 +307,13 @@ function handleNext() {
   }
 }
 
-// ─── BOOT ───────────────────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", () => {
+// ─── BOOT BLINDADO ──────────────────────────────────────────────
+function bootQuiz() {
   renderIntro();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootQuiz);
+} else {
+  bootQuiz();
+}
