@@ -67,19 +67,21 @@ function renderIntro() {
   phase = "intro";
 
   mount(/* html */ `
-    <div class="flex min-h-screen items-center justify-center bg-gray-950 p-4">
-      <div class="max-w-lg text-center text-white">
-        <h1 class="mb-4 text-3xl font-bold">Quiz Financeiro</h1>
-        <p class="mb-8 text-gray-400">
-          Descubra o seu perfil financeiro em menos de 1 minuto e receba uma
-          recomendação personalizada para organizar suas finanças.
-        </p>
-        <button
-          id="btn-start"
-          class="rounded-lg bg-emerald-500 px-8 py-3 font-semibold text-white transition hover:bg-emerald-600"
-        >
-          Iniciar Quiz
-        </button>
+    <div class="quiz-wrapper">
+      <div class="step active">
+        <div class="welcome-screen">
+          <h1 class="welcome-title">Quiz Financeiro</h1>
+          <p class="welcome-subtitle">
+            Descubra o seu perfil financeiro em menos de 1 minuto e receba uma
+            recomendação personalizada para organizar suas finanças.
+          </p>
+          <button
+            id="btn-start"
+            class="btn-primary btn-glow"
+          >
+            Iniciar Quiz
+          </button>
+        </div>
       </div>
     </div>
   `);
@@ -111,11 +113,10 @@ function renderQuestions() {
     .map(
       (opt, idx) => `
       <button
-        class="quiz-option rounded-lg border px-4 py-3 text-left transition
-               border-gray-700 bg-gray-900 text-gray-300 hover:border-gray-500"
+        class="option-card"
         data-index="${idx}"
       >
-        ${opt}
+        <span class="card-label">${opt}</span>
       </button>`
     )
     .join("");
@@ -123,62 +124,56 @@ function renderQuestions() {
   const isLast = stepNumber >= total;
 
   mount(/* html */ `
-    <div class="flex min-h-screen items-center justify-center bg-gray-950 p-4">
-      <div class="w-full max-w-xl text-white">
-        <!-- Progresso -->
-        <div class="mb-6">
-          <div class="mb-1 flex justify-between text-sm text-gray-400">
-            <span>Pergunta ${stepNumber} / ${total}</span>
-            <span>${pct}%</span>
+    <div class="quiz-wrapper">
+      <!-- Progresso -->
+      <div class="progress-container">
+        <div class="progress-bar" style="width: ${pct}%"></div>
+      </div>
+      <div class="progress-text">Pergunta ${stepNumber} / ${total}</div>
+
+      <div class="step active">
+        <div class="step-content">
+          <!-- Cabeçalho da pergunta -->
+          <div class="step-header">
+            <span class="step-number">Pergunta ${stepNumber} de ${total}</span>
+            <h2 class="step-title">${current.question}</h2>
           </div>
-          <div class="h-2 w-full overflow-hidden rounded-full bg-gray-800">
-            <div
-              class="h-full rounded-full bg-emerald-500 transition-all duration-300"
-              style="width: ${pct}%"
-            ></div>
+
+          <!-- Opções -->
+          <div class="options-grid grid-2x2" id="options-container">
+            ${optionsHTML}
           </div>
+
+          <!-- Botão Avançar (inicia oculto) -->
+          <button
+            id="btn-next"
+            disabled
+            class="btn-continue hidden"
+          >
+            ${isLast ? "Finalizar Quiz" : "Próxima Pergunta"}
+          </button>
         </div>
-
-        <!-- Pergunta -->
-        <h2 class="mb-6 text-xl font-semibold">${current.question}</h2>
-
-        <!-- Opções -->
-        <div class="mb-6 flex flex-col gap-3" id="options-container">
-          ${optionsHTML}
-        </div>
-
-        <!-- Botão Avançar (inicia desabilitado) -->
-        <button
-          id="btn-next"
-          disabled
-          class="w-full rounded-lg px-6 py-3 font-semibold transition cursor-not-allowed bg-gray-700 text-gray-500"
-        >
-          ${isLast ? "Finalizar Quiz" : "Próxima Pergunta"}
-        </button>
       </div>
     </div>
   `);
 
   // ── Bind: seleção de opção ──
-  document.querySelectorAll(".quiz-option").forEach((btn) => {
+  document.querySelectorAll(".option-card").forEach((btn) => {
     btn.addEventListener("click", () => {
       // Remove seleção anterior
-      document.querySelectorAll(".quiz-option").forEach((b) => {
-        b.classList.remove("border-emerald-500", "bg-emerald-500/20", "text-emerald-300");
-        b.classList.add("border-gray-700", "bg-gray-900", "text-gray-300");
+      document.querySelectorAll(".option-card").forEach((b) => {
+        b.classList.remove("selected");
       });
 
       // Marca a opção clicada
-      btn.classList.remove("border-gray-700", "bg-gray-900", "text-gray-300");
-      btn.classList.add("border-emerald-500", "bg-emerald-500/20", "text-emerald-300");
+      btn.classList.add("selected");
 
       selectedOption = current.options[parseInt(btn.dataset.index, 10)];
 
       // Habilita o botão Avançar
       const nextBtn = document.getElementById("btn-next");
       nextBtn.disabled = false;
-      nextBtn.classList.remove("cursor-not-allowed", "bg-gray-700", "text-gray-500");
-      nextBtn.classList.add("bg-emerald-500", "text-white", "hover:bg-emerald-600");
+      nextBtn.classList.remove("hidden");
     });
   });
 
@@ -191,12 +186,20 @@ function renderLoading() {
   phase = "loading";
 
   mount(/* html */ `
-    <div class="flex min-h-screen flex-col items-center justify-center bg-gray-950 text-white">
-      <div class="mb-6 h-12 w-12 animate-spin rounded-full border-4 border-gray-700 border-t-emerald-500"></div>
-      <p class="text-lg font-medium">Analisando suas respostas…</p>
-      <p class="mt-2 text-sm text-gray-500">
-        Aguarde enquanto geramos seu diagnóstico personalizado.
-      </p>
+    <div class="quiz-wrapper">
+      <div class="step active">
+        <div class="loading-screen">
+          <div class="loading-animation">
+            <div class="loading-circle"></div>
+            <div class="loading-circle delay-1"></div>
+            <div class="loading-circle delay-2"></div>
+          </div>
+          <h2 class="loading-title">Analisando suas respostas…</h2>
+          <p class="step-subtitle">
+            Aguarde enquanto geramos seu diagnóstico personalizado.
+          </p>
+        </div>
+      </div>
     </div>
   `);
 
@@ -211,39 +214,47 @@ function renderResult() {
   phase = "result";
 
   mount(/* html */ `
-    <div class="flex min-h-screen items-center justify-center bg-gray-950 p-4">
-      <div class="max-w-lg text-center text-white">
-        <h2 class="mb-2 text-2xl font-bold">Seu Diagnóstico Está Pronto!</h2>
-        <p class="mb-6 text-gray-400">
-          Com base nas suas respostas, identificamos que você precisa de um
-          sistema financeiro completo para retomar o controle do seu dinheiro.
-        </p>
+    <div class="quiz-wrapper">
+      <div class="step active">
+        <div class="results-screen">
+          <div class="result-hero">
+            <h2 class="result-headline">Seu Diagnóstico Está Pronto!</h2>
+            <p class="result-subheadline">
+              Com base nas suas respostas, identificamos que você precisa de um
+              sistema financeiro completo para retomar o controle do seu dinheiro.
+            </p>
+          </div>
 
-        <div class="mb-8 rounded-lg border border-gray-700 bg-gray-900 p-6 text-left">
-          <h3 class="mb-2 text-lg font-semibold text-emerald-400">
-            📊 Template Hermes Wallet
-          </h3>
-          <ul class="space-y-1 text-sm text-gray-300">
-            <li>✅ Controle completo de receitas e despesas</li>
-            <li>✅ Dashboard visual automático</li>
-            <li>✅ Metas financeiras com acompanhamento</li>
-            <li>✅ Planejamento de investimentos integrado</li>
-          </ul>
+          <div class="benefit-card" style="margin-bottom: 32px;">
+            <h3 class="benefit-icon">📊</h3>
+            <h3 style="color: var(--accent-1); margin-bottom: 8px; font-size: 18px; font-weight: 700;">
+              Template Hermes Wallet
+            </h3>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+              <li style="font-size: 14px; color: var(--text-secondary);">✅ Controle completo de receitas e despesas</li>
+              <li style="font-size: 14px; color: var(--text-secondary);">✅ Dashboard visual automático</li>
+              <li style="font-size: 14px; color: var(--text-secondary);">✅ Metas financeiras com acompanhamento</li>
+              <li style="font-size: 14px; color: var(--text-secondary);">✅ Planejamento de investimentos integrado</li>
+            </ul>
+          </div>
+
+          <div class="final-cta">
+            <a
+              id="btn-checkout"
+              href="${CHECKOUT_URL}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary btn-glow btn-cta"
+              style="text-decoration: none; width: 100%; display: flex;"
+            >
+              Quero Organizar Minhas Finanças →
+            </a>
+
+            <p class="welcome-disclaimer">
+              Você será redirecionado para o checkout seguro da Kiwify.
+            </p>
+          </div>
         </div>
-
-        <a
-          id="btn-checkout"
-          href="${CHECKOUT_URL}"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block w-full rounded-lg bg-emerald-500 px-8 py-4 text-lg font-bold text-white transition hover:bg-emerald-600"
-        >
-          Quero Organizar Minhas Finanças →
-        </a>
-
-        <p class="mt-4 text-xs text-gray-600">
-          Você será redirecionado para o checkout seguro da Kiwify.
-        </p>
       </div>
     </div>
   `);
