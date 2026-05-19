@@ -1,392 +1,302 @@
-/* ============================================
-   Quiz Financeiro — Main JavaScript
-   ============================================ */
+/* =============================================
+   Quiz Hermes Wallet — Vanilla JS (ES6+)
+   Tradução 1:1 do componente React QuizHermesWallet.jsx
+   ============================================= */
 
-// ---- STATE ----
-let currentStep = 0;
-const totalSteps = 16; // 0=welcome, 1-14=quiz, 15=loading, 16=results
-const answers = {};
-let isTransitioning = false;
+// ─── DADOS MOCKADOS ─────────────────────────────────────────────
+const QUESTIONS = [
+  {
+    id: 1,
+    question: "Como você descreveria o controle atual das suas finanças pessoais?",
+    options: [
+      "Não tenho nenhum controle, gasto sem acompanhar",
+      "Anoto algumas coisas, mas sem método definido",
+      "Uso planilha ou app, porém sem consistência",
+      "Tenho um sistema organizado que sigo todo mês",
+    ],
+  },
+  {
+    id: 2,
+    question: "Qual é o seu maior desafio financeiro hoje?",
+    options: [
+      "Não consigo guardar dinheiro no fim do mês",
+      "Tenho dívidas acumuladas e não sei por onde começar",
+      "Ganho bem, mas o dinheiro some sem eu perceber",
+      "Quero investir, mas não sei como organizar meu caixa",
+    ],
+  },
+  {
+    id: 3,
+    question: "Se você tivesse uma ferramenta para organizar suas finanças, o que ela deveria resolver primeiro?",
+    options: [
+      "Mostrar para onde meu dinheiro está indo",
+      "Criar um plano para sair das dívidas",
+      "Automatizar o controle mensal de receitas e despesas",
+      "Ajudar a definir metas e acompanhar o progresso",
+    ],
+  },
+];
 
-// ---- INIT ----
-document.addEventListener('DOMContentLoaded', () => {
-    createParticles();
-    animateCounter();
-    updateProgress();
-    addRippleEffect();
-});
+const CHECKOUT_URL = "https://pay.kiwify.com.br/chCm1MZ";
 
-// ---- PARTICLES ----
-function createParticles() {
-    const container = document.getElementById('bgParticles');
-    const colors = ['#34d399', '#06b6d4', '#8b5cf6', '#fbbf24'];
-    const particleCount = 25;
+// ─── ESTADO GLOBAL ──────────────────────────────────────────────
+let phase = "intro";          // intro | questions | loading | result
+let currentIndex = 0;
+let selectedOption = null;
+const answers = [];
+const viewedSteps = new Set(); // anti-duplicação de quiz_step_viewed
 
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        const size = Math.random() * 6 + 2;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const left = Math.random() * 100;
-        const duration = Math.random() * 15 + 10;
-        const delay = Math.random() * 10;
-
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.background = color;
-        particle.style.left = `${left}%`;
-        particle.style.animationDuration = `${duration}s`;
-        particle.style.animationDelay = `${delay}s`;
-
-        container.appendChild(particle);
-    }
+// ─── HELPER: Push seguro para o dataLayer ───────────────────────
+function pushDataLayer(payload) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ ...payload });
 }
 
-// ---- COUNTER ANIMATION ----
-function animateCounter() {
-    const counters = document.querySelectorAll('.counter');
-    counters.forEach(counter => {
-        const target = parseInt(counter.dataset.target);
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
+// ─── REFERÊNCIA AO CONTAINER ────────────────────────────────────
+const root = document.getElementById("quiz-root");
 
-        const timer = setInterval(() => {
-            current += step;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            counter.textContent = Math.floor(current).toLocaleString('pt-BR');
-        }, 16);
+// ─── RENDER ENGINE ──────────────────────────────────────────────
+
+/** Limpa o container e injeta novo HTML */
+function mount(html) {
+  root.innerHTML = html;
+}
+
+// ─────────────────── TELA: INTRO ────────────────────────────────
+function renderIntro() {
+  phase = "intro";
+
+  mount(/* html */ `
+    <div class="flex min-h-screen items-center justify-center bg-gray-950 p-4">
+      <div class="max-w-lg text-center text-white">
+        <h1 class="mb-4 text-3xl font-bold">Quiz Financeiro</h1>
+        <p class="mb-8 text-gray-400">
+          Descubra o seu perfil financeiro em menos de 1 minuto e receba uma
+          recomendação personalizada para organizar suas finanças.
+        </p>
+        <button
+          id="btn-start"
+          class="rounded-lg bg-emerald-500 px-8 py-3 font-semibold text-white transition hover:bg-emerald-600"
+        >
+          Iniciar Quiz
+        </button>
+      </div>
+    </div>
+  `);
+
+  document.getElementById("btn-start").addEventListener("click", handleStart);
+}
+
+// ─────────────────── TELA: PERGUNTAS ────────────────────────────
+function renderQuestions() {
+  phase = "questions";
+
+  const current = QUESTIONS[currentIndex];
+  const stepNumber = currentIndex + 1;
+  const total = QUESTIONS.length;
+  const pct = Math.round((stepNumber / total) * 100);
+
+  // Dispara quiz_step_viewed (anti-duplicação)
+  if (!viewedSteps.has(stepNumber)) {
+    viewedSteps.add(stepNumber);
+    pushDataLayer({
+      event: "quiz_step_viewed",
+      quiz_step: stepNumber,
+      quiz_total_steps: total,
     });
-}
+  }
 
-// ---- PROGRESS BAR ----
-function updateProgress() {
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    const progressContainer = document.getElementById('progressContainer');
+  // Monta as opções
+  const optionsHTML = current.options
+    .map(
+      (opt, idx) => `
+      <button
+        class="quiz-option rounded-lg border px-4 py-3 text-left transition
+               border-gray-700 bg-gray-900 text-gray-300 hover:border-gray-500"
+        data-index="${idx}"
+      >
+        ${opt}
+      </button>`
+    )
+    .join("");
 
-    // Hide progress on welcome and results
-    if (currentStep === 0 || currentStep >= 15) {
-        progressContainer.style.opacity = '0';
-        progressContainer.style.pointerEvents = 'none';
-    } else {
-        progressContainer.style.opacity = '1';
-        progressContainer.style.pointerEvents = 'auto';
-    }
+  const isLast = stepNumber >= total;
 
-    // Calculate progress (steps 1-14)
-    const progress = Math.min(((currentStep) / 14) * 100, 100);
-    progressBar.style.width = `${progress}%`;
-    progressText.textContent = `${Math.round(progress)}%`;
-}
+  mount(/* html */ `
+    <div class="flex min-h-screen items-center justify-center bg-gray-950 p-4">
+      <div class="w-full max-w-xl text-white">
+        <!-- Progresso -->
+        <div class="mb-6">
+          <div class="mb-1 flex justify-between text-sm text-gray-400">
+            <span>Pergunta ${stepNumber} / ${total}</span>
+            <span>${pct}%</span>
+          </div>
+          <div class="h-2 w-full overflow-hidden rounded-full bg-gray-800">
+            <div
+              class="h-full rounded-full bg-emerald-500 transition-all duration-300"
+              style="width: ${pct}%"
+            ></div>
+          </div>
+        </div>
 
-// ---- STEP NAVIGATION ----
-function nextStep() {
-    if (isTransitioning) return;
-    goToStep(currentStep + 1);
-}
+        <!-- Pergunta -->
+        <h2 class="mb-6 text-xl font-semibold">${current.question}</h2>
 
-function goToStep(targetStep) {
-    if (isTransitioning || targetStep === currentStep) return;
-    isTransitioning = true;
+        <!-- Opções -->
+        <div class="mb-6 flex flex-col gap-3" id="options-container">
+          ${optionsHTML}
+        </div>
 
-    const currentEl = document.getElementById(`step-${currentStep}`);
-    const targetEl = document.getElementById(`step-${targetStep}`);
+        <!-- Botão Avançar (inicia desabilitado) -->
+        <button
+          id="btn-next"
+          disabled
+          class="w-full rounded-lg px-6 py-3 font-semibold transition cursor-not-allowed bg-gray-700 text-gray-500"
+        >
+          ${isLast ? "Finalizar Quiz" : "Próxima Pergunta"}
+        </button>
+      </div>
+    </div>
+  `);
 
-    if (!targetEl) {
-        isTransitioning = false;
-        return;
-    }
+  // ── Bind: seleção de opção ──
+  document.querySelectorAll(".quiz-option").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // Remove seleção anterior
+      document.querySelectorAll(".quiz-option").forEach((b) => {
+        b.classList.remove("border-emerald-500", "bg-emerald-500/20", "text-emerald-300");
+        b.classList.add("border-gray-700", "bg-gray-900", "text-gray-300");
+      });
 
-    // Exit animation
-    currentEl.classList.remove('active');
-    currentEl.classList.add('exiting');
+      // Marca a opção clicada
+      btn.classList.remove("border-gray-700", "bg-gray-900", "text-gray-300");
+      btn.classList.add("border-emerald-500", "bg-emerald-500/20", "text-emerald-300");
 
-    setTimeout(() => {
-        currentEl.classList.remove('exiting');
-        currentEl.style.display = 'none';
+      selectedOption = current.options[parseInt(btn.dataset.index, 10)];
 
-        // Enter
-        currentStep = targetStep;
-        updateProgress();
-        targetEl.classList.add('active');
-
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'instant' });
-
-        // Special actions per step
-        if (currentStep === 15) {
-            runLoadingAnimation();
-        }
-        if (currentStep === 16) {
-            launchConfetti();
-            initScrollAnimations();
-        }
-
-        // Re-apply ripple effects to new buttons
-        addRippleEffect();
-
-        setTimeout(() => {
-            isTransitioning = false;
-        }, 100);
-    }, 400);
-}
-
-// ---- SELECT AND ADVANCE (Single select cards/pills) ----
-function selectAndAdvance(el) {
-    if (isTransitioning) return;
-
-    // Visual feedback
-    const parent = el.closest('.options-grid, .options-list');
-    parent.querySelectorAll('.option-card, .option-pill').forEach(opt => {
-        opt.classList.remove('selected');
+      // Habilita o botão Avançar
+      const nextBtn = document.getElementById("btn-next");
+      nextBtn.disabled = false;
+      nextBtn.classList.remove("cursor-not-allowed", "bg-gray-700", "text-gray-500");
+      nextBtn.classList.add("bg-emerald-500", "text-white", "hover:bg-emerald-600");
     });
-    el.classList.add('selected');
+  });
 
-    // Store answer
-    const stepNum = el.closest('.step').dataset.step;
-    answers[`step-${stepNum}`] = el.dataset.value;
-
-    // Advance after brief delay for visual feedback
-    setTimeout(() => {
-        nextStep();
-    }, 500);
+  // ── Bind: avançar ──
+  document.getElementById("btn-next").addEventListener("click", handleNext);
 }
 
-// ---- MULTIPLE SELECT (Pills with continue button) ----
-function toggleMulti(el) {
-    el.classList.toggle('selected');
+// ─────────────────── TELA: LOADING ──────────────────────────────
+function renderLoading() {
+  phase = "loading";
 
-    // Show/hide continue button
-    const step = el.closest('.step');
-    const stepNum = step.dataset.step;
-    const btn = document.getElementById(`btn-continue-${stepNum}`);
-    const anySelected = step.querySelectorAll('.option-pill.selected').length > 0;
+  mount(/* html */ `
+    <div class="flex min-h-screen flex-col items-center justify-center bg-gray-950 text-white">
+      <div class="mb-6 h-12 w-12 animate-spin rounded-full border-4 border-gray-700 border-t-emerald-500"></div>
+      <p class="text-lg font-medium">Analisando suas respostas…</p>
+      <p class="mt-2 text-sm text-gray-500">
+        Aguarde enquanto geramos seu diagnóstico personalizado.
+      </p>
+    </div>
+  `);
 
-    if (btn) {
-        if (anySelected) {
-            btn.classList.remove('hidden');
-        } else {
-            btn.classList.add('hidden');
-        }
-    }
-
-    // Store answers
-    const selected = Array.from(step.querySelectorAll('.option-pill.selected'))
-        .map(opt => opt.dataset.value);
-    answers[`step-${stepNum}`] = selected;
+  // Simula 2 s de loading e avança para resultado
+  setTimeout(() => {
+    renderResult();
+  }, 2000);
 }
 
-// ---- STAR RATING ----
-const starFeedbacks = {
-    1: ['😰 Vamos resolver isso!', '😟 Entendo a dificuldade...', '💪 Você pode melhorar!', '📚 Hora de aprender!', '🎯 Vamos definir juntos!'],
-    2: ['😔 Pode melhorar...', '😕 Normal, mas pode ser melhor', '💪 Vamos trabalhar nisso!', '📖 Em construção!', '🌱 Em desenvolvimento...'],
-    3: ['😊 Na média!', '😐 Razoável', '⚡ Tem potencial!', '📊 Conhecimento intermediário', '🔄 Caminho certo!'],
-    4: ['👍 Muito bom!', '😌 Controlável!', '🔥 Boa disciplina!', '📈 Bom nível!', '✨ Quase lá!'],
-    5: ['🏆 Excelente!', '😎 Impressionante!', '💎 Disciplina top!', '🧠 Expert!', '🎯 Metas claras!'],
-};
+// ─────────────────── TELA: RESULTADO ────────────────────────────
+function renderResult() {
+  phase = "result";
 
-function rateStar(el, stepNum) {
-    if (isTransitioning) return;
+  mount(/* html */ `
+    <div class="flex min-h-screen items-center justify-center bg-gray-950 p-4">
+      <div class="max-w-lg text-center text-white">
+        <h2 class="mb-2 text-2xl font-bold">Seu Diagnóstico Está Pronto!</h2>
+        <p class="mb-6 text-gray-400">
+          Com base nas suas respostas, identificamos que você precisa de um
+          sistema financeiro completo para retomar o controle do seu dinheiro.
+        </p>
 
-    const rating = parseInt(el.dataset.rating);
-    const container = document.getElementById(`stars-${stepNum}`);
-    const feedback = document.getElementById(`starFeedback-${stepNum}`);
-    const allStars = container.querySelectorAll('.star');
+        <div class="mb-8 rounded-lg border border-gray-700 bg-gray-900 p-6 text-left">
+          <h3 class="mb-2 text-lg font-semibold text-emerald-400">
+            📊 Template Hermes Wallet
+          </h3>
+          <ul class="space-y-1 text-sm text-gray-300">
+            <li>✅ Controle completo de receitas e despesas</li>
+            <li>✅ Dashboard visual automático</li>
+            <li>✅ Metas financeiras com acompanhamento</li>
+            <li>✅ Planejamento de investimentos integrado</li>
+          </ul>
+        </div>
 
-    // Activate all stars up to and including the selected rating
-    allStars.forEach((star, index) => {
-        star.classList.remove('active');
+        <a
+          id="btn-checkout"
+          href="${CHECKOUT_URL}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block w-full rounded-lg bg-emerald-500 px-8 py-4 text-lg font-bold text-white transition hover:bg-emerald-600"
+        >
+          Quero Organizar Minhas Finanças →
+        </a>
+
+        <p class="mt-4 text-xs text-gray-600">
+          Você será redirecionado para o checkout seguro da Kiwify.
+        </p>
+      </div>
+    </div>
+  `);
+
+  // ── Bind: checkout_initiated ──
+  document.getElementById("btn-checkout").addEventListener("click", () => {
+    pushDataLayer({ event: "checkout_initiated" });
+  });
+}
+
+// ─── HANDLERS ───────────────────────────────────────────────────
+
+/** Inicia o quiz → dispara quiz_started */
+function handleStart() {
+  pushDataLayer({ event: "quiz_started" });
+  currentIndex = 0;
+  selectedOption = null;
+  answers.length = 0;
+  viewedSteps.clear();
+  renderQuestions();
+}
+
+/** Confirma resposta e avança (trava anti-burlar) */
+function handleNext() {
+  if (selectedOption === null) return; // trava de segurança
+
+  const stepNumber = currentIndex + 1;
+
+  // Evento: step completado
+  pushDataLayer({
+    event: "quiz_step_completed",
+    quiz_step: stepNumber,
+    quiz_answer: selectedOption,
+  });
+
+  answers.push({ step: stepNumber, answer: selectedOption });
+
+  // Última pergunta?
+  if (currentIndex + 1 >= QUESTIONS.length) {
+    pushDataLayer({
+      event: "quiz_completed",
+      quiz_answers: [...answers],
     });
-
-    // Staggered activation for visual impact
-    allStars.forEach((star, index) => {
-        if (index < rating) {
-            setTimeout(() => {
-                star.classList.add('active');
-            }, index * 60);
-        }
-    });
-
-    // Show feedback
-    const stepIndex = stepNum - 10; // maps 10-14 to 0-4
-    feedback.textContent = starFeedbacks[rating][stepIndex] || '';
-    feedback.style.opacity = '1';
-
-    // Store & advance
-    answers[`step-${stepNum}`] = rating;
-
-    setTimeout(() => {
-        nextStep();
-    }, 1000);
+    selectedOption = null;
+    renderLoading();
+  } else {
+    currentIndex++;
+    selectedOption = null;
+    renderQuestions();
+  }
 }
 
-// ---- STAR HOVER PREVIEW ----
-document.addEventListener('mouseover', (e) => {
-    const star = e.target.closest('.star');
-    if (!star) return;
-    const container = star.closest('.stars-container');
-    if (!container) return;
-    const rating = parseInt(star.dataset.rating);
-    container.querySelectorAll('.star').forEach((s, i) => {
-        s.classList.toggle('hover-preview', i < rating);
-    });
-});
-
-document.addEventListener('mouseout', (e) => {
-    const star = e.target.closest('.star');
-    if (!star) return;
-    const container = star.closest('.stars-container');
-    if (!container) return;
-    container.querySelectorAll('.star').forEach(s => {
-        s.classList.remove('hover-preview');
-    });
-});
-
-// ---- LOADING ANIMATION ----
-function runLoadingAnimation() {
-    const steps = document.querySelectorAll('#loadingSteps .loading-step');
-
-    steps.forEach((step, index) => {
-        const delay = parseInt(step.dataset.delay);
-
-        setTimeout(() => {
-            step.classList.add('visible');
-        }, delay);
-
-        setTimeout(() => {
-            step.classList.add('completed');
-            step.querySelector('.loading-check').textContent = '✅';
-        }, delay + 600);
-    });
-
-    // Go to results after loading
-    setTimeout(() => {
-        goToStep(16);
-    }, 3800);
-}
-
-// ---- CONFETTI ----
-function launchConfetti() {
-    const container = document.getElementById('confettiContainer');
-    const colors = ['#34d399', '#06b6d4', '#8b5cf6', '#fbbf24', '#ef4444', '#ec4899'];
-
-    for (let i = 0; i < 60; i++) {
-        const piece = document.createElement('div');
-        piece.classList.add('confetti-piece');
-        piece.style.left = `${Math.random() * 100}%`;
-        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.width = `${Math.random() * 10 + 5}px`;
-        piece.style.height = `${Math.random() * 10 + 5}px`;
-        piece.style.animationDuration = `${Math.random() * 2 + 1.5}s`;
-        piece.style.animationDelay = `${Math.random() * 0.5}s`;
-        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-        container.appendChild(piece);
-    }
-
-    // Cleanup
-    setTimeout(() => {
-        container.innerHTML = '';
-    }, 4000);
-}
-
-// ---- SCROLL ANIMATIONS ----
-function initScrollAnimations() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        observer.observe(el);
-    });
-}
-
-// ---- FAQ TOGGLE ----
-function toggleFaq(item) {
-    const wasOpen = item.classList.contains('open');
-    // Close all
-    document.querySelectorAll('.faq-item').forEach(faq => faq.classList.remove('open'));
-    // Toggle clicked
-    if (!wasOpen) {
-        item.classList.add('open');
-    }
-}
-
-// ---- SCROLL TO OFFER ----
-function scrollToOffer() {
-    const section = document.getElementById('offerSection');
-    if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-}
-
-// ---- PURCHASE HANDLER ----
-function handlePurchase(plan) {
-    // Placeholder — you'd replace this with your actual payment link
-    const purchaseData = {
-        plan: plan,
-        answers: answers,
-        timestamp: new Date().toISOString()
-    };
-    console.log('Purchase initiated:', purchaseData);
-
-    // Visual feedback
-    const btn = event.currentTarget;
-    const originalText = btn.querySelector('span').textContent;
-    btn.querySelector('span').textContent = '⏳ Redirecionando...';
-    btn.style.pointerEvents = 'none';
-
-    setTimeout(() => {
-        // Reset (in production, user would be redirected)
-        btn.querySelector('span').textContent = originalText;
-        btn.style.pointerEvents = 'auto';
-        alert('🚀 Aqui seria o redirecionamento para a página de pagamento!\n\nDados de checkout registrados no console.');
-    }, 1500);
-}
-
-// ---- RIPPLE EFFECT ----
-function addRippleEffect() {
-    const interactiveEls = document.querySelectorAll('.option-card, .option-pill, .btn-primary, .btn-continue');
-
-    interactiveEls.forEach(el => {
-        // Avoid duplicates
-        if (el.dataset.ripple) return;
-        el.dataset.ripple = 'true';
-        el.style.position = el.style.position || 'relative';
-        el.style.overflow = 'hidden';
-
-        el.addEventListener('click', function(e) {
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
-            ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
-            this.appendChild(ripple);
-
-            setTimeout(() => ripple.remove(), 600);
-        });
-    });
-}
-
-// ---- KEYBOARD SUPPORT ----
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        // If a continue button is visible, click it
-        const activeStep = document.querySelector('.step.active');
-        if (activeStep) {
-            const continueBtn = activeStep.querySelector('.btn-continue:not(.hidden), .btn-primary');
-            if (continueBtn) {
-                continueBtn.click();
-            }
-        }
-    }
+// ─── BOOT ───────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", () => {
+  renderIntro();
 });
