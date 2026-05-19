@@ -1,11 +1,13 @@
 /* =============================================
    Quiz Hermes Wallet — Vanilla JS (ES6+)
-   Render Engine com suporte a tipos mistos:
-   'question' | 'video' | 'review'
+   Render Engine Multi-Tipo: 15 etapas
+   Tipos: question | pill | video | review |
+          interstitial | star_rating
    ============================================= */
 
-// ─── DADOS DO FUNIL ─────────────────────────────────────────────
+// ─── DADOS DO FUNIL (15 ETAPAS) ─────────────────────────────────
 const STEPS = [
+  // ── 1. Pergunta grid 2x2 ──────────────────────────────────────
   {
     id: 1,
     type: "question",
@@ -17,92 +19,133 @@ const STEPS = [
       "Sim, acompanho tudo com planilha ou aplicativo",
     ],
   },
+  // ── 2. Pergunta grid 2x2 ──────────────────────────────────────
   {
     id: 2,
     type: "question",
     question: "Como está a sua relação com dívidas hoje?",
     options: [
-      "Estou afundado e não sei nem por onde começar a pagar",
-      "Tenho parcelas que apertam, mas vou empurrando com a barriga",
-      "Já quitei tudo, porém volta e meia me endivido de novo",
-      "Não tenho dívidas e consigo manter o controle",
+      "Estou afundado e não sei por onde começar",
+      "Tenho parcelas que apertam todo mês",
+      "Já quitei tudo, mas volta e meia me endivido",
+      "Não tenho dívidas e mantenho o controle",
     ],
   },
+  // ── 3. Interstitial — Impacto Emocional ───────────────────────
   {
     id: 3,
-    type: "question",
-    question: "Quando você pensa em investir dinheiro, qual sentimento vem primeiro?",
-    options: [
-      "Paralisia total — não entendo nada e tenho medo de perder",
-      "Curiosidade, mas falta sobra no mês para aplicar qualquer valor",
-      "Já tentei, porém não tive consistência e parei",
-      "Invisto com frequência e tenho uma estratégia definida",
-    ],
+    type: "interstitial",
+    icon: "🔍",
+    title: "Interessante… suas respostas já revelam um padrão.",
+    subtitle: "A maioria das pessoas que faz este quiz descobriu que o problema <strong>nunca foi o salário</strong> — foi a falta de um sistema.",
+    buttonText: "Continuar Diagnóstico",
   },
+  // ── 4. Pill select ────────────────────────────────────────────
   {
     id: 4,
-    type: "question",
-    question: "Como é a sensação na última semana do mês na sua casa?",
+    type: "pill",
+    question: "Quando você pensa em investir dinheiro, qual sentimento vem primeiro?",
     options: [
-      "Desespero: conto moedas e rezo para nenhum boleto vencer",
-      "Aperto: vivo no limite e qualquer imprevisto é uma crise",
-      "Neutro: pago as contas, mas não sobra nada para o futuro",
-      "Tranquilidade: tudo está planejado e já reservei minha poupança",
+      { icon: "😰", text: "Paralisia — não entendo nada e tenho medo de perder" },
+      { icon: "🤔", text: "Curiosidade, mas falta sobra no mês para aplicar" },
+      { icon: "😔", text: "Já tentei, mas não tive consistência e parei" },
+      { icon: "😎", text: "Invisto com frequência e tenho estratégia definida" },
     ],
   },
+  // ── 5. Pergunta grid 2x2 ──────────────────────────────────────
   {
     id: 5,
     type: "question",
-    question: "Qual destas frases mais se parece com algo que você já disse?",
+    question: "Como é a sensação na última semana do mês na sua casa?",
     options: [
-      '"Ganho bem, mas não sei para onde vai meu dinheiro"',
-      '"Sempre prometo que vou organizar… mas nunca começo"',
-      '"Já tentei planilha, app, caderninho… nada funciona pra mim"',
-      '"Preciso de um método simples que eu consiga manter"',
+      "Desespero: conto moedas e rezo pra nenhum boleto vencer",
+      "Aperto: vivo no limite e qualquer imprevisto é crise",
+      "Neutro: pago as contas, mas não sobra nada",
+      "Tranquilo: tudo planejado e reserva garantida",
     ],
   },
+  // ── 6. Pill select ────────────────────────────────────────────
   {
     id: 6,
-    type: "question",
-    question: "Se um gasto inesperado de R$ 500 surgisse agora, o que aconteceria?",
+    type: "pill",
+    question: "Qual destas frases mais se parece com algo que você já disse?",
     options: [
-      "Caos total: teria que pedir emprestado ou usar crédito rotativo",
-      "Pagaria, mas comprometeria outras contas do mês",
-      "Usaria minha reserva, porém ficaria desconfortável",
-      "Tranquilo: minha reserva de emergência cobre isso e muito mais",
+      { icon: "💸", text: '"Ganho bem, mas não sei para onde vai meu dinheiro"' },
+      { icon: "📅", text: '"Sempre prometo que vou organizar… mas nunca começo"' },
+      { icon: "📋", text: '"Já tentei planilha, app, caderninho… nada funciona"' },
+      { icon: "🎯", text: '"Preciso de um método simples que eu consiga manter"' },
     ],
   },
+  // ── 7. Video — Prova de conceito ──────────────────────────────
   {
     id: 7,
-    type: "question",
-    question: "O que te impede de ter a vida financeira que você quer?",
-    options: [
-      "Falta de organização: não tenho um sistema que funcione",
-      "Falta de disciplina: gasto por impulso e me arrependo depois",
-      "Falta de conhecimento: ninguém me ensinou a lidar com dinheiro",
-      "Falta de ferramenta: preciso de algo prático e visual",
-    ],
+    type: "video",
+    title: "📊 Veja como o Hermes Wallet transformou a vida financeira de milhares de brasileiros",
+    subtitle: "Assista ao vídeo de 1 minuto e entenda o que suas respostas revelam sobre o seu perfil.",
+    buttonText: "Continuar Quiz",
   },
+  // ── 8. Pergunta grid 2x2 ──────────────────────────────────────
   {
     id: 8,
     type: "question",
-    question: "Imagine ter um painel que mostra sua saúde financeira em tempo real. Qual recurso te animaria mais?",
+    question: "Se um gasto inesperado de R$ 500 surgisse agora, o que aconteceria?",
     options: [
-      "Visão total de receitas, despesas e saldo em uma só tela",
-      "Alertas automáticos quando estou perto de estourar o limite",
-      "Planejador de metas com progresso visual mês a mês",
-      "Simulador de investimentos integrado ao meu orçamento",
+      "Caos: teria que pedir emprestado ou usar crédito rotativo",
+      "Pagaria, mas comprometeria outras contas do mês",
+      "Usaria minha reserva, porém ficaria desconfortável",
+      "Tranquilo: minha reserva de emergência cobre fácil",
     ],
   },
+  // ── 9. Star Rating — Nota pra vida financeira ─────────────────
   {
     id: 9,
-    type: "video",
-    title: "📊 Veja como o Hermes Wallet revelou o diagnóstico de milhares de brasileiros",
-    subtitle: "Assista ao vídeo de 1 minuto e entenda o que as suas respostas dizem sobre o seu perfil financeiro.",
-    buttonText: "Avançar para o Diagnóstico",
+    type: "star_rating",
+    question: "De 1 a 5 estrelas, que nota você dá para a sua vida financeira hoje?",
+    subtitle: "Seja sincero — essa nota ajuda a calibrar seu diagnóstico.",
+    feedbackMap: {
+      1: "😟 Situação crítica — mas o primeiro passo é reconhecer.",
+      2: "😕 Está difícil, porém já existe consciência. Isso é poderoso.",
+      3: "😐 No meio do caminho. Com o sistema certo, você decola.",
+      4: "🙂 Quase lá! Faltam pequenos ajustes para o controle total.",
+      5: "🤩 Excelente! Vamos turbinar o que já funciona.",
+    },
   },
+  // ── 10. Interstitial — Revelação ──────────────────────────────
   {
     id: 10,
+    type: "interstitial",
+    icon: "⚡",
+    title: "Você está a poucos passos do seu diagnóstico completo.",
+    subtitle: "As próximas perguntas vão nos ajudar a entender <strong>exatamente</strong> qual ferramenta você precisa para virar o jogo.",
+    buttonText: "Estou Pronto",
+  },
+  // ── 11. Pill select ───────────────────────────────────────────
+  {
+    id: 11,
+    type: "pill",
+    question: "O que te impede de ter a vida financeira que você quer?",
+    options: [
+      { icon: "🗂️", text: "Falta de organização: não tenho um sistema que funcione" },
+      { icon: "🛒", text: "Falta de disciplina: gasto por impulso e me arrependo" },
+      { icon: "📚", text: "Falta de conhecimento: ninguém me ensinou sobre dinheiro" },
+      { icon: "🔧", text: "Falta de ferramenta: preciso de algo prático e visual" },
+    ],
+  },
+  // ── 12. Pergunta grid 2x2 ─────────────────────────────────────
+  {
+    id: 12,
+    type: "question",
+    question: "Imagine ter um painel que mostra sua saúde financeira em tempo real. Qual recurso te animaria mais?",
+    options: [
+      "Visão total de receitas, despesas e saldo numa só tela",
+      "Alertas automáticos quando estou perto de estourar limite",
+      "Planejador de metas com progresso visual mês a mês",
+      "Simulador de investimentos integrado ao orçamento",
+    ],
+  },
+  // ── 13. Review — Prova Social ─────────────────────────────────
+  {
+    id: 13,
     type: "review",
     title: "O que dizem quem já retomou o controle financeiro",
     testimonials: [
@@ -122,9 +165,30 @@ const STEPS = [
         name: "Fernanda S.",
         initials: "FS",
         stars: 5,
-        text: "Meu dinheiro sumia e eu não sabia explicar pra onde ia. O dashboard me mostrou que eu gastava R$ 800/mês em delivery sem perceber. Hoje invisto esse valor todo mês.",
+        text: "Meu dinheiro sumia e eu não sabia explicar pra onde ia. O dashboard me mostrou que eu gastava R$ 800/mês em delivery sem perceber. Hoje invisto esse valor.",
       },
     ],
+    buttonText: "Continuar",
+  },
+  // ── 14. Pill select — Comprometimento ─────────────────────────
+  {
+    id: 14,
+    type: "pill",
+    question: "Se existisse um sistema que organiza sua vida financeira em 15 minutos, você começaria…",
+    options: [
+      { icon: "🚀", text: "Agora mesmo — estou cansado de viver assim" },
+      { icon: "📆", text: "Essa semana — preciso de um empurrão" },
+      { icon: "⏳", text: "Talvez no próximo mês — ainda estou pensando" },
+      { icon: "🤷", text: "Não sei se algo assim existe de verdade" },
+    ],
+  },
+  // ── 15. Interstitial final + CTA ──────────────────────────────
+  {
+    id: 15,
+    type: "interstitial",
+    icon: "✅",
+    title: "Pronto! Todas as suas respostas foram registradas.",
+    subtitle: "Nosso algoritmo já está processando seu perfil financeiro. Em instantes você verá um <strong>diagnóstico personalizado</strong> com a solução ideal para o seu momento.",
     buttonText: "Ver Meu Diagnóstico",
   },
 ];
@@ -162,17 +226,38 @@ function renderIntro() {
     <div class="quiz-wrapper">
       <div class="step active">
         <div class="welcome-screen">
-          <h1 class="welcome-title">Quiz Financeiro</h1>
+          <div class="welcome-badge">
+            <span class="badge-icon">📊</span>
+            Quiz Financeiro Hermes
+          </div>
+          <h1 class="welcome-title">Descubra o seu <span class="gradient-text">Perfil Financeiro</span></h1>
           <p class="welcome-subtitle">
-            Descubra o seu perfil financeiro em menos de 2 minutos e receba uma
-            recomendação personalizada para organizar suas finanças.
+            Responda 15 perguntas rápidas e receba um diagnóstico personalizado
+            para organizar suas finanças de vez.
           </p>
+          <div class="welcome-stats">
+            <div class="stat-item">
+              <span class="stat-number">2 min</span>
+              <span class="stat-label">Duração</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">12.847+</span>
+              <span class="stat-label">Diagnósticos</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">4.9 ⭐</span>
+              <span class="stat-label">Avaliação</span>
+            </div>
+          </div>
           <button
             id="btn-start"
             class="btn-primary btn-glow"
           >
-            Iniciar Quiz
+            Iniciar Quiz <span class="btn-arrow">→</span>
           </button>
+          <p class="welcome-disclaimer">100% gratuito • Resultado imediato</p>
         </div>
       </div>
     </div>
@@ -196,6 +281,7 @@ function renderStep() {
     pushDataLayer({
       event: "quiz_step_viewed",
       quiz_step: stepNumber,
+      quiz_step_type: current.type,
       quiz_total_steps: total,
     });
   }
@@ -207,11 +293,20 @@ function renderStep() {
     case "question":
       innerHTML = buildQuestionHTML(current, stepNumber, total);
       break;
+    case "pill":
+      innerHTML = buildPillHTML(current, stepNumber, total);
+      break;
     case "video":
       innerHTML = buildVideoHTML(current);
       break;
     case "review":
       innerHTML = buildReviewHTML(current);
+      break;
+    case "interstitial":
+      innerHTML = buildInterstitialHTML(current);
+      break;
+    case "star_rating":
+      innerHTML = buildStarRatingHTML(current);
       break;
     default:
       innerHTML = `<p>Tipo de etapa desconhecido.</p>`;
@@ -234,8 +329,16 @@ function renderStep() {
   `);
 
   // ── Binds pós-montagem conforme o tipo ──
-  if (current.type === "question") {
-    bindQuestionEvents(current);
+  switch (current.type) {
+    case "question":
+      bindQuestionEvents(current);
+      break;
+    case "pill":
+      bindPillEvents(current);
+      break;
+    case "star_rating":
+      bindStarRatingEvents(current);
+      break;
   }
 
   // Bind do botão avançar (presente em todos os tipos)
@@ -245,7 +348,7 @@ function renderStep() {
   }
 }
 
-// ─────────────────── BUILDER: QUESTION ──────────────────────────
+// ─────────────────── BUILDER: QUESTION (grid 2x2) ───────────────
 function buildQuestionHTML(step, stepNumber, total) {
   const optionsHTML = step.options
     .map(
@@ -259,27 +362,58 @@ function buildQuestionHTML(step, stepNumber, total) {
     )
     .join("");
 
-  const isLast = stepNumber >= total;
-
   return /* html */ `
-    <!-- Cabeçalho da pergunta -->
     <div class="step-header">
       <span class="step-number">Pergunta ${stepNumber} de ${total}</span>
       <h2 class="step-title">${step.question}</h2>
     </div>
 
-    <!-- Opções -->
     <div class="options-grid grid-2x2" id="options-container">
       ${optionsHTML}
     </div>
 
-    <!-- Botão Avançar (inicia oculto) -->
     <button
       id="btn-next"
       disabled
       class="btn-continue hidden"
     >
-      ${isLast ? "Finalizar Quiz" : "Próxima Pergunta"}
+      Próxima Pergunta
+    </button>
+  `;
+}
+
+// ─────────────────── BUILDER: PILL (lista vertical) ─────────────
+function buildPillHTML(step, stepNumber, total) {
+  const pillsHTML = step.options
+    .map(
+      (opt, idx) => `
+      <button
+        class="option-pill"
+        data-index="${idx}"
+      >
+        <span class="pill-icon">${opt.icon}</span>
+        <span>${opt.text}</span>
+        <span class="pill-check">✓</span>
+      </button>`
+    )
+    .join("");
+
+  return /* html */ `
+    <div class="step-header">
+      <span class="step-number">Pergunta ${stepNumber} de ${total}</span>
+      <h2 class="step-title">${step.question}</h2>
+    </div>
+
+    <div class="options-list" id="options-container">
+      ${pillsHTML}
+    </div>
+
+    <button
+      id="btn-next"
+      disabled
+      class="btn-continue hidden"
+    >
+      Próxima Pergunta
     </button>
   `;
 }
@@ -303,7 +437,6 @@ function buildVideoHTML(step) {
       </div>
     </div>
 
-    <!-- Botão Avançar (nasce HABILITADO) -->
     <button
       id="btn-next"
       class="btn-continue"
@@ -318,7 +451,7 @@ function buildReviewHTML(step) {
   const testimonialsHTML = step.testimonials
     .map(
       (t) => `
-      <div class="testimonial-card">
+      <div class="testimonial-card animate-slide-up">
         <div class="testimonial-header">
           <div class="testimonial-avatar">${t.initials}</div>
           <div>
@@ -340,7 +473,6 @@ function buildReviewHTML(step) {
       ${testimonialsHTML}
     </div>
 
-    <!-- Botão Avançar (nasce HABILITADO) -->
     <button
       id="btn-next"
       class="btn-continue"
@@ -350,21 +482,136 @@ function buildReviewHTML(step) {
   `;
 }
 
+// ─────────────────── BUILDER: INTERSTITIAL ──────────────────────
+function buildInterstitialHTML(step) {
+  return /* html */ `
+    <div class="interstitial-screen">
+      <div class="interstitial-icon animate-float">${step.icon}</div>
+      <h2 class="interstitial-title step-title">${step.title}</h2>
+      <p class="step-subtitle">${step.subtitle}</p>
+
+      <button
+        id="btn-next"
+        class="btn-continue"
+        style="margin-top: 36px;"
+      >
+        ${step.buttonText} <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  `;
+}
+
+// ─────────────────── BUILDER: STAR RATING ───────────────────────
+function buildStarRatingHTML(step) {
+  const starsHTML = [1, 2, 3, 4, 5]
+    .map(
+      (n) => `<button class="star" data-value="${n}">⭐</button>`
+    )
+    .join("");
+
+  return /* html */ `
+    <div class="star-rating-screen">
+      <div class="step-header">
+        <h2 class="step-title">${step.question}</h2>
+        <p class="step-subtitle star-legend">${step.subtitle}</p>
+      </div>
+
+      <div class="stars-container" id="stars-container">
+        ${starsHTML}
+      </div>
+
+      <div class="star-feedback" id="star-feedback"></div>
+
+      <button
+        id="btn-next"
+        disabled
+        class="btn-continue hidden"
+      >
+        Próxima Pergunta
+      </button>
+    </div>
+  `;
+}
+
 // ─────────────────── BIND: QUESTION EVENTS ──────────────────────
 function bindQuestionEvents(step) {
   document.querySelectorAll(".option-card").forEach((btn) => {
     btn.addEventListener("click", () => {
-      // Remove seleção anterior
-      document.querySelectorAll(".option-card").forEach((b) => {
-        b.classList.remove("selected");
-      });
-
-      // Marca a opção clicada
+      document.querySelectorAll(".option-card").forEach((b) =>
+        b.classList.remove("selected")
+      );
       btn.classList.add("selected");
-
       selectedOption = step.options[parseInt(btn.dataset.index, 10)];
 
-      // Habilita o botão Avançar
+      const nextBtn = document.getElementById("btn-next");
+      nextBtn.disabled = false;
+      nextBtn.classList.remove("hidden");
+    });
+  });
+}
+
+// ─────────────────── BIND: PILL EVENTS ──────────────────────────
+function bindPillEvents(step) {
+  document.querySelectorAll(".option-pill").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".option-pill").forEach((b) =>
+        b.classList.remove("selected")
+      );
+      btn.classList.add("selected");
+      selectedOption = step.options[parseInt(btn.dataset.index, 10)].text;
+
+      const nextBtn = document.getElementById("btn-next");
+      nextBtn.disabled = false;
+      nextBtn.classList.remove("hidden");
+    });
+  });
+}
+
+// ─────────────────── BIND: STAR RATING EVENTS ───────────────────
+function bindStarRatingEvents(step) {
+  const stars = document.querySelectorAll(".star");
+  const feedbackEl = document.getElementById("star-feedback");
+
+  // Hover preview
+  stars.forEach((star) => {
+    star.addEventListener("mouseenter", () => {
+      const val = parseInt(star.dataset.value, 10);
+      stars.forEach((s) => {
+        const sv = parseInt(s.dataset.value, 10);
+        if (sv <= val) {
+          s.classList.add("hover-preview");
+        } else {
+          s.classList.remove("hover-preview");
+        }
+      });
+    });
+
+    star.addEventListener("mouseleave", () => {
+      stars.forEach((s) => s.classList.remove("hover-preview"));
+    });
+
+    // Click
+    star.addEventListener("click", () => {
+      const val = parseInt(star.dataset.value, 10);
+      selectedOption = `${val} estrelas`;
+
+      // Highlight active stars
+      stars.forEach((s) => {
+        const sv = parseInt(s.dataset.value, 10);
+        if (sv <= val) {
+          s.classList.add("active");
+        } else {
+          s.classList.remove("active");
+        }
+      });
+
+      // Show feedback
+      if (step.feedbackMap && step.feedbackMap[val]) {
+        feedbackEl.textContent = step.feedbackMap[val];
+        feedbackEl.style.opacity = "1";
+      }
+
+      // Enable next
       const nextBtn = document.getElementById("btn-next");
       nextBtn.disabled = false;
       nextBtn.classList.remove("hidden");
@@ -376,6 +623,23 @@ function bindQuestionEvents(step) {
 function renderLoading() {
   phase = "loading";
 
+  const loadingSteps = [
+    { icon: "📋", text: "Processando suas respostas…" },
+    { icon: "🧠", text: "Analisando padrões de comportamento…" },
+    { icon: "📊", text: "Gerando diagnóstico personalizado…" },
+    { icon: "✅", text: "Diagnóstico concluído!" },
+  ];
+
+  const stepsHTML = loadingSteps
+    .map(
+      (s, i) => `
+      <div class="loading-step" data-step="${i}">
+        <span class="loading-check">${s.icon}</span>
+        <span>${s.text}</span>
+      </div>`
+    )
+    .join("");
+
   mount(/* html */ `
     <div class="quiz-wrapper">
       <div class="step active">
@@ -386,18 +650,30 @@ function renderLoading() {
             <div class="loading-circle delay-2"></div>
           </div>
           <h2 class="loading-title">Analisando suas respostas…</h2>
-          <p class="step-subtitle">
-            Aguarde enquanto geramos seu diagnóstico personalizado.
-          </p>
+
+          <div class="loading-steps">
+            ${stepsHTML}
+          </div>
         </div>
       </div>
     </div>
   `);
 
-  // Simula 2 s de loading e avança para resultado
+  // Sequência animada dos steps de loading
+  const loadEls = document.querySelectorAll(".loading-step");
+  loadEls.forEach((el, i) => {
+    setTimeout(() => {
+      el.classList.add("visible");
+    }, i * 700);
+    setTimeout(() => {
+      el.classList.add("completed");
+    }, i * 700 + 500);
+  });
+
+  // Avança para resultado após animação completa
   setTimeout(() => {
     renderResult();
-  }, 2000);
+  }, loadingSteps.length * 700 + 800);
 }
 
 // ─────────────────── TELA: RESULTADO ────────────────────────────
@@ -409,6 +685,7 @@ function renderResult() {
       <div class="step active">
         <div class="results-screen">
           <div class="result-hero">
+            <span class="result-badge animate-pop">🎯</span>
             <h2 class="result-headline">Seu Diagnóstico Está Pronto!</h2>
             <p class="result-subheadline">
               Com base nas suas respostas, identificamos que você precisa de um
@@ -416,20 +693,34 @@ function renderResult() {
             </p>
           </div>
 
-          <div class="benefit-card" style="margin-bottom: 32px;">
-            <h3 class="benefit-icon">📊</h3>
-            <h3 style="color: var(--accent-1); margin-bottom: 8px; font-size: 18px; font-weight: 700;">
-              Template Hermes Wallet
-            </h3>
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
-              <li style="font-size: 14px; color: var(--text-secondary);">✅ Controle completo de receitas e despesas</li>
-              <li style="font-size: 14px; color: var(--text-secondary);">✅ Dashboard visual automático</li>
-              <li style="font-size: 14px; color: var(--text-secondary);">✅ Metas financeiras com acompanhamento</li>
-              <li style="font-size: 14px; color: var(--text-secondary);">✅ Planejamento de investimentos integrado</li>
-            </ul>
+          <div class="benefits-section">
+            <h2 class="section-title">O que o <span class="gradient-text">Hermes Wallet</span> vai fazer por você</h2>
+            <div class="benefits-grid">
+              <div class="benefit-card animate-slide-up">
+                <div class="benefit-icon">📊</div>
+                <h3>Dashboard Completo</h3>
+                <p>Visão total de receitas, despesas e saldo — tudo atualizado em tempo real, sem complicação.</p>
+              </div>
+              <div class="benefit-card animate-slide-up delay-1">
+                <div class="benefit-icon">🎯</div>
+                <h3>Metas Inteligentes</h3>
+                <p>Defina objetivos financeiros e acompanhe o progresso com gráficos visuais mês a mês.</p>
+              </div>
+              <div class="benefit-card animate-slide-up delay-2">
+                <div class="benefit-icon">🔔</div>
+                <h3>Alertas Automáticos</h3>
+                <p>Receba avisos antes de estourar limites. Nunca mais seja pego de surpresa.</p>
+              </div>
+              <div class="benefit-card animate-slide-up delay-3">
+                <div class="benefit-icon">💰</div>
+                <h3>Planejador de Investimentos</h3>
+                <p>Simulador integrado que mostra quanto investir a partir do que sobra no seu orçamento.</p>
+              </div>
+            </div>
           </div>
 
           <div class="final-cta">
+            <h2>Pronto para <span class="gradient-text">retomar o controle</span>?</h2>
             <a
               id="btn-checkout"
               href="${CHECKOUT_URL}"
@@ -440,7 +731,7 @@ function renderResult() {
             >
               Quero Organizar Minhas Finanças →
             </a>
-
+            <p class="final-urgency">⚡ Oferta por tempo limitado</p>
             <p class="welcome-disclaimer">
               Você será redirecionado para o checkout seguro da Kiwify.
             </p>
@@ -473,20 +764,21 @@ function handleNext() {
   const current = STEPS[currentIndex];
   const stepNumber = currentIndex + 1;
 
-  // Para tipo 'question', exige seleção
-  if (current.type === "question" && selectedOption === null) return;
+  // Para tipos interativos, exige seleção
+  const requiresSelection = ["question", "pill", "star_rating"];
+  if (requiresSelection.includes(current.type) && selectedOption === null) return;
 
   // Evento: step completado
   pushDataLayer({
     event: "quiz_step_completed",
     quiz_step: stepNumber,
     quiz_step_type: current.type,
-    quiz_answer: current.type === "question" ? selectedOption : null,
+    quiz_answer: selectedOption,
   });
 
-  // Salva resposta (para questions)
-  if (current.type === "question") {
-    answers.push({ step: stepNumber, answer: selectedOption });
+  // Salva resposta (para tipos que coletam dados)
+  if (requiresSelection.includes(current.type)) {
+    answers.push({ step: stepNumber, type: current.type, answer: selectedOption });
   }
 
   // Última etapa?
