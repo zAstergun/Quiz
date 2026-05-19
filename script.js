@@ -800,7 +800,16 @@ function handleNext() {
 }
 
 // ─── BOOT BLINDADO ──────────────────────────────────────────────
+// Use ?direct=1 na URL para pular direto à landing page (ex: anúncios)
 function bootQuiz() {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get("direct") === "1") {
+    pushDataLayer({ event: "direct_landing", source: params.get("utm_source") || "unknown" });
+    renderResult();
+    return;
+  }
+
   renderIntro();
 }
 
