@@ -679,75 +679,611 @@ function renderLoading() {
   }, loadingSteps.length * 700 + 800);
 }
 
-// ─────────────────── TELA: RESULTADO ────────────────────────────
+// ─────────────────── TELA: RESULTADO (Premium SaaS) ─────────────
 function renderResult() {
   phase = "result";
 
+  // ── Light Rays HTML helper ──
+  const lightRaysHTML = `
+    <div class="light-rays-container">
+      <div class="light-ray light-ray--1">
+        <div class="light-ray__core light-ray__core--narrow"></div>
+        <div class="light-ray__core light-ray__core--mid"></div>
+        <div class="light-ray__core light-ray__core--thin"></div>
+      </div>
+      <div class="light-ray light-ray--2">
+        <div class="light-ray__core light-ray__core--narrow"></div>
+        <div class="light-ray__core light-ray__core--mid"></div>
+        <div class="light-ray__core light-ray__core--thin"></div>
+      </div>
+      <div class="light-ray light-ray--3">
+        <div class="light-ray__core light-ray__core--narrow"></div>
+        <div class="light-ray__core light-ray__core--mid"></div>
+        <div class="light-ray__core light-ray__core--thin"></div>
+      </div>
+      <div class="light-rays-ambient"></div>
+    </div>`;
+
+  // ── Benefit card builder ──
+  function benefitCard(emoji, title, desc, wide = false, delay = 0) {
+    return `
+      <div class="card-glass ${wide ? 'card-glass--wide' : ''} reveal-blur reveal-delay-${delay}">
+        <div class="card-glass__inner">
+          <div class="card-glass__grid"></div>
+          <div class="card-glass__glow"></div>
+          <div class="card-glass__spotlight"></div>
+          <div class="card-glass__content">
+            <span class="benefit-glass__icon">${emoji}</span>
+            <h3 class="benefit-glass__title">${title}</h3>
+            <p class="benefit-glass__desc">${desc}</p>
+          </div>
+        </div>
+        <div class="card-glass__border"></div>
+        <svg class="card-glass__shine" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="shine-${delay}" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="transparent"/>
+              <stop offset="12%" stop-color="rgba(201,168,76,0.15)"/>
+              <stop offset="28%" stop-color="rgba(232,197,71,0.3)"/>
+              <stop offset="34%" stop-color="rgba(201,168,76,0.15)"/>
+              <stop offset="50%" stop-color="transparent"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </linearGradient>
+            <clipPath id="topClip-${delay}">
+              <rect x="0" y="0" width="100%" height="21"/>
+            </clipPath>
+          </defs>
+          <rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="20" ry="20" fill="none" stroke="url(#shine-${delay})" stroke-width="1" clip-path="url(#topClip-${delay})"/>
+        </svg>
+      </div>`;
+  }
+
+  // ── FAQ data ──
+  const faqs = [
+    { q: "Para quem é o Hermes Wallet?", a: "Para qualquer brasileiro que quer retomar o controle financeiro — seja quem está endividado, quem vive no limite ou quem quer organizar para investir mais." },
+    { q: "Preciso saber de finanças para usar?", a: "Não! O Hermes Wallet foi desenhado para ser intuitivo. Você receberá acesso a aulas passo a passo que ensinam tudo do zero — mesmo que nunca tenha usado o Notion." },
+    { q: "Preciso saber usar o Notion?", a: "Não! Incluímos 4 videoaulas práticas que ensinam desde o básico até a configuração completa do seu sistema financeiro. É só seguir o passo a passo." },
+    { q: "Como funciona a garantia?", a: "Você tem 7 dias para testar. Se por qualquer motivo não gostar, devolvemos 100% do valor — sem perguntas, sem burocracia." },
+    { q: "Funciona no celular?", a: "Sim! O Hermes Wallet funciona no Notion, que é 100% responsivo e otimizado para qualquer dispositivo — celular, tablet ou desktop." },
+    { q: "Como recebo o acesso?", a: "Após a confirmação do pagamento, você receberá acesso imediato à plataforma da Kiwify com as videoaulas e o sistema Hermes Wallet pronto para usar." },
+  ];
+
+  const faqHTML = faqs.map((f, i) => `
+    <div class="faq-premium__item reveal-blur reveal-delay-${Math.min(i + 1, 5)}" onclick="this.classList.toggle('open')">
+      <div class="faq-premium__question">
+        <span>${f.q}</span>
+        <span class="faq-premium__arrow">▾</span>
+      </div>
+      <div class="faq-premium__answer">
+        <p>${f.a}</p>
+      </div>
+    </div>
+  `).join("");
+
+  // ── Testimonials data (WhatsApp Prints) ──
+  const testimonials = [
+    { img: "assets/whatsapp-review-1.png", alt: "Depoimento Camila R." },
+    { img: "assets/whatsapp-review-2.png", alt: "Depoimento Lucas M." },
+    { img: "assets/whatsapp-review-3.png", alt: "Depoimento Fernanda S." },
+    { img: "assets/whatsapp-review-4.png", alt: "Depoimento Matheus K." },
+    { img: "assets/whatsapp-review-5.png", alt: "Depoimento Cliente 5" },
+    { img: "assets/whatsapp-review-6.png", alt: "Depoimento Cliente 6" },
+    { img: "assets/whatsapp-review-7.png", alt: "Depoimento Cliente 7" },
+    { img: "assets/whatsapp-review-8.png", alt: "Depoimento Cliente 8" },
+    { img: "assets/whatsapp-review-9.png", alt: "Depoimento Cliente 9" },
+    { img: "assets/whatsapp-review-10.png", alt: "Depoimento Cliente 10" }
+  ];
+
+  const testimonialsHTML = testimonials.map((t, i) => `
+    <div class="whatsapp-review-card">
+      <div class="whatsapp-review-card__img-wrapper">
+        <img src="${t.img}" alt="${t.alt}" class="whatsapp-review-card__img" loading="lazy" />
+      </div>
+    </div>
+  `).join("");
+
   mount(/* html */ `
-    <div class="quiz-wrapper">
-      <div class="step active">
-        <div class="results-screen">
-          <div class="result-hero">
-            <span class="result-badge animate-pop">🎯</span>
-            <h2 class="result-headline">Seu Diagnóstico Está Pronto!</h2>
-            <p class="result-subheadline">
-              Com base nas suas respostas, identificamos que você precisa de um
-              sistema financeiro completo para retomar o controle do seu dinheiro.
-            </p>
+    <div class="quiz-wrapper" style="overflow-y: auto; max-height: 100vh;">
+
+      <!-- ═══════ HERO ═══════ -->
+      <section class="result-hero--premium">
+        ${lightRaysHTML}
+        <div class="results-section__inner" style="position: relative; z-index: 10; padding-top: 60px;">
+          <div class="reveal-blur reveal-delay-1">
+            <span class="badge-shine badge-shine--hero">
+              <span>✅</span>
+              <span>Diagnóstico Concluído</span>
+            </span>
           </div>
 
-          <div class="benefits-section">
-            <h2 class="section-title">O que o <span class="gradient-text">Hermes Wallet</span> vai fazer por você</h2>
-            <div class="benefits-grid">
-              <div class="benefit-card animate-slide-up">
-                <div class="benefit-icon">📊</div>
-                <h3>Dashboard Completo</h3>
-                <p>Visão total de receitas, despesas e saldo — tudo atualizado em tempo real, sem complicação.</p>
+          <h1 class="result-hero__heading heading-fade reveal-blur reveal-delay-2" style="margin-top: 28px;">
+            Seu sistema financeiro personalizado está pronto.
+          </h1>
+
+          <p class="result-hero__sub reveal-blur reveal-delay-3">
+            Com base nas suas respostas, identificamos exatamente o que você precisa
+            para retomar o controle do seu dinheiro e começar a construir patrimônio.
+          </p>
+
+          <div class="cta-group reveal-blur reveal-delay-4">
+            <a
+              id="btn-checkout-hero"
+              href="${CHECKOUT_URL}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary btn-glow"
+              style="text-decoration: none;"
+            >
+              Quero Organizar Minhas Finanças <span class="btn-arrow">→</span>
+            </a>
+            <button class="btn-ghost" onclick="document.getElementById('section-benefits').scrollIntoView({behavior:'smooth'})">
+              Saiba Mais
+            </button>
+          </div>
+
+          <p class="trusted-text reveal-blur reveal-delay-5">
+            Mais de 12.847 brasileiros já retomaram o controle financeiro
+          </p>
+        </div>
+      </section>
+
+      <!-- ═══════ STATS ═══════ -->
+      <section class="results-section" id="section-stats">
+        <div class="results-section__inner">
+          <div class="stats-row reveal-blur">
+            <div class="stat-card">
+              <div class="stat-card__value">12.847+</div>
+              <div class="stat-card__label">Diagnósticos</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__value">4.9 ⭐</div>
+              <div class="stat-card__label">Avaliação</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__value">98%</div>
+              <div class="stat-card__label">Satisfação</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- ═══════ BENEFITS ═══════ -->
+      <section class="results-section" id="section-benefits">
+        <div class="results-section__inner">
+          <div class="section-badge reveal-blur">
+            <span class="badge-shine badge-shine--section">✨ Funcionalidades</span>
+          </div>
+          <h2 class="section-title heading-fade reveal-blur" style="margin-bottom: 32px;">
+            O que o Hermes Wallet vai fazer por você
+          </h2>
+
+          <div class="benefits-premium">
+            ${benefitCard("📊", "Dashboard Completo", "Visão total de receitas, despesas e saldo — tudo atualizado em tempo real numa interface visual e intuitiva.", true, 1)}
+            ${benefitCard("🎯", "Metas Inteligentes", "Defina objetivos financeiros e acompanhe o progresso com gráficos visuais mês a mês.", false, 2)}
+            ${benefitCard("🔔", "Alertas Automáticos", "Receba avisos antes de estourar limites. Nunca mais seja pego de surpresa por contas inesperadas.", false, 3)}
+            ${benefitCard("💰", "Planejador de Investimentos", "Simulador integrado que mostra quanto e onde investir a partir do que sobra no seu orçamento mensal.", true, 4)}
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- ═══════ SOCIAL PROOF ═══════ -->
+      <section class="results-section">
+        <div class="results-section__inner">
+          <div class="section-badge reveal-blur">
+            <span class="badge-shine badge-shine--section">🏆 Resultados Reais</span>
+          </div>
+          <h2 class="section-title heading-fade reveal-blur" style="margin-bottom: 24px;">
+            O que dizem quem já retomou o controle
+          </h2>
+        </div>
+
+        <div class="carousel-outer reveal-blur">
+          <div class="carousel-track" id="testimonials-carousel">
+            ${testimonialsHTML}
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- ═══════ NOTION LESSONS ═══════ -->
+      <section class="results-section">
+        <div class="results-section__inner">
+          <div class="section-badge reveal-blur">
+            <span class="badge-shine badge-shine--section">📚 Não sabe usar o Notion?</span>
+          </div>
+          <h2 class="section-title heading-fade reveal-blur">
+            Aprenda do zero com nossas videoaulas
+          </h2>
+          <p style="text-align: center; color: var(--text-secondary); font-size: 15px; max-width: 520px; margin: -16px auto 32px; line-height: 1.7;" class="reveal-blur">
+            Você não precisa ser expert em tecnologia. Nossas 4 aulas práticas te guiam passo a passo
+            — do primeiro acesso ao domínio completo do sistema.
+          </p>
+        </div>
+
+        <div class="carousel-outer reveal-blur">
+          <div class="carousel-track" id="lessons-carousel">
+            <div class="lesson-card">
+              <div class="lesson-card__img-wrapper">
+                <img src="assets/aula-1.png" alt="Aula 1 — Primeiros Passos" class="lesson-card__img" loading="lazy" />
               </div>
-              <div class="benefit-card animate-slide-up delay-1">
-                <div class="benefit-icon">🎯</div>
-                <h3>Metas Inteligentes</h3>
-                <p>Defina objetivos financeiros e acompanhe o progresso com gráficos visuais mês a mês.</p>
+              <div class="lesson-card__info">
+                <span class="lesson-card__number">Aula 1</span>
+                <h4 class="lesson-card__title">Primeiros Passos</h4>
+                <p class="lesson-card__desc">Como acessar, criar sua conta no Notion e entender a estrutura do sistema.</p>
               </div>
-              <div class="benefit-card animate-slide-up delay-2">
-                <div class="benefit-icon">🔔</div>
-                <h3>Alertas Automáticos</h3>
-                <p>Receba avisos antes de estourar limites. Nunca mais seja pego de surpresa.</p>
+            </div>
+            <div class="lesson-card">
+              <div class="lesson-card__img-wrapper">
+                <img src="assets/aula-2.png" alt="Aula 2 — Configurando o Dashboard" class="lesson-card__img" loading="lazy" />
               </div>
-              <div class="benefit-card animate-slide-up delay-3">
-                <div class="benefit-icon">💰</div>
-                <h3>Planejador de Investimentos</h3>
-                <p>Simulador integrado que mostra quanto investir a partir do que sobra no seu orçamento.</p>
+              <div class="lesson-card__info">
+                <span class="lesson-card__number">Aula 2</span>
+                <h4 class="lesson-card__title">Configurando o Dashboard</h4>
+                <p class="lesson-card__desc">Personalize suas categorias, receitas e configure o painel financeiro.</p>
+              </div>
+            </div>
+            <div class="lesson-card">
+              <div class="lesson-card__img-wrapper">
+                <img src="assets/aula-3.png" alt="Aula 3 — Metas e Orçamento" class="lesson-card__img" loading="lazy" />
+              </div>
+              <div class="lesson-card__info">
+                <span class="lesson-card__number">Aula 3</span>
+                <h4 class="lesson-card__title">Metas e Orçamento</h4>
+                <p class="lesson-card__desc">Defina suas metas financeiras e crie seu orçamento mensal inteligente.</p>
+              </div>
+            </div>
+            <div class="lesson-card">
+              <div class="lesson-card__img-wrapper">
+                <img src="assets/aula-4.png" alt="Aula 4 — Rotina Financeira" class="lesson-card__img" loading="lazy" />
+              </div>
+              <div class="lesson-card__info">
+                <span class="lesson-card__number">Aula 4</span>
+                <h4 class="lesson-card__title">Rotina Financeira</h4>
+                <p class="lesson-card__desc">Monte sua rotina semanal de 5 minutos para manter tudo sob controle.</p>
+              </div>
+            </div>
+            <div class="lesson-card">
+              <div class="lesson-card__img-wrapper">
+                <img src="assets/aula-5.png" alt="Aula 5 — Otimização Avançada" class="lesson-card__img" loading="lazy" />
+              </div>
+              <div class="lesson-card__info">
+                <span class="lesson-card__number">Aula 5</span>
+                <h4 class="lesson-card__title">Otimização Avançada</h4>
+                <p class="lesson-card__desc">Automatizações e dicas de produtividade para gerenciar tudo em segundos.</p>
+              </div>
+            </div>
+            <div class="lesson-card">
+              <div class="lesson-card__img-wrapper">
+                <img src="assets/aula-6.png" alt="Aula 6 — Planejamento Anual" class="lesson-card__img" loading="lazy" />
+              </div>
+              <div class="lesson-card__info">
+                <span class="lesson-card__number">Aula 6</span>
+                <h4 class="lesson-card__title">Planejamento Anual</h4>
+                <p class="lesson-card__desc">Visão de longo prazo, controle anual de gastos e metas para o futuro.</p>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div class="final-cta">
-            <h2>Pronto para <span class="gradient-text">retomar o controle</span>?</h2>
+      <div class="section-divider"></div>
+
+      <!-- ═══════ PRICING ═══════ -->
+      <section class="results-section">
+        <div class="results-section__inner">
+          <div class="section-badge reveal-blur">
+            <span class="badge-shine badge-shine--section">💎 Investimento</span>
+          </div>
+          <h2 class="section-title heading-fade reveal-blur">
+            Comece a transformação hoje
+          </h2>
+
+          <div class="pricing-premium-wrapper reveal-blur">
+            <div class="pricing-glass">
+              <div class="pricing-glass__inner">
+                <div class="pricing-glass__grid"></div>
+                <div class="pricing-glass__glow"></div>
+
+                <div class="pricing-glass__badge">
+                  <span class="badge-shine badge-shine--pricing">MAIS POPULAR</span>
+                </div>
+
+                <div class="pricing-glass__content">
+                  <h3 class="pricing-glass__name">Hermes Wallet Premium</h3>
+                  <div class="pricing-glass__old">De <s>R$ 97,00</s></div>
+                  <div class="pricing-glass__price-row">
+                    <span class="pricing-glass__currency">R$</span>
+                    <span class="pricing-glass__value">25</span>
+                    <span class="pricing-glass__cents">,00</span>
+                  </div>
+                  <div class="pricing-glass__period">pagamento único • acesso vitalício</div>
+
+                  <ul class="pricing-glass__features">
+                    <li><span class="feature-check">✓</span> Sistema financeiro completo no Notion</li>
+                    <li><span class="feature-check">✓</span> 4 videoaulas passo a passo</li>
+                    <li><span class="feature-check">✓</span> Dashboard com alertas inteligentes</li>
+                    <li><span class="feature-check">✓</span> Metas visuais e progresso mensal</li>
+                    <li><span class="feature-check">✓</span> Simulador de investimentos</li>
+                    <li><span class="feature-check">✓</span> Acesso imediato via plataforma Kiwify</li>
+                    <li><span class="feature-check">✓</span> Atualizações gratuitas para sempre</li>
+                  </ul>
+
+                  <a
+                    id="btn-checkout-pricing"
+                    href="${CHECKOUT_URL}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-primary btn-glow"
+                    style="text-decoration: none; display: flex;"
+                  >
+                    Garantir Meu Acesso <span class="btn-arrow">→</span>
+                  </a>
+                </div>
+              </div>
+              <div class="pricing-glass__border"></div>
+              <svg class="pricing-glass__shine" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="pricingShine" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="transparent"/>
+                    <stop offset="8%" stop-color="transparent"/>
+                    <stop offset="15%" stop-color="rgba(201,168,76,0.2)"/>
+                    <stop offset="30%" stop-color="rgba(232,197,71,0.4)"/>
+                    <stop offset="36%" stop-color="rgba(201,168,76,0.2)"/>
+                    <stop offset="50%" stop-color="transparent"/>
+                    <stop offset="100%" stop-color="transparent"/>
+                  </linearGradient>
+                  <clipPath id="pricingTopClip">
+                    <rect x="0" y="0" width="100%" height="25"/>
+                  </clipPath>
+                </defs>
+                <rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="24" ry="24" fill="none" stroke="url(#pricingShine)" stroke-width="1.5" clip-path="url(#pricingTopClip)"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- ═══════ GUARANTEE ═══════ -->
+      <section class="results-section">
+        <div class="results-section__inner">
+          <div class="guarantee-premium reveal-blur">
+            <span class="guarantee-premium__icon">🛡️</span>
+            <h3 class="guarantee-premium__title">Garantia Incondicional de 7 Dias</h3>
+            <p class="guarantee-premium__text">
+              Teste o Hermes Wallet por 7 dias completos. Se por qualquer motivo
+              você não ficar satisfeito, devolvemos 100% do seu investimento
+              — sem perguntas, sem burocracia.
+            </p>
+            <div class="guarantee-premium__badges">
+              <span class="guarantee-premium__badge">🔒 Compra Segura</span>
+              <span class="guarantee-premium__badge">⚡ Acesso Imediato</span>
+              <span class="guarantee-premium__badge">💯 Satisfação Garantida</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- ═══════ FAQ ═══════ -->
+      <section class="results-section">
+        <div class="results-section__inner">
+          <div class="section-badge reveal-blur">
+            <span class="badge-shine badge-shine--section">❓ Dúvidas Frequentes</span>
+          </div>
+          <h2 class="section-title heading-fade reveal-blur">
+            Perguntas Frequentes
+          </h2>
+
+          <div class="faq-premium">
+            ${faqHTML}
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- ═══════ FINAL CTA ═══════ -->
+      <section class="final-cta--premium">
+        ${lightRaysHTML}
+        <div class="results-section__inner" style="position: relative; z-index: 10;">
+          <h2 class="final-cta__heading reveal-blur">
+            Pronto para <span class="gradient-text">retomar o controle</span> das suas finanças?
+          </h2>
+
+          <div class="cta-group reveal-blur">
             <a
-              id="btn-checkout"
+              id="btn-checkout-final"
               href="${CHECKOUT_URL}"
               target="_blank"
               rel="noopener noreferrer"
               class="btn-primary btn-glow btn-cta"
-              style="text-decoration: none; width: 100%; display: flex;"
+              style="text-decoration: none; display: flex;"
             >
               Quero Organizar Minhas Finanças →
             </a>
-            <p class="final-urgency">⚡ Oferta por tempo limitado</p>
-            <p class="welcome-disclaimer">
-              Você será redirecionado para o checkout seguro da Kiwify.
-            </p>
           </div>
+
+          <span class="final-cta__urgency reveal-blur">⚡ Oferta por tempo limitado</span>
+          <p class="final-cta__disclaimer reveal-blur">
+            Após o pagamento, você terá acesso imediato à plataforma com as aulas e o sistema pronto para usar.
+          </p>
         </div>
-      </div>
+      </section>
+
     </div>
   `);
 
-  // ── Bind: checkout_initiated ──
-  document.getElementById("btn-checkout").addEventListener("click", () => {
-    pushDataLayer({ event: "checkout_initiated" });
+  // ── Bind: checkout_initiated (all CTA buttons) ──
+  document.querySelectorAll('[id^="btn-checkout"]').forEach(btn => {
+    btn.addEventListener("click", () => {
+      pushDataLayer({ event: "checkout_initiated" });
+    });
   });
+
+  // ── IntersectionObserver: scroll-reveal with blur ──
+  const scrollRoot = document.querySelector(".quiz-wrapper");
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("revealed");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px", root: scrollRoot });
+
+  // Small delay to let layout settle
+  requestAnimationFrame(() => {
+    document.querySelectorAll(".reveal-blur").forEach(el => {
+      revealObserver.observe(el);
+    });
+  });
+
+  // ── Mouse spotlight for glassmorphism cards ──
+  document.querySelectorAll(".card-glass").forEach(card => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty("--mouse-x", x + "px");
+      card.style.setProperty("--mouse-y", y + "px");
+    });
+  });
+
+  // ── Initialize Horizontal Carousels ──
+  initCarousel("testimonials-carousel");
+  initCarousel("lessons-carousel");
+
+  // ── Mover rodapé de compliance para dentro do container rolável para evitar que fique inacessível ──
+  const footer = document.querySelector(".compliance-footer");
+  if (footer && scrollRoot) {
+    scrollRoot.appendChild(footer);
+  }
+}
+
+/**
+ * Inicializa um carrossel horizontal de largura total com:
+ * 1. Auto-scroll lento contínuo
+ * 2. Pausa ao passar o mouse ou interagir
+ * 3. Clique e arraste (mouse drag) no desktop
+ * 4. Toque e arraste (touch swipe) no celular
+ * @param {string} trackId - ID do elemento .carousel-track
+ */
+function initCarousel(trackId) {
+  const track = document.getElementById(trackId);
+  if (!track) return;
+
+  // Duplicar conteúdo para loop infinito
+  track.innerHTML += track.innerHTML;
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+  let autoScrollActive = true;
+  let scrollSpeed = 0.45; // Velocidade bem lenta e suave
+  let scrollPos = track.scrollLeft;
+  
+  // Como duplicamos, a largura real do conteúdo original é exatamente metade
+  let halfWidth = track.scrollWidth / 2;
+
+  // Atualizar halfWidth em caso de resize
+  window.addEventListener("resize", () => {
+    halfWidth = track.scrollWidth / 2;
+  });
+
+  // Função auxiliar para manter o scroll infinito perfeitamente em loop
+  function getInfinitePos(pos) {
+    if (halfWidth === 0) return pos;
+    return (pos % halfWidth + halfWidth) % halfWidth;
+  }
+
+  // Interação do Mouse: Arrastar
+  track.addEventListener("mousedown", (e) => {
+    isDown = true;
+    track.classList.add("active");
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    autoScrollActive = false;
+  });
+
+  track.addEventListener("mouseleave", () => {
+    isDown = false;
+    track.classList.remove("active");
+    autoScrollActive = true;
+  });
+
+  track.addEventListener("mouseup", () => {
+    isDown = false;
+    track.classList.remove("active");
+    setTimeout(() => {
+      if (!isDown) autoScrollActive = true;
+    }, 1200);
+  });
+
+  track.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 1.3;
+    let newScroll = scrollLeft - walk;
+    newScroll = getInfinitePos(newScroll);
+    track.scrollLeft = newScroll;
+    scrollPos = newScroll;
+  });
+
+  // Interação de Toque (Mobile Swipe)
+  track.addEventListener("touchstart", (e) => {
+    isDown = true;
+    startX = e.touches[0].pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    autoScrollActive = false;
+  }, { passive: true });
+
+  track.addEventListener("touchend", () => {
+    isDown = false;
+    setTimeout(() => {
+      if (!isDown) autoScrollActive = true;
+    }, 1200);
+  }, { passive: true });
+
+  track.addEventListener("touchmove", (e) => {
+    if (!isDown) return;
+    const x = e.touches[0].pageX - track.offsetLeft;
+    const walk = (x - startX) * 1.3;
+    let newScroll = scrollLeft - walk;
+    newScroll = getInfinitePos(newScroll);
+    track.scrollLeft = newScroll;
+    scrollPos = newScroll;
+  }, { passive: true });
+
+  track.addEventListener("mouseenter", () => {
+    if (!isDown) autoScrollActive = false;
+  });
+
+  track.addEventListener("mouseleave", () => {
+    if (!isDown) autoScrollActive = true;
+  });
+
+  // Loop de Auto-Scroll Suave Contínuo
+  function autoScrollLoop() {
+    if (autoScrollActive && !isDown) {
+      scrollPos += scrollSpeed;
+      scrollPos = getInfinitePos(scrollPos);
+      track.scrollLeft = scrollPos;
+    } else {
+      scrollPos = track.scrollLeft;
+    }
+    requestAnimationFrame(autoScrollLoop);
+  }
+
+  requestAnimationFrame(autoScrollLoop);
 }
 
 // ─── HANDLERS ───────────────────────────────────────────────────
