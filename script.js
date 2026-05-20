@@ -431,7 +431,7 @@ function buildVideoHTML(step) {
     <div class="video-placeholder">
       <div class="video-mock">
         <div class="video-play-btn">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#0a0e17">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#0a0804">
             <polygon points="6,3 20,12 6,21" />
           </svg>
         </div>
@@ -839,7 +839,7 @@ const COMPLIANCE_CONTENT = {
       <h4>4. Alterações nos Termos</h4>
       <p>A Arche Labs reserva-se o direito de alterar estes Termos de Uso a qualquer momento, sem aviso prévio. O uso continuado da ferramenta após qualquer modificação constitui aceitação dos novos termos.</p>
 
-      <p style="margin-top: 20px; color: #64748b; font-size: 12px;">Última atualização: maio de 2026.</p>
+      <p style="margin-top: 20px; color: var(--text-muted); font-size: 12px;">Última atualização: maio de 2026.</p>
     `,
   },
   privacidade: {
@@ -860,7 +860,7 @@ const COMPLIANCE_CONTENT = {
       <h4>5. Alterações nesta Política</h4>
       <p>A Arche Labs pode atualizar esta Política de Privacidade periodicamente. Recomendamos que você a consulte regularmente para se manter informado sobre como protegemos suas informações.</p>
 
-      <p style="margin-top: 20px; color: #64748b; font-size: 12px;">Última atualização: maio de 2026.</p>
+      <p style="margin-top: 20px; color: var(--text-muted); font-size: 12px;">Última atualização: maio de 2026.</p>
     `,
   },
 };
