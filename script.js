@@ -800,11 +800,12 @@ function handleNext() {
 }
 
 // ─── BOOT BLINDADO ──────────────────────────────────────────────
-// Use ?direct=1 na URL para pular direto à landing page (ex: anúncios)
+// Use ?direct=1 na URL ou acesse via oferta.html para pular direto à landing page
 function bootQuiz() {
   const params = new URLSearchParams(window.location.search);
+  const isDirectPage = window.location.pathname.includes("oferta");
 
-  if (params.get("direct") === "1") {
+  if (params.get("direct") === "1" || isDirectPage) {
     pushDataLayer({ event: "direct_landing", source: params.get("utm_source") || "unknown" });
     renderResult();
     return;
@@ -817,4 +818,97 @@ if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", bootQuiz);
 } else {
   bootQuiz();
+}
+
+// ─── MODAIS DE COMPLIANCE (Termos & Privacidade) ────────────────
+
+const COMPLIANCE_CONTENT = {
+  termos: {
+    title: "Termos de Uso",
+    body: `
+      <h4>1. Natureza do Serviço</h4>
+      <p>O diagnóstico gerado pelo Quiz Financeiro Hermes Wallet é uma ferramenta de caráter <strong>exclusivamente informativo e educativo</strong>. Ele NÃO constitui aconselhamento financeiro, consultoria de investimentos, recomendação de produtos financeiros ou promessa de retorno financeiro de qualquer natureza.</p>
+
+      <h4>2. Isenção de Responsabilidade</h4>
+      <p>A Arche Labs não se responsabiliza por quaisquer decisões financeiras, investimentos, aquisições ou ações tomadas pelo usuário com base nas informações, diagnósticos ou recomendações apresentadas pela ferramenta. O uso das informações fornecidas é de <strong>inteira responsabilidade do usuário</strong>.</p>
+      <p>Em nenhuma hipótese a Arche Labs será responsável por danos diretos, indiretos, incidentais, consequenciais ou punitivos decorrentes do uso desta ferramenta.</p>
+
+      <h4>3. Propriedade Intelectual</h4>
+      <p>Todo o conteúdo, design, lógica de funcionamento do quiz, textos, gráficos e a marca <strong>Hermes Wallet</strong> são propriedade intelectual exclusiva da <strong>Arche Labs</strong>. É expressamente proibida a reprodução, cópia, distribuição ou utilização não autorizada, total ou parcial, de qualquer elemento deste site sem prévia autorização por escrito da Arche Labs.</p>
+
+      <h4>4. Alterações nos Termos</h4>
+      <p>A Arche Labs reserva-se o direito de alterar estes Termos de Uso a qualquer momento, sem aviso prévio. O uso continuado da ferramenta após qualquer modificação constitui aceitação dos novos termos.</p>
+
+      <p style="margin-top: 20px; color: #64748b; font-size: 12px;">Última atualização: maio de 2026.</p>
+    `,
+  },
+  privacidade: {
+    title: "Políticas de Privacidade",
+    body: `
+      <h4>1. Dados Coletados</h4>
+      <p>Coletamos dados de interação durante o uso do Quiz Financeiro, incluindo suas respostas às perguntas e padrões de navegação. Esses dados são utilizados exclusivamente para <strong>personalizar sua experiência</strong>, gerar seu diagnóstico financeiro e aprimorar continuamente nosso sistema.</p>
+
+      <h4>2. Ferramentas de Análise e Marketing</h4>
+      <p>Utilizamos ferramentas de análise e marketing digital, incluindo o <strong>Meta/Facebook Pixel</strong> e o <strong>Google Tag Manager (GTM)</strong>, para fins de remarketing, mensuração de conversão e otimização de campanhas publicitárias. Essas ferramentas podem coletar dados de navegação através de cookies e tecnologias similares.</p>
+
+      <h4>3. Compartilhamento de Dados</h4>
+      <p>Seus dados pessoais não são vendidos, alugados ou cedidos a terceiros. O compartilhamento ocorre exclusivamente com as plataformas de análise mencionadas acima, nos limites necessários para o funcionamento das ferramentas de marketing.</p>
+
+      <h4>4. Seus Direitos</h4>
+      <p>Você tem o direito de solicitar a <strong>exclusão de qualquer dado pessoal</strong> coletado a qualquer momento. Para exercer esse direito, envie um e-mail para <a href="mailto:suporte@archelabs.vip">suporte@archelabs.vip</a> com o assunto "Exclusão de Dados" e atenderemos sua solicitação no prazo de até 15 dias úteis.</p>
+
+      <h4>5. Alterações nesta Política</h4>
+      <p>A Arche Labs pode atualizar esta Política de Privacidade periodicamente. Recomendamos que você a consulte regularmente para se manter informado sobre como protegemos suas informações.</p>
+
+      <p style="margin-top: 20px; color: #64748b; font-size: 12px;">Última atualização: maio de 2026.</p>
+    `,
+  },
+};
+
+/** Injeta o container do modal no DOM (uma única vez) */
+function injectComplianceModal() {
+  if (document.getElementById("compliance-modal")) return;
+  const overlay = document.createElement("div");
+  overlay.id = "compliance-modal";
+  overlay.className = "compliance-modal-overlay";
+  overlay.innerHTML = `
+    <div class="compliance-modal-card">
+      <div class="compliance-modal-header">
+        <h3 id="compliance-modal-title"></h3>
+        <button class="compliance-modal-close" onclick="closeComplianceModal()" aria-label="Fechar">&times;</button>
+      </div>
+      <div class="compliance-modal-body" id="compliance-modal-body"></div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  // Fechar ao clicar no backdrop
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeComplianceModal();
+  });
+
+  // Fechar com ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeComplianceModal();
+  });
+}
+
+/** Abre o modal de compliance */
+function openComplianceModal(key) {
+  injectComplianceModal();
+  const data = COMPLIANCE_CONTENT[key];
+  if (!data) return;
+  document.getElementById("compliance-modal-title").textContent = data.title;
+  document.getElementById("compliance-modal-body").innerHTML = data.body;
+  document.getElementById("compliance-modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+/** Fecha o modal de compliance */
+function closeComplianceModal() {
+  const modal = document.getElementById("compliance-modal");
+  if (modal) {
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+  }
 }
