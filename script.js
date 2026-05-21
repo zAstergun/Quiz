@@ -1051,7 +1051,7 @@ function renderResult() {
 
                   <ul class="pricing-glass__features">
                     <li><span class="feature-check">✓</span> Sistema financeiro completo no Notion</li>
-                    <li><span class="feature-check">✓</span> 4 videoaulas passo a passo</li>
+                    <li><span class="feature-check">✓</span> Videoaulas passo a passo</li>
                     <li><span class="feature-check">✓</span> Dashboard com alertas inteligentes</li>
                     <li><span class="feature-check">✓</span> Metas visuais e progresso mensal</li>
                     <li><span class="feature-check">✓</span> Simulador de investimentos</li>
@@ -1235,7 +1235,7 @@ function initCarousel(trackId) {
   let autoScrollActive = true;
   let scrollSpeed = 0.45; // Velocidade bem lenta e suave
   let scrollPos = track.scrollLeft;
-  
+
   // Como duplicamos, a largura real do conteúdo original é exatamente metade
   let halfWidth = track.scrollWidth / 2;
 
