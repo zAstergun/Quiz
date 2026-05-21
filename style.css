@@ -2015,6 +2015,8 @@ button {
     color: var(--text-secondary);
     max-width: 520px;
     margin: 0 auto 16px;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 /* CTA Group */
@@ -3552,18 +3554,15 @@ button {
 /* ─────────── RESPONSIVE ─────────── */
 @media (max-width: 768px) {
     .mockup-showcase {
-        margin: 20px auto 28px;
-        padding: 0 12px;
+        margin: 40px auto 40px;
+        padding: 0 24px;
+        box-sizing: border-box;
     }
 
     .mockup-composition {
-        padding-bottom: 64%;
+        padding-bottom: 45%;
         min-height: auto;
-    }
-
-    .mockup-notebook {
-        width: 72%;
-        transform: translateX(-50%) translateZ(-60px) rotateY(0deg) rotateX(5deg);
+        transform: rotateX(10deg);
     }
 
     .mockup-notebook__screen {
@@ -3589,12 +3588,6 @@ button {
         height: 3px;
     }
 
-    .mockup-tablet {
-        width: 30%;
-        left: 0;
-        transform: translateZ(40px) rotateY(5deg) rotateX(5deg);
-    }
-
     .mockup-tablet__body {
         border-radius: 10px;
         padding: 4px;
@@ -3602,13 +3595,6 @@ button {
 
     .mockup-tablet__display {
         border-radius: 7px;
-    }
-
-    .mockup-phone {
-        width: 10%;
-        right: 0;
-        left: auto;
-        transform: translateZ(40px) rotateY(-5deg) rotateX(5deg);
     }
 
     .mockup-phone__body {
@@ -3633,18 +3619,15 @@ button {
 
 @media (max-width: 480px) {
     .mockup-showcase {
-        margin: 12px auto 18px;
-        padding: 0 6px;
+        margin: 32px auto 32px;
+        padding: 0 16px;
+        box-sizing: border-box;
     }
 
     .mockup-composition {
-        padding-bottom: 68%;
+        padding-bottom: 45%;
         min-height: auto;
-    }
-
-    .mockup-notebook {
-        width: 70%;
-        transform: translateX(-50%) translateZ(-40px) rotateY(0deg) rotateX(3deg);
+        transform: rotateX(10deg);
     }
 
     .mockup-notebook__screen {
@@ -3661,12 +3644,6 @@ button {
         height: 2px;
     }
 
-    .mockup-tablet {
-        width: 30%;
-        left: 0;
-        transform: translateZ(20px) rotateY(3deg) rotateX(3deg);
-    }
-
     .mockup-tablet__body {
         border-radius: 7px;
         padding: 3px;
@@ -3674,13 +3651,6 @@ button {
 
     .mockup-tablet__display {
         border-radius: 5px;
-    }
-
-    .mockup-phone {
-        width: 10%;
-        right: 0;
-        left: auto;
-        transform: translateZ(20px) rotateY(-3deg) rotateX(3deg);
     }
 
     .mockup-phone__body {
