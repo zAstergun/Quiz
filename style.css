@@ -1552,7 +1552,6 @@ button {
     position: absolute;
     inset: 0;
     width: 100%;
-    max-width: 1000px;
     margin: 0 auto;
     height: 100%;
     overflow: hidden;
@@ -1578,7 +1577,7 @@ button {
 }
 
 .light-ray__core--narrow {
-    width: 4%;
+    width: 10%;
     clip-path: polygon(0% 0%, 100% 0%, 900% 100%, -800% 100%);
     background: linear-gradient(to bottom,
             rgba(201, 168, 76, 0.5) 0%,
@@ -1596,7 +1595,7 @@ button {
 }
 
 .light-ray__core--mid {
-    width: 6%;
+    width: 15%;
     clip-path: polygon(0% 0%, 100% 0%, 1000% 100%, -900% 100%);
     background: linear-gradient(to bottom,
             rgba(201, 168, 76, 0.22) 0%,
@@ -1612,7 +1611,7 @@ button {
 }
 
 .light-ray__core--thin {
-    width: 2%;
+    width: 5%;
     clip-path: polygon(0% 0%, 100% 0%, 700% 100%, -600% 100%);
     background: linear-gradient(to bottom,
             rgba(232, 197, 71, 0.3) 0%,
@@ -1627,21 +1626,21 @@ button {
 
 /* Individual ray positioning */
 .light-ray--1 {
-    width: 55%;
+    width: 60%;
     left: 50%;
-    transform: rotate(12deg);
+    transform: translateX(-50%) rotate(0deg);
 }
 
 .light-ray--2 {
-    width: 35%;
-    left: 66%;
-    transform: rotate(38deg);
+    width: 50%;
+    left: 50%;
+    transform: translateX(-50%) rotate(-35deg);
 }
 
 .light-ray--3 {
-    width: 28%;
-    left: 64%;
-    transform: rotate(-18deg);
+    width: 50%;
+    left: 50%;
+    transform: translateX(-50%) rotate(35deg);
 }
 
 .light-ray--1 .light-ray__core {
@@ -1690,7 +1689,7 @@ button {
     opacity: 0.12;
     background: radial-gradient(ellipse at top center,
             rgba(201, 168, 76, 0.2) 0%,
-            rgba(201, 168, 76, 0) 70%);
+            rgba(201, 168, 76, 0) 90%);
     filter: blur(40px);
     pointer-events: none;
     animation: ambientPulse 6s ease-in-out infinite;
@@ -3333,7 +3332,7 @@ button {
     position: absolute;
     width: 32%;
     bottom: 0;
-    left: -10%;
+    left: 0;
     z-index: 2;
     transform: translateZ(60px) rotateY(20deg) rotateX(5deg);
     transform-style: preserve-3d;
@@ -3395,7 +3394,7 @@ button {
     position: absolute;
     width: 11%;
     bottom: 0;
-    right: -8%;
+    right: 8%;
     z-index: 2;
     transform: translateZ(60px) rotateY(-20deg) rotateX(5deg);
     transform-style: preserve-3d;
@@ -3592,7 +3591,7 @@ button {
 
     .mockup-tablet {
         width: 30%;
-        left: -2%;
+        left: 0;
         transform: translateZ(40px) rotateY(5deg) rotateX(5deg);
     }
 
@@ -3607,7 +3606,7 @@ button {
 
     .mockup-phone {
         width: 10%;
-        right: -2%;
+        right: 0;
         left: auto;
         transform: translateZ(40px) rotateY(-5deg) rotateX(5deg);
     }
