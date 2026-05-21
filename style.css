@@ -3193,6 +3193,7 @@ button {
     padding: 0 20px;
     position: relative;
     z-index: 5;
+    perspective: 1200px;
 }
 
 .mockup-composition {
@@ -3200,8 +3201,9 @@ button {
     width: 100%;
     /* Height driven by content — padding-bottom for aspect ratio */
     padding-bottom: 58%;
-    perspective: 1200px;
-    perspective-origin: 50% 40%;
+    transform-style: preserve-3d;
+    transform: rotateX(12deg) rotateY(-12deg) rotateZ(2deg);
+    animation: smoothFloat 6s ease-in-out infinite;
 }
 
 /* ─────────────── NOTEBOOK (BEHIND, CENTER) ─────────────── */
@@ -3210,7 +3212,7 @@ button {
     width: 75%;
     bottom: 0;
     left: 50%;
-    transform: translateX(-50%) rotateX(2deg);
+    transform: translateX(-50%) translateZ(-80px) rotateY(12deg) rotateX(8deg) rotateZ(-2deg);
     transform-style: preserve-3d;
     z-index: 1;
 }
@@ -3298,7 +3300,7 @@ button {
     bottom: 0;
     left: 0;
     z-index: 2;
-    transform: rotateY(6deg) rotateX(1deg);
+    transform: translateZ(60px) rotateY(22deg) rotateX(2deg);
     transform-style: preserve-3d;
 }
 
@@ -3362,7 +3364,7 @@ button {
     bottom: 0;
     right: 2%;
     z-index: 2;
-    transform: rotateY(-8deg) rotateX(1deg);
+    transform: translateZ(80px) rotateY(-8deg) rotateX(1deg);
     transform-style: preserve-3d;
 }
 
@@ -3447,33 +3449,52 @@ button {
 @keyframes mockupFadeIn {
     from {
         opacity: 0;
-        transform: translateX(-50%) rotateX(2deg) translateY(30px);
+        transform: translateX(-50%) translateZ(-80px) rotateY(12deg) rotateX(8deg) rotateZ(-2deg) translateY(30px);
     }
     to {
         opacity: 1;
-        transform: translateX(-50%) rotateX(2deg) translateY(0);
+        transform: translateX(-50%) translateZ(-80px) rotateY(12deg) rotateX(8deg) rotateZ(-2deg) translateY(0);
     }
 }
 
 @keyframes mockupFadeInLeft {
     from {
         opacity: 0;
-        transform: rotateY(6deg) rotateX(1deg) translateX(-20px) translateY(20px);
+        transform: translateZ(60px) rotateY(22deg) rotateX(2deg) translateX(-20px) translateY(20px);
     }
     to {
         opacity: 1;
-        transform: rotateY(6deg) rotateX(1deg) translateX(0) translateY(0);
+        transform: translateZ(60px) rotateY(22deg) rotateX(2deg) translateX(0) translateY(0);
     }
 }
 
 @keyframes mockupFadeInRight {
     from {
         opacity: 0;
-        transform: rotateY(-8deg) rotateX(1deg) translateX(20px) translateY(20px);
+        transform: translateZ(80px) rotateY(-8deg) rotateX(1deg) translateX(20px) translateY(20px);
     }
     to {
         opacity: 1;
-        transform: rotateY(-8deg) rotateX(1deg) translateX(0) translateY(0);
+        transform: translateZ(80px) rotateY(-8deg) rotateX(1deg) translateX(0) translateY(0);
+    }
+}
+
+/* ─────────── SMOOTH FLOAT ANIMATION (3D) ─────────── */
+@keyframes smoothFloat {
+    0%, 100% {
+        transform: rotateX(12deg) rotateY(-12deg) rotateZ(2deg) translateY(0);
+    }
+    50% {
+        transform: rotateX(12deg) rotateY(-12deg) rotateZ(2deg) translateY(-20px);
+    }
+}
+
+@keyframes smoothFloatMobile {
+    0%, 100% {
+        transform: rotateX(5deg) rotateY(-5deg) rotateZ(1deg) translateY(0);
+    }
+    50% {
+        transform: rotateX(5deg) rotateY(-5deg) rotateZ(1deg) translateY(-12px);
     }
 }
 
@@ -3498,6 +3519,8 @@ button {
 
     .mockup-composition {
         padding-bottom: 64%;
+        transform: rotateX(5deg) rotateY(-5deg) rotateZ(1deg);
+        animation: smoothFloatMobile 6s ease-in-out infinite;
     }
 
     .mockup-notebook {
@@ -3574,6 +3597,8 @@ button {
 
     .mockup-composition {
         padding-bottom: 68%;
+        transform: rotateX(5deg) rotateY(-5deg) rotateZ(1deg);
+        animation: smoothFloatMobile 6s ease-in-out infinite;
     }
 
     .mockup-notebook {
