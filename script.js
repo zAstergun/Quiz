@@ -783,7 +783,7 @@ function renderResult() {
   `).join("");
 
   mount(/* html */ `
-    <div class="quiz-wrapper" style="overflow-y: auto; max-height: 100vh;">
+    <div class="quiz-wrapper" style="overflow-y: auto; overflow-x: hidden; max-height: 100vh;">
 
       <!-- ═══════ HERO ═══════ -->
       <section class="result-hero--premium">
@@ -804,6 +804,52 @@ function renderResult() {
             Com base nas suas respostas, identificamos exatamente o que você precisa
             para retomar o controle do seu dinheiro e começar a construir patrimônio.
           </p>
+
+          <!-- ═══════ DEVICE MOCKUP SHOWCASE ═══════ -->
+          <div class="mockup-showcase reveal-blur reveal-delay-3" id="mockup-showcase">
+            <div class="mockup-composition">
+
+              <!-- 1. NOTEBOOK (MacBook Style) -->
+              <div class="mockup-notebook group">
+                <div class="mockup-notebook__screen">
+                  <div class="mockup-notebook__webcam"></div>
+                  <div class="mockup-notebook__display">
+                    <img src="assets/desktop.png"
+                         alt="Hermes Wallet — Visão Desktop"
+                         class="mockup-notebook__img" />
+                  </div>
+                </div>
+                <div class="mockup-notebook__base">
+                  <div class="mockup-notebook__notch"></div>
+                </div>
+              </div>
+
+              <!-- 2. TABLET (iPad Style) -->
+              <div class="mockup-tablet group">
+                <div class="mockup-tablet__body">
+                  <div class="mockup-tablet__webcam"></div>
+                  <div class="mockup-tablet__display">
+                    <img src="assets/tablet.png"
+                         alt="Hermes Wallet — Visão Tablet"
+                         class="mockup-tablet__img" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. SMARTPHONE (iPhone Style) -->
+              <div class="mockup-phone group">
+                <div class="mockup-phone__body">
+                  <div class="mockup-phone__display">
+                    <div class="mockup-phone__notch"></div>
+                    <img src="assets/mobile.png"
+                         alt="Hermes Wallet — Visão Mobile"
+                         class="mockup-phone__img" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
 
           <div class="cta-group reveal-blur reveal-delay-4">
             <a
