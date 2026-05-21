@@ -1143,7 +1143,6 @@ function renderResult() {
 
       <!-- ═══════ FINAL CTA ═══════ -->
       <section class="final-cta--premium">
-        ${lightRaysHTML}
         <div class="results-section__inner" style="position: relative; z-index: 10;">
           <h2 class="final-cta__heading reveal-blur">
             Pronto para <span class="gradient-text">retomar o controle</span> das suas finanças?
