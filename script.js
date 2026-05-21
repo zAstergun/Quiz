@@ -821,8 +821,6 @@ function renderResult() {
             <a
               id="btn-checkout-hero"
               href="${CHECKOUT_URL}"
-              target="_blank"
-              rel="noopener noreferrer"
               class="btn-primary btn-glow"
               style="text-decoration: none;"
             >
@@ -1067,8 +1065,6 @@ function renderResult() {
                   <a
                     id="btn-checkout-pricing"
                     href="${CHECKOUT_URL}"
-                    target="_blank"
-                    rel="noopener noreferrer"
                     class="btn-primary btn-glow"
                     style="text-decoration: none; display: flex;"
                   >
@@ -1152,8 +1148,6 @@ function renderResult() {
             <a
               id="btn-checkout-final"
               href="${CHECKOUT_URL}"
-              target="_blank"
-              rel="noopener noreferrer"
               class="btn-primary btn-glow btn-cta"
               style="text-decoration: none; display: flex;"
             >
