@@ -3519,8 +3519,6 @@ button {
 
     .mockup-composition {
         padding-bottom: 64%;
-        transform: rotateX(5deg) rotateY(-5deg) rotateZ(1deg);
-        animation: smoothFloatMobile 6s ease-in-out infinite;
     }
 
     .mockup-notebook {
@@ -3597,8 +3595,6 @@ button {
 
     .mockup-composition {
         padding-bottom: 68%;
-        transform: rotateX(5deg) rotateY(-5deg) rotateZ(1deg);
-        animation: smoothFloatMobile 6s ease-in-out infinite;
     }
 
     .mockup-notebook {
@@ -3635,7 +3631,7 @@ button {
 
     .mockup-phone {
         width: 13%;
-        right: 1%;
+        right: 2%;
     }
 
     .mockup-phone__body {
