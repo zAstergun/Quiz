@@ -1181,62 +1181,92 @@ button {
     margin-bottom: 36px;
 }
 
-/* Benefits Grid */
-.benefits-grid {
+/* Features Split-Screen Layout */
+.features-split {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
+    grid-template-columns: 4fr 6fr;
+    gap: 48px;
+    align-items: start;
 }
 
-.benefit-card {
-    background: var(--bg-card);
-    border: 1px solid rgba(201, 168, 76, 0.08);
-    border-radius: var(--radius-md);
-    padding: 30px 24px;
-    transition: all var(--transition-normal);
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--shadow-gold-inset);
+.features-split__left .section-badge {
+    margin-bottom: 20px;
 }
 
-.benefit-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--gradient-main);
-    opacity: 0;
-    transition: opacity var(--transition-normal);
+.features-split__left .section-title {
+    text-align: left;
+    margin-bottom: 16px;
 }
 
-.benefit-card:hover {
-    border-color: rgba(201, 168, 76, 0.2);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-glow);
+.features-split__subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 340px;
 }
 
-.benefit-card:hover::before {
-    opacity: 1;
+.features-split__right {
+    display: flex;
+    flex-direction: column;
 }
 
-.benefit-icon {
-    font-size: 36px;
-    margin-bottom: 14px;
+/* Feature List Item */
+.feature-list-item {
+    display: flex;
+    gap: 24px;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+    transition: transform 0.3s ease, background 0.3s ease;
+    border-radius: var(--radius-sm);
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
-.benefit-card h3 {
-    font-size: 16px;
+.feature-list-item:last-child {
+    border-bottom: none;
+}
+
+.feature-list-item:hover {
+    transform: translateY(-2px);
+}
+
+.feature-list-item__icon {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.12);
+    border-radius: var(--radius-sm);
+    transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.feature-list-item:hover .feature-list-item__icon {
+    background: rgba(201, 168, 76, 0.14);
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.15), 0 0 40px rgba(201, 168, 76, 0.05);
+}
+
+.feature-list-item__text h3 {
+    font-size: 17px;
     font-weight: 700;
-    margin-bottom: 8px;
     color: var(--gold-100);
+    margin: 0 0 6px;
+    transition: color 0.3s ease;
 }
 
-.benefit-card p {
+.feature-list-item:hover .feature-list-item__text h3 {
+    color: var(--gold-200);
+}
+
+.feature-list-item__text p {
     font-size: 14px;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.65;
+    margin: 0;
 }
 
 /* Sales Copy */
@@ -3667,6 +3697,39 @@ button {
         height: 3px;
         width: 30%;
         top: 1px;
+    }
+}
+
+/* ─── Features Split Responsive ─── */
+@media (max-width: 768px) {
+    .features-split {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .features-split__left {
+        text-align: center;
+    }
+
+    .features-split__left .section-title {
+        text-align: center !important;
+    }
+
+    .features-split__subtitle {
+        max-width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .feature-list-item {
+        gap: 16px;
+        padding: 24px 0;
+    }
+
+    .feature-list-item__icon {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
     }
 }
 

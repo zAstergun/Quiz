@@ -704,40 +704,6 @@ function renderResult() {
       <div class="light-rays-ambient"></div>
     </div>`;
 
-  // ── Benefit card builder ──
-  function benefitCard(emoji, title, desc, wide = false, delay = 0) {
-    return `
-      <div class="card-glass ${wide ? 'card-glass--wide' : ''} reveal-blur reveal-delay-${delay}">
-        <div class="card-glass__inner">
-          <div class="card-glass__grid"></div>
-          <div class="card-glass__glow"></div>
-          <div class="card-glass__spotlight"></div>
-          <div class="card-glass__content">
-            <span class="benefit-glass__icon">${emoji}</span>
-            <h3 class="benefit-glass__title">${title}</h3>
-            <p class="benefit-glass__desc">${desc}</p>
-          </div>
-        </div>
-        <div class="card-glass__border"></div>
-        <svg class="card-glass__shine" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="shine-${delay}" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="transparent"/>
-              <stop offset="12%" stop-color="rgba(201,168,76,0.15)"/>
-              <stop offset="28%" stop-color="rgba(232,197,71,0.3)"/>
-              <stop offset="34%" stop-color="rgba(201,168,76,0.15)"/>
-              <stop offset="50%" stop-color="transparent"/>
-              <stop offset="100%" stop-color="transparent"/>
-            </linearGradient>
-            <clipPath id="topClip-${delay}">
-              <rect x="0" y="0" width="100%" height="21"/>
-            </clipPath>
-          </defs>
-          <rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="20" ry="20" fill="none" stroke="url(#shine-${delay})" stroke-width="1" clip-path="url(#topClip-${delay})"/>
-        </svg>
-      </div>`;
-  }
-
   // ── FAQ data ──
   const faqs = [
     { q: "Para quem é o Hermes Wallet?", a: "Para qualquer brasileiro que quer retomar o controle financeiro — seja quem está endividado, quem vive no limite ou quem quer organizar para investir mais." },
@@ -895,21 +861,60 @@ function renderResult() {
 
       <div class="section-divider"></div>
 
-      <!-- ═══════ BENEFITS ═══════ -->
+      <!-- ═══════ BENEFITS (Split-Screen) ═══════ -->
       <section class="results-section" id="section-benefits">
         <div class="results-section__inner">
-          <div class="section-badge reveal-blur">
-            <span class="badge-shine badge-shine--section">✨ Funcionalidades</span>
-          </div>
-          <h2 class="section-title heading-fade reveal-blur" style="margin-bottom: 32px;">
-            O que o Hermes Wallet vai fazer por você
-          </h2>
+          <div class="features-split">
 
-          <div class="benefits-premium">
-            ${benefitCard("📊", "Dashboard Completo", "Visão total de receitas, despesas e saldo — tudo atualizado em tempo real numa interface visual e intuitiva.", true, 1)}
-            ${benefitCard("🎯", "Metas Inteligentes", "Defina objetivos financeiros e acompanhe o progresso com gráficos visuais mês a mês.", false, 2)}
-            ${benefitCard("🔔", "Alertas Automáticos", "Receba avisos antes de estourar limites. Nunca mais seja pego de surpresa por contas inesperadas.", false, 3)}
-            ${benefitCard("💰", "Planejador de Investimentos", "Simulador integrado que mostra quanto e onde investir a partir do que sobra no seu orçamento mensal.", true, 4)}
+            <!-- Left Column: Badge + Title -->
+            <div class="features-split__left reveal-blur reveal-delay-1">
+              <div class="section-badge">
+                <span class="badge-shine badge-shine--section">✨ Funcionalidades</span>
+              </div>
+              <h2 class="section-title heading-fade" style="text-align: left; margin-bottom: 16px;">
+                O que o Hermes Wallet vai fazer por você
+              </h2>
+              <p class="features-split__subtitle">
+                Um sistema financeiro completo, visual e intuitivo — pensado para quem quer resultados reais.
+              </p>
+            </div>
+
+            <!-- Right Column: Stacked Features -->
+            <div class="features-split__right">
+
+              <div class="feature-list-item reveal-blur reveal-delay-1">
+                <div class="feature-list-item__icon">📊</div>
+                <div class="feature-list-item__text">
+                  <h3>Dashboard Completo</h3>
+                  <p>Visão total de receitas, despesas e saldo — tudo atualizado em tempo real numa interface visual e intuitiva.</p>
+                </div>
+              </div>
+
+              <div class="feature-list-item reveal-blur reveal-delay-2">
+                <div class="feature-list-item__icon">🎯</div>
+                <div class="feature-list-item__text">
+                  <h3>Metas Inteligentes</h3>
+                  <p>Defina objetivos financeiros e acompanhe o progresso com gráficos visuais mês a mês.</p>
+                </div>
+              </div>
+
+              <div class="feature-list-item reveal-blur reveal-delay-3">
+                <div class="feature-list-item__icon">🔔</div>
+                <div class="feature-list-item__text">
+                  <h3>Alertas Automáticos</h3>
+                  <p>Receba avisos antes de estourar limites. Nunca mais seja pego de surpresa por contas inesperadas.</p>
+                </div>
+              </div>
+
+              <div class="feature-list-item reveal-blur reveal-delay-4">
+                <div class="feature-list-item__icon">💰</div>
+                <div class="feature-list-item__text">
+                  <h3>Planejador de Investimentos</h3>
+                  <p>Simulador integrado que mostra quanto e onde investir a partir do que sobra no seu orçamento mensal.</p>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
