@@ -1022,8 +1022,8 @@ function renderResult() {
 
       <div class="section-divider"></div>
 
-      <!-- ═══════ PRICING ═══════ -->
-      <section class="results-section">
+      <!-- ═══════ PRICING + GUARANTEE (Desktop 2-col) ═══════ -->
+      <section class="results-section results-section--pricing-guarantee">
         <div class="results-section__inner">
           <div class="section-badge reveal-blur">
             <span class="badge-shine badge-shine--section">💎 Investimento</span>
@@ -1032,86 +1032,109 @@ function renderResult() {
             Comece a transformação hoje
           </h2>
 
-          <div class="pricing-premium-wrapper reveal-blur">
-            <div class="pricing-glass">
-              <div class="pricing-glass__inner">
-                <div class="pricing-glass__grid"></div>
-                <div class="pricing-glass__glow"></div>
+          <div class="pricing-guarantee-grid">
+            <!-- Pricing Column -->
+            <div class="pricing-premium-wrapper reveal-blur">
+              <div class="pricing-glass">
+                <div class="pricing-glass__inner">
+                  <div class="pricing-glass__grid"></div>
+                  <div class="pricing-glass__glow"></div>
 
-                <div class="pricing-glass__badge">
-                  <span class="badge-shine badge-shine--pricing">MAIS POPULAR</span>
-                </div>
-
-                <div class="pricing-glass__content">
-                  <h3 class="pricing-glass__name">Hermes Wallet Premium</h3>
-                  <div class="pricing-glass__old">De <s>R$ 97,00</s></div>
-                  <div class="pricing-glass__price-row">
-                    <span class="pricing-glass__currency">R$</span>
-                    <span class="pricing-glass__value">25</span>
-                    <span class="pricing-glass__cents">,00</span>
+                  <div class="pricing-glass__badge">
+                    <span class="badge-shine badge-shine--pricing">MAIS POPULAR</span>
                   </div>
-                  <div class="pricing-glass__period">pagamento único • acesso vitalício</div>
 
-                  <ul class="pricing-glass__features">
-                    <li><span class="feature-check">✓</span> Sistema financeiro completo no Notion</li>
-                    <li><span class="feature-check">✓</span> Videoaulas passo a passo</li>
-                    <li><span class="feature-check">✓</span> Dashboard com alertas inteligentes</li>
-                    <li><span class="feature-check">✓</span> Metas visuais e progresso mensal</li>
-                    <li><span class="feature-check">✓</span> Simulador de investimentos</li>
-                    <li><span class="feature-check">✓</span> Acesso imediato via plataforma Kiwify</li>
-                    <li><span class="feature-check">✓</span> Atualizações gratuitas para sempre</li>
-                  </ul>
+                  <div class="pricing-glass__content">
+                    <h3 class="pricing-glass__name">Hermes Wallet Premium</h3>
+                    <div class="pricing-glass__old">De <s>R$ 97,00</s></div>
+                    <div class="pricing-glass__price-row">
+                      <span class="pricing-glass__currency">R$</span>
+                      <span class="pricing-glass__value">25</span>
+                      <span class="pricing-glass__cents">,00</span>
+                    </div>
+                    <div class="pricing-glass__period">pagamento único • acesso vitalício</div>
 
-                  <a
-                    id="btn-checkout-pricing"
-                    href="${CHECKOUT_URL}"
-                    class="btn-primary btn-glow"
-                    style="text-decoration: none; display: flex;"
-                  >
-                    Garantir Meu Acesso <span class="btn-arrow">→</span>
-                  </a>
+                    <ul class="pricing-glass__features">
+                      <li><span class="feature-check">✓</span> Sistema financeiro completo no Notion</li>
+                      <li><span class="feature-check">✓</span> Videoaulas passo a passo</li>
+                      <li><span class="feature-check">✓</span> Dashboard com alertas inteligentes</li>
+                      <li><span class="feature-check">✓</span> Metas visuais e progresso mensal</li>
+                      <li><span class="feature-check">✓</span> Simulador de investimentos</li>
+                      <li><span class="feature-check">✓</span> Acesso imediato via plataforma Kiwify</li>
+                      <li><span class="feature-check">✓</span> Atualizações gratuitas para sempre</li>
+                    </ul>
+
+                    <a
+                      id="btn-checkout-pricing"
+                      href="${CHECKOUT_URL}"
+                      class="btn-primary btn-glow"
+                      style="text-decoration: none; display: flex;"
+                    >
+                      Garantir Meu Acesso <span class="btn-arrow">→</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="pricing-glass__border"></div>
+                <svg class="pricing-glass__shine" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="pricingShine" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="transparent"/>
+                      <stop offset="8%" stop-color="transparent"/>
+                      <stop offset="15%" stop-color="rgba(201,168,76,0.2)"/>
+                      <stop offset="30%" stop-color="rgba(232,197,71,0.4)"/>
+                      <stop offset="36%" stop-color="rgba(201,168,76,0.2)"/>
+                      <stop offset="50%" stop-color="transparent"/>
+                      <stop offset="100%" stop-color="transparent"/>
+                    </linearGradient>
+                    <clipPath id="pricingTopClip">
+                      <rect x="0" y="0" width="100%" height="25"/>
+                    </clipPath>
+                  </defs>
+                  <rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="24" ry="24" fill="none" stroke="url(#pricingShine)" stroke-width="1.5" clip-path="url(#pricingTopClip)"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Guarantee + Trust Column -->
+            <div class="guarantee-column reveal-blur">
+              <div class="guarantee-premium">
+                <span class="guarantee-premium__icon">🛡️</span>
+                <h3 class="guarantee-premium__title">Garantia Incondicional de 7 Dias</h3>
+                <p class="guarantee-premium__text">
+                  Teste o Hermes Wallet por 7 dias completos. Se por qualquer motivo
+                  você não ficar satisfeito, devolvemos 100% do seu investimento
+                  — sem perguntas, sem burocracia.
+                </p>
+                <div class="guarantee-premium__badges">
+                  <span class="guarantee-premium__badge">🔒 Compra Segura</span>
+                  <span class="guarantee-premium__badge">⚡ Acesso Imediato</span>
+                  <span class="guarantee-premium__badge">💯 Satisfação Garantida</span>
                 </div>
               </div>
-              <div class="pricing-glass__border"></div>
-              <svg class="pricing-glass__shine" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="pricingShine" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="transparent"/>
-                    <stop offset="8%" stop-color="transparent"/>
-                    <stop offset="15%" stop-color="rgba(201,168,76,0.2)"/>
-                    <stop offset="30%" stop-color="rgba(232,197,71,0.4)"/>
-                    <stop offset="36%" stop-color="rgba(201,168,76,0.2)"/>
-                    <stop offset="50%" stop-color="transparent"/>
-                    <stop offset="100%" stop-color="transparent"/>
-                  </linearGradient>
-                  <clipPath id="pricingTopClip">
-                    <rect x="0" y="0" width="100%" height="25"/>
-                  </clipPath>
-                </defs>
-                <rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="24" ry="24" fill="none" stroke="url(#pricingShine)" stroke-width="1.5" clip-path="url(#pricingTopClip)"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <div class="section-divider"></div>
-
-      <!-- ═══════ GUARANTEE ═══════ -->
-      <section class="results-section">
-        <div class="results-section__inner">
-          <div class="guarantee-premium reveal-blur">
-            <span class="guarantee-premium__icon">🛡️</span>
-            <h3 class="guarantee-premium__title">Garantia Incondicional de 7 Dias</h3>
-            <p class="guarantee-premium__text">
-              Teste o Hermes Wallet por 7 dias completos. Se por qualquer motivo
-              você não ficar satisfeito, devolvemos 100% do seu investimento
-              — sem perguntas, sem burocracia.
-            </p>
-            <div class="guarantee-premium__badges">
-              <span class="guarantee-premium__badge">🔒 Compra Segura</span>
-              <span class="guarantee-premium__badge">⚡ Acesso Imediato</span>
-              <span class="guarantee-premium__badge">💯 Satisfação Garantida</span>
+              <div class="trust-metrics">
+                <div class="trust-metrics__item">
+                  <span class="trust-metrics__icon">👥</span>
+                  <div class="trust-metrics__info">
+                    <strong>12.847+</strong>
+                    <span>clientes satisfeitos</span>
+                  </div>
+                </div>
+                <div class="trust-metrics__item">
+                  <span class="trust-metrics__icon">⭐</span>
+                  <div class="trust-metrics__info">
+                    <strong>4.9/5.0</strong>
+                    <span>nota média</span>
+                  </div>
+                </div>
+                <div class="trust-metrics__item">
+                  <span class="trust-metrics__icon">🔄</span>
+                  <div class="trust-metrics__info">
+                    <strong>< 1%</strong>
+                    <span>taxa de reembolso</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1120,17 +1143,24 @@ function renderResult() {
       <div class="section-divider"></div>
 
       <!-- ═══════ FAQ ═══════ -->
-      <section class="results-section">
+      <section class="results-section results-section--faq">
         <div class="results-section__inner">
-          <div class="section-badge reveal-blur">
-            <span class="badge-shine badge-shine--section">❓ Dúvidas Frequentes</span>
-          </div>
-          <h2 class="section-title heading-fade reveal-blur">
-            Perguntas Frequentes
-          </h2>
+          <div class="faq-desktop-layout">
+            <div class="faq-desktop-left reveal-blur">
+              <div class="section-badge">
+                <span class="badge-shine badge-shine--section">❓ Dúvidas Frequentes</span>
+              </div>
+              <h2 class="section-title heading-fade">
+                Perguntas Frequentes
+              </h2>
+              <p class="faq-desktop-left__desc">
+                Tire suas dúvidas antes de garantir seu acesso. Se precisar de mais informações, estamos à disposição.
+              </p>
+            </div>
 
-          <div class="faq-premium">
-            ${faqHTML}
+            <div class="faq-premium">
+              ${faqHTML}
+            </div>
           </div>
         </div>
       </section>
@@ -1139,10 +1169,14 @@ function renderResult() {
 
       <!-- ═══════ FINAL CTA ═══════ -->
       <section class="final-cta--premium">
+        <div class="final-cta__ambient"></div>
         <div class="results-section__inner" style="position: relative; z-index: 10;">
           <h2 class="final-cta__heading reveal-blur">
             Pronto para <span class="gradient-text">retomar o controle</span> das suas finanças?
           </h2>
+          <p class="final-cta__subtext reveal-blur">
+            Junte-se a mais de 12.000 brasileiros que já transformaram sua relação com o dinheiro.
+          </p>
 
           <div class="cta-group reveal-blur">
             <a
@@ -1153,6 +1187,12 @@ function renderResult() {
             >
               Quero Organizar Minhas Finanças →
             </a>
+          </div>
+
+          <div class="final-cta__trust-row reveal-blur">
+            <span class="final-cta__trust-item">🔒 Compra Segura</span>
+            <span class="final-cta__trust-item">🛡️ Garantia 7 dias</span>
+            <span class="final-cta__trust-item">⚡ Acesso Imediato</span>
           </div>
 
           <span class="final-cta__urgency reveal-blur">⚡ Oferta por tempo limitado</span>

@@ -2026,7 +2026,7 @@ button {
 .result-hero--premium {
     position: relative;
     text-align: center;
-    padding: 40px 0 60px;
+    padding: 40px 0 32px;
     overflow: hidden;
 }
 
@@ -2619,7 +2619,7 @@ button {
 .final-cta--premium {
     position: relative;
     text-align: center;
-    padding: 60px 24px 40px;
+    padding: 48px 20px 32px;
     overflow: hidden;
 }
 
@@ -2666,7 +2666,12 @@ button {
    PREMIUM RESULTS — SECTIONS SPACING
    ============================================ */
 .results-section {
-    padding: 48px 20px;
+    padding: 36px 20px;
+}
+
+#section-stats {
+    padding-top: 8px;
+    padding-bottom: 24px;
 }
 
 .results-section__inner {
@@ -3730,6 +3735,428 @@ button {
         width: 48px;
         height: 48px;
         font-size: 24px;
+    }
+}
+
+/* ============================================
+   PRICING-GUARANTEE GRID (new combined layout)
+   ============================================ */
+.pricing-guarantee-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+}
+
+.pricing-guarantee-grid .pricing-premium-wrapper {
+    max-width: 440px;
+    width: 100%;
+}
+
+.guarantee-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 440px;
+}
+
+.guarantee-column .guarantee-premium {
+    max-width: 100%;
+}
+
+/* ============================================
+   TRUST METRICS (new component)
+   ============================================ */
+.trust-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.trust-metrics__item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid rgba(201, 168, 76, 0.08);
+    border-radius: 16px;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-gold-inset);
+}
+
+.trust-metrics__item:hover {
+    border-color: rgba(201, 168, 76, 0.2);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+.trust-metrics__icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.trust-metrics__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.trust-metrics__info strong {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-200);
+}
+
+.trust-metrics__info span {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   FAQ DESKTOP LAYOUT
+   ============================================ */
+.faq-desktop-layout {
+    display: flex;
+    flex-direction: column;
+}
+
+.faq-desktop-left {
+    margin-bottom: 24px;
+}
+
+.faq-desktop-left .section-title {
+    margin-bottom: 12px;
+}
+
+.faq-desktop-left__desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 420px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* ============================================
+   FINAL CTA ENHANCEMENTS
+   ============================================ */
+.final-cta__ambient {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201, 168, 76, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 70% at 30% 60%, rgba(201, 168, 76, 0.03) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 70% at 70% 40%, rgba(201, 168, 76, 0.03) 0%, transparent 60%);
+}
+
+.final-cta__subtext {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: -8px auto 28px;
+    text-align: center;
+}
+
+.final-cta__trust-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.final-cta__trust-item {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ============================================
+   DESKTOP ENHANCEMENTS (≥ 768px)
+   ============================================ */
+@media (min-width: 768px) {
+
+    /* ─── Sections: More generous spacing ─── */
+    .results-section {
+        padding: 48px 32px;
+    }
+
+    #section-stats {
+        padding-top: 12px;
+        padding-bottom: 32px;
+    }
+
+    .section-divider {
+        max-width: 800px;
+    }
+
+    .section-title {
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    }
+
+    /* ─── Stats Row: Bigger cards, wider ─── */
+    .stats-row {
+        max-width: 780px;
+        gap: 24px;
+    }
+
+    .stat-card {
+        padding: 32px 24px;
+    }
+
+    .stat-card__value {
+        font-size: 2.2rem;
+    }
+
+    .stat-card__label {
+        font-size: 13px;
+    }
+
+    /* ─── FAQ: Side-by-side ─── */
+    .faq-desktop-layout {
+        display: grid;
+        grid-template-columns: 5fr 7fr;
+        gap: 48px;
+        align-items: start;
+    }
+
+    .faq-desktop-left {
+        margin-bottom: 0;
+        position: sticky;
+        top: 40px;
+    }
+
+    .faq-desktop-left .section-badge {
+        text-align: left;
+    }
+
+    .faq-desktop-left .section-title {
+        text-align: left;
+        margin-bottom: 16px;
+    }
+
+    .faq-desktop-left__desc {
+        text-align: left;
+        margin: 0;
+    }
+
+    .faq-premium {
+        max-width: 100%;
+    }
+
+    /* ─── Pricing-Guarantee: 2 column grid ─── */
+    .pricing-guarantee-grid {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 32px;
+        max-width: 920px;
+        margin: 0 auto;
+    }
+
+    .pricing-guarantee-grid .pricing-premium-wrapper {
+        flex: 1;
+        max-width: 480px;
+    }
+
+    .guarantee-column {
+        flex: 1;
+        max-width: 440px;
+        justify-content: center;
+    }
+
+    /* ─── Final CTA: More imposing on desktop ─── */
+    .final-cta--premium {
+        padding: 56px 32px 40px;
+    }
+
+    .final-cta__heading {
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .final-cta__trust-row {
+        gap: 40px;
+    }
+
+    .final-cta__trust-item {
+        font-size: 14px;
+    }
+
+    /* ─── Guarantee: Bigger on desktop ─── */
+    .guarantee-premium {
+        padding: 40px 36px;
+    }
+
+    .guarantee-premium__title {
+        font-size: 22px;
+    }
+
+    .guarantee-premium__text {
+        font-size: 15px;
+    }
+
+    .guarantee-premium__badge {
+        font-size: 13px;
+        padding: 8px 18px;
+    }
+
+    /* ─── Pricing: Bigger typography ─── */
+    .pricing-glass__name {
+        font-size: 24px;
+    }
+
+    .pricing-glass__value {
+        font-size: 72px;
+    }
+
+    .pricing-glass__features li {
+        font-size: 15px;
+        padding: 10px 0;
+    }
+
+    /* ─── Hero: Enhanced ─── */
+    .result-hero--premium {
+        padding: 48px 0 40px;
+    }
+
+    .result-hero__sub {
+        font-size: 17px;
+        max-width: 600px;
+    }
+
+    .cta-group {
+        max-width: 480px;
+    }
+}
+
+/* ============================================
+   LARGE DESKTOP ENHANCEMENTS (≥ 1024px)
+   ============================================ */
+@media (min-width: 1024px) {
+
+    /* ─── Sections: Even more space ─── */
+    .results-section {
+        padding: 56px 48px;
+    }
+
+    .section-divider {
+        max-width: 900px;
+    }
+
+    /* ─── Pricing-Guarantee Grid ─── */
+    .pricing-guarantee-grid {
+        gap: 48px;
+        max-width: 1000px;
+    }
+
+    .pricing-guarantee-grid .pricing-premium-wrapper {
+        max-width: 520px;
+    }
+
+    .guarantee-column {
+        max-width: 480px;
+    }
+
+    /* ─── FAQ: Even more spacious ─── */
+    .faq-desktop-layout {
+        gap: 64px;
+    }
+
+    .faq-premium__question {
+        padding: 22px 28px;
+        font-size: 16px;
+    }
+
+    .faq-premium__answer p {
+        padding: 0 28px 22px;
+        font-size: 15px;
+    }
+
+    /* ─── Final CTA ─── */
+    .final-cta--premium {
+        padding: 64px 48px 48px;
+    }
+
+    .final-cta__subtext {
+        font-size: 17px;
+        max-width: 600px;
+    }
+
+    /* ─── Benefits: Wider feature items ─── */
+    .feature-list-item {
+        padding: 36px 16px;
+        gap: 28px;
+    }
+
+    .feature-list-item__icon {
+        width: 64px;
+        height: 64px;
+        font-size: 32px;
+    }
+
+    .feature-list-item__text h3 {
+        font-size: 19px;
+    }
+
+    .feature-list-item__text p {
+        font-size: 15px;
+    }
+
+    /* ─── Trust Metrics: Row layout ─── */
+    .trust-metrics {
+        gap: 14px;
+    }
+
+    .trust-metrics__item {
+        padding: 20px 24px;
+    }
+
+    .trust-metrics__info strong {
+        font-size: 20px;
+    }
+}
+
+/* ============================================
+   EXTRA LARGE DESKTOP (≥ 1280px)
+   ============================================ */
+@media (min-width: 1280px) {
+
+    .results-section {
+        padding: 64px 60px;
+    }
+
+    .results-section__inner {
+        max-width: 1100px;
+    }
+
+    .pricing-guarantee-grid {
+        max-width: 1080px;
+    }
+
+    .faq-desktop-layout {
+        gap: 80px;
+    }
+
+    .final-cta--premium {
+        padding: 72px 60px 56px;
+    }
+
+    .final-cta__heading {
+        font-size: 2.8rem;
     }
 }
 
