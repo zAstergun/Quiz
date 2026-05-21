@@ -939,6 +939,76 @@ function renderResult() {
 
       <div class="section-divider"></div>
 
+      <!-- ═══════ DESAFIOS DA DISCIPLINA ═══════ -->
+      <section class="results-section challenges-section" id="section-challenges">
+        <div class="results-section__inner">
+          <h2 class="challenges-section__title heading-fade reveal-blur">
+            Qual é o maior desafio para manter<br>
+            <span class="gradient-text">a disciplina financeira?</span>
+          </h2>
+        </div>
+
+        <div class="challenges-scatter" id="challenges-scatter">
+
+          <div class="challenge-card challenge-card--1">
+            <span class="challenge-card__x">✕</span>
+            <span class="challenge-card__text">Falta de clareza nos objetivos</span>
+          </div>
+
+          <div class="challenge-card challenge-card--2">
+            <span class="challenge-card__x">✕</span>
+            <span class="challenge-card__text">Gastos por impulso</span>
+          </div>
+
+          <div class="challenge-card challenge-card--3">
+            <span class="challenge-card__x">✕</span>
+            <span class="challenge-card__text">Gestão ineficiente do dinheiro</span>
+          </div>
+
+          <div class="challenge-card challenge-card--4">
+            <span class="challenge-card__x">✕</span>
+            <span class="challenge-card__text">Falta de motivação</span>
+          </div>
+
+          <div class="challenge-card challenge-card--5">
+            <span class="challenge-card__x">✕</span>
+            <span class="challenge-card__text">Distrações constantes</span>
+          </div>
+
+          <div class="challenge-card challenge-card--6">
+            <span class="challenge-card__x">✕</span>
+            <span class="challenge-card__text">Medo de investir</span>
+          </div>
+
+          <div class="challenge-card challenge-card--7">
+            <span class="challenge-card__x">✕</span>
+            <span class="challenge-card__text">Falta de rotina financeira</span>
+          </div>
+
+          <div class="challenge-card challenge-card--8">
+            <span class="challenge-card__x">✕</span>
+            <span class="challenge-card__text">Fadiga mental e física</span>
+          </div>
+
+          <div class="challenge-card challenge-card--9">
+            <span class="challenge-card__x">✕</span>
+            <span class="challenge-card__text">Perfeccionismo paralisante</span>
+          </div>
+
+        </div>
+
+        <div class="challenges-bg-x-marks">
+          <span class="bg-x bg-x--1">✕</span>
+          <span class="bg-x bg-x--2">✕</span>
+          <span class="bg-x bg-x--3">✕</span>
+          <span class="bg-x bg-x--4">✕</span>
+          <span class="bg-x bg-x--5">✕</span>
+          <span class="bg-x bg-x--6">✕</span>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
       <!-- ═══════ NOTION LESSONS ═══════ -->
       <section class="results-section">
         <div class="results-section__inner">
@@ -1244,6 +1314,20 @@ function renderResult() {
   // ── Initialize Horizontal Carousels ──
   initCarousel("testimonials-carousel");
   initCarousel("lessons-carousel");
+
+  // ── Challenges Section: scatter-out animation on scroll ──
+  const challengesScatter = document.getElementById("challenges-scatter");
+  if (challengesScatter) {
+    const challengeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          challengesScatter.classList.add("animate-in");
+          challengeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -60px 0px", root: scrollRoot });
+    challengeObserver.observe(challengesScatter);
+  }
 
   // ── Mover rodapé de compliance para dentro do container rolável para evitar que fique inacessível ──
   const footer = document.querySelector(".compliance-footer");

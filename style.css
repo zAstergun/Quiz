@@ -4160,6 +4160,283 @@ button {
     }
 }
 
+/* ============================================
+   CHALLENGES / DESAFIOS SECTION
+   Scattered cards with explode-from-center animation
+   ============================================ */
+.challenges-section {
+    position: relative;
+    overflow: hidden;
+    padding-top: 64px !important;
+    padding-bottom: 80px !important;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% 50%, rgba(180, 40, 40, 0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 30% 60%, rgba(201, 168, 76, 0.03) 0%, transparent 60%);
+}
+
+.challenges-section__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4.5vw, 2.4rem);
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 56px;
+    color: var(--text-primary);
+}
+
+/* ─── Scatter Container ─── */
+.challenges-scatter {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    height: 520px;
+    perspective: 1000px;
+}
+
+/* ─── Individual Challenge Card ─── */
+.challenge-card {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    background: rgba(18, 14, 10, 0.92);
+    border: 1px solid rgba(201, 168, 76, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(12px);
+    white-space: nowrap;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(232, 197, 71, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+
+    /* Start state: scaled down at center */
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+    left: 50%;
+    top: 50%;
+}
+
+.challenge-card:hover {
+    border-color: rgba(201, 168, 76, 0.3);
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(201, 168, 76, 0.08),
+        inset 0 1px 0 rgba(232, 197, 71, 0.1);
+}
+
+.challenge-card__x {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(200, 50, 50, 0.15);
+    border: 1.5px solid rgba(200, 50, 50, 0.5);
+    color: #e04040;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.challenge-card__text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.2px;
+    font-style: italic;
+}
+
+/* ─── Final positions for each card (scattered layout) ─── */
+.challenges-scatter.animate-in .challenge-card--1 {
+    animation: challengeScatter1 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
+}
+.challenges-scatter.animate-in .challenge-card--2 {
+    animation: challengeScatter2 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
+}
+.challenges-scatter.animate-in .challenge-card--3 {
+    animation: challengeScatter3 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.19s forwards;
+}
+.challenges-scatter.animate-in .challenge-card--4 {
+    animation: challengeScatter4 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.26s forwards;
+}
+.challenges-scatter.animate-in .challenge-card--5 {
+    animation: challengeScatter5 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.33s forwards;
+}
+.challenges-scatter.animate-in .challenge-card--6 {
+    animation: challengeScatter6 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+}
+.challenges-scatter.animate-in .challenge-card--7 {
+    animation: challengeScatter7 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.47s forwards;
+}
+.challenges-scatter.animate-in .challenge-card--8 {
+    animation: challengeScatter8 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.54s forwards;
+}
+.challenges-scatter.animate-in .challenge-card--9 {
+    animation: challengeScatter9 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.61s forwards;
+}
+
+/* Top-left area */
+@keyframes challengeScatter1 {
+    from { opacity: 0; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to   { opacity: 1; left: 6%;  top: 8%;  transform: translate(0, 0) scale(1) rotate(-4deg); }
+}
+
+/* Top-right area */
+@keyframes challengeScatter2 {
+    from { opacity: 0; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to   { opacity: 1; left: 62%; top: 5%;  transform: translate(0, 0) scale(1) rotate(3deg); }
+}
+
+/* Center-left */
+@keyframes challengeScatter3 {
+    from { opacity: 0; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to   { opacity: 1; left: 30%; top: 24%; transform: translate(0, 0) scale(1) rotate(-2deg); }
+}
+
+/* Center-right */
+@keyframes challengeScatter4 {
+    from { opacity: 0; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to   { opacity: 1; left: 55%; top: 30%; transform: translate(0, 0) scale(1) rotate(5deg); }
+}
+
+/* Middle-left */
+@keyframes challengeScatter5 {
+    from { opacity: 0; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to   { opacity: 1; left: 4%;  top: 42%; transform: translate(0, 0) scale(1) rotate(-6deg); }
+}
+
+/* Middle-right */
+@keyframes challengeScatter6 {
+    from { opacity: 0; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to   { opacity: 1; left: 68%; top: 52%; transform: translate(0, 0) scale(1) rotate(4deg); }
+}
+
+/* Bottom-center */
+@keyframes challengeScatter7 {
+    from { opacity: 0; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to   { opacity: 1; left: 32%; top: 60%; transform: translate(0, 0) scale(1) rotate(-3deg); }
+}
+
+/* Bottom-left */
+@keyframes challengeScatter8 {
+    from { opacity: 0; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to   { opacity: 1; left: 8%;  top: 76%; transform: translate(0, 0) scale(1) rotate(2deg); }
+}
+
+/* Bottom-right */
+@keyframes challengeScatter9 {
+    from { opacity: 0; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to   { opacity: 1; left: 58%; top: 78%; transform: translate(0, 0) scale(1) rotate(-5deg); }
+}
+
+/* ─── Background decorative X marks ─── */
+.challenges-bg-x-marks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.bg-x {
+    position: absolute;
+    font-size: 60px;
+    font-weight: 900;
+    color: rgba(200, 50, 50, 0.06);
+    line-height: 1;
+    user-select: none;
+}
+
+.bg-x--1 { top: 10%; left: 8%; transform: rotate(15deg); font-size: 80px; }
+.bg-x--2 { top: 5%;  right: 15%; transform: rotate(-20deg); font-size: 50px; }
+.bg-x--3 { top: 45%; right: 5%;  transform: rotate(30deg); font-size: 70px; }
+.bg-x--4 { bottom: 15%; left: 12%; transform: rotate(-10deg); font-size: 65px; }
+.bg-x--5 { bottom: 8%;  right: 20%; transform: rotate(25deg); font-size: 55px; }
+.bg-x--6 { top: 55%;  left: 45%; transform: rotate(-35deg); font-size: 90px; color: rgba(200, 50, 50, 0.03); }
+
+/* ─── Challenges: Mobile (≤ 768px) ─── */
+@media (max-width: 768px) {
+    .challenges-scatter {
+        height: auto;
+        min-height: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 0 16px;
+        align-items: center;
+    }
+
+    .challenge-card {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        opacity: 0;
+        white-space: normal;
+    }
+
+    .challenges-scatter.animate-in .challenge-card {
+        animation: challengeMobileIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+    }
+
+    .challenges-scatter.animate-in .challenge-card--1 { animation-delay: 0.05s !important; transform: rotate(-2deg) !important; }
+    .challenges-scatter.animate-in .challenge-card--2 { animation-delay: 0.1s !important; transform: rotate(1.5deg) !important; align-self: flex-end; }
+    .challenges-scatter.animate-in .challenge-card--3 { animation-delay: 0.15s !important; transform: rotate(-1deg) !important; align-self: flex-start; }
+    .challenges-scatter.animate-in .challenge-card--4 { animation-delay: 0.2s !important; transform: rotate(2.5deg) !important; align-self: flex-end; }
+    .challenges-scatter.animate-in .challenge-card--5 { animation-delay: 0.25s !important; transform: rotate(-3deg) !important; align-self: flex-start; }
+    .challenges-scatter.animate-in .challenge-card--6 { animation-delay: 0.3s !important; transform: rotate(1deg) !important; align-self: flex-end; }
+    .challenges-scatter.animate-in .challenge-card--7 { animation-delay: 0.35s !important; transform: rotate(-2.5deg) !important; }
+    .challenges-scatter.animate-in .challenge-card--8 { animation-delay: 0.4s !important; transform: rotate(2deg) !important; align-self: flex-start; }
+    .challenges-scatter.animate-in .challenge-card--9 { animation-delay: 0.45s !important; transform: rotate(-1.5deg) !important; align-self: flex-end; }
+
+    @keyframes challengeMobileIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .challenges-section__title {
+        font-size: clamp(1.3rem, 5vw, 1.8rem);
+        margin-bottom: 36px;
+    }
+
+    .bg-x {
+        font-size: 40px !important;
+    }
+}
+
+/* ─── Challenges: Small mobile (≤ 480px) ─── */
+@media (max-width: 480px) {
+    .challenges-scatter {
+        min-height: auto;
+        gap: 10px;
+    }
+
+    .challenge-card {
+        padding: 12px 18px;
+        gap: 10px;
+    }
+
+    .challenge-card__text {
+        font-size: 13px;
+    }
+
+    .challenge-card__x {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+    }
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
     width: 5px;
