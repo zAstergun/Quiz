@@ -734,10 +734,7 @@ function renderResult() {
     { img: "assets/whatsapp-review-4.png", alt: "Depoimento Matheus K." },
     { img: "assets/whatsapp-review-5.png", alt: "Depoimento Cliente 5" },
     { img: "assets/whatsapp-review-6.png", alt: "Depoimento Cliente 6" },
-    { img: "assets/whatsapp-review-7.png", alt: "Depoimento Cliente 7" },
-    { img: "assets/whatsapp-review-8.png", alt: "Depoimento Cliente 8" },
-    { img: "assets/whatsapp-review-9.png", alt: "Depoimento Cliente 9" },
-    { img: "assets/whatsapp-review-10.png", alt: "Depoimento Cliente 10" }
+    { img: "assets/whatsapp-review-7.png", alt: "Depoimento Cliente 7" }
   ];
 
   const testimonialsHTML = testimonials.map((t, i) => `
